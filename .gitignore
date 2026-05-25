@@ -2,3 +2,6 @@
 *.log
 .vscode/
 .idea/
+
+# Backups dos PNGs originais (pré-resize) — não pertencem ao repo
+_orig/
