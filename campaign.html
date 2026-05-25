@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Maria finish her cancer treatment — Carelift</title>
+<meta name="description" content="A real campaign on Carelift. Help Maria and her family finish life-saving treatment this winter.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   CARELIFT — Campaign detail page
+   Adapted from FellowHope detail-page.html. Preserves the
+   full architecture (image hero · ring progress · donate +
+   share · description · donations · organizer · trust ·
+   share circles · promo fan · showcase) and reskins the
+   gold/amber surfaces into the coral system.
+   ══════════════════════════════════════════════════════════ */
+
+:root{
+  --coral:       #FF7452;
+  --coral-dark:  #F06543;
+  --coral-soft:  #FFC2B2;
+  --coral-tint:  #FFE9E1;
+  --paper:       #FFF8F4;
+  --white:       #FFFFFF;
+  --surface:     #F9EEE8;
+  --line:        #E7D6CC;
+  --ink:         #2D3135;
+  --slate:       #6A7C89;
+  --muted:       #7E736D;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-pill: 100px;
+  --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);color:var(--ink);background:var(--paper);
+  line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+
+/* ── HEADER NAV ────────────────────────────────────── */
+.pd-header-nav{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;gap:14px;
+  padding:18px 5%;
+  background:rgba(255,248,244,.88);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:50;
+}
+.btn-voltar{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 16px;border-radius:var(--r-pill);
+  border:1.5px solid var(--line);background:var(--white);
+  font-size:.88rem;font-weight:600;color:var(--slate);
+  transition:border-color .15s, color .15s, background .15s;
+}
+.btn-voltar:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.btn-voltar svg{stroke:currentColor;fill:none;stroke-width:2.4}
+
+.logo{display:inline-flex;align-items:center;gap:9px;justify-self:center;font-family:var(--font-head);font-weight:800;font-size:1.1rem;color:var(--ink);letter-spacing:-.02em}
+.logo-mark{
+  width:28px;height:28px;border-radius:9px;
+  background:linear-gradient(135deg,var(--coral) 0%,var(--coral-dark) 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(255,116,82,.32);flex-shrink:0;
+}
+.logo-mark svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5}
+
+.pd-header-actions{display:flex;align-items:center;gap:10px;justify-self:end}
+.btn-busca{
+  width:40px;height:40px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--white);
+  color:var(--slate);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s, color .15s, background .15s;
+}
+.btn-busca:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.btn-busca svg{stroke:currentColor;fill:none}
+
+/* ── STICKY DONATE BAR (mobile floats above content) ── */
+.pd-sticky{
+  display:none;
+  position:fixed;bottom:14px;left:14px;right:14px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:12px 14px;
+  box-shadow:0 14px 36px rgba(45,49,53,.16);
+  z-index:48;
+  align-items:center;gap:14px;
+}
+.pd-sticky-topo{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.pd-sticky-circulo{
+  position:relative;width:44px;height:44px;flex-shrink:0;
+}
+.pd-sticky-circulo svg{width:100%;height:100%}
+.sticky-circ-bg{fill:none;stroke:var(--surface);stroke-width:5}
+.sticky-circ-fill{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)}
+.pd-sticky-pct{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:.7rem;font-weight:800;color:var(--coral-dark);
+}
+.pd-sticky-info{min-width:0;flex:1}
+.pd-sticky-valor{font-family:var(--font-head);font-size:.92rem;font-weight:800;color:var(--ink)}
+.pd-sticky-meta{font-size:.74rem;color:var(--muted)}
+.pd-sticky-btns .btn-primary{padding:10px 18px;font-size:.86rem;border-radius:var(--r-pill)}
+
+@media(max-width:900px){.pd-sticky{display:flex}}
+
+/* ── DESKTOP WRAP (2-col grid) ─────────────────────── */
+.pd-desktop-wrap{max-width:1180px;margin:0 auto;padding:32px 5% 80px}
+.pd-desktop-main{min-width:0}
+
+@media(min-width:900px){
+  .pd-desktop-wrap{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:48px;
+    align-items:flex-start;
+  }
+}
+
+/* ── DESKTOP TITLE ─────────────────────────────────── */
+.pd-titulo-desktop{
+  display:none;
+  font-family:var(--font-head);
+  font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:800;color:var(--ink);
+  letter-spacing:-.028em;line-height:1.18;
+  margin-bottom:20px;
+}
+@media(min-width:900px){.pd-titulo-desktop{display:block}}
+
+/* ── IMAGE CONTAINER ───────────────────────────────── */
+.pd-imagem-container{
+  position:relative;border-radius:24px;overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--line);
+  box-shadow:0 12px 36px rgba(45,49,53,.08), 0 2px 8px rgba(45,49,53,.04);
+  margin-bottom:32px;
+  aspect-ratio:16/10;
+}
+/* Image carousel track */
+.pd-img-track{
+  position:absolute;inset:0;
+  display:flex;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.pd-img-slide{
+  flex:0 0 100%;width:100%;height:100%;
+  background:var(--surface) center/cover no-repeat;
+}
+.pd-car-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(255,255,255,.4);
+  color:var(--ink);
+  font-size:1.4rem;line-height:0;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.18);
+  z-index:4;transition:background .15s, transform .15s;
+}
+.pd-car-btn:hover{background:var(--white);transform:translateY(-50%) scale(1.08)}
+.pd-car-prev{left:14px}
+.pd-car-next{right:14px}
+.pd-car-dots{
+  position:absolute;top:18px;right:18px;
+  display:flex;gap:6px;z-index:3;
+}
+.pd-car-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.45);
+  cursor:pointer;transition:background .2s, width .25s;
+}
+.pd-car-dot.active{background:var(--white);width:22px;border-radius:8px}
+.pd-imagem-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,.18) 60%, rgba(0,0,0,.62) 100%);
+  pointer-events:none;
+}
+.pd-org-overlay{
+  position:absolute;top:18px;left:18px;
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);
+  border-radius:var(--r-pill);
+  padding:7px 14px 7px 7px;
+  z-index:3;
+}
+.pd-org-overlay-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  color:#fff;
+  font-family:var(--font-head);font-size:.78rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.pd-org-overlay-nome{font-size:.84rem;font-weight:600;color:var(--ink)}
+.pd-titulo-overlay{
+  position:absolute;left:24px;right:24px;bottom:22px;
+  font-family:var(--font-head);
+  font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:800;color:#fff;
+  letter-spacing:-.022em;line-height:1.18;
+  text-shadow:0 2px 14px rgba(0,0,0,.42);
+  z-index:2;
+}
+@media(min-width:900px){.pd-titulo-overlay{display:none}}
+
+/* ── BODY CONTENT ──────────────────────────────────── */
+.pd-conteudo{display:flex;flex-direction:column;gap:28px}
+
+.pd-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--coral-tint);
+  color:var(--coral-dark);
+  font-size:.68rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  padding:6px 12px;border-radius:var(--r-pill);
+  align-self:flex-start;
+}
+
+.pd-titulo{
+  font-family:var(--font-head);
+  font-size:clamp(1.4rem,2.4vw,1.85rem);font-weight:800;color:var(--ink);
+  letter-spacing:-.025em;line-height:1.18;
+}
+@media(min-width:900px){.pd-titulo{display:none}}
+
+/* ── PROGRESS BLOCK ────────────────────────────────── */
+.pd-progresso-bloco{
+  display:flex;align-items:center;gap:24px;
+  padding:24px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+}
+.pd-circulo-wrap{position:relative;width:96px;height:96px;flex-shrink:0}
+.pd-circulo-wrap svg{width:100%;height:100%}
+.circ-bg{fill:none;stroke:var(--surface);stroke-width:6}
+.circ-fill{
+  fill:none;stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:232.5;
+  stroke-dashoffset:60;
+  transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1);
+}
+.circ-centro{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+}
+.circ-centro-pct{
+  font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--coral-dark);
+}
+.pd-valores-lado{flex:1;min-width:0}
+.pd-val-arrecadado{
+  font-family:var(--font-head);
+  font-size:1.45rem;font-weight:800;color:var(--ink);letter-spacing:-.02em;
+}
+.pd-val-arrecadado span:first-child{color:var(--ink)}
+.pd-val-raised-suffix{font-size:.92rem;color:var(--muted);font-weight:500;margin-left:4px}
+.pd-val-meta{font-size:.86rem;color:var(--muted);margin-top:2px;margin-bottom:10px}
+.pd-val-ticker{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:var(--r-pill);
+  background:var(--surface);
+  font-size:.78rem;color:var(--coral-dark);font-weight:600;
+  transition:background .15s, color .15s;
+}
+.pd-val-ticker:hover{background:var(--coral-tint)}
+.pd-val-ticker svg{stroke:currentColor;fill:none}
+
+/* ── BUTTONS ───────────────────────────────────────── */
+.pd-botoes{display:flex;gap:10px}
+.btn{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 22px;border-radius:var(--r-pill);
+  font-family:var(--font-body);font-size:.95rem;font-weight:700;
+  transition:background .15s, transform .12s, box-shadow .15s, border-color .15s, color .15s;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--coral) 0%,var(--coral-dark) 100%);
+  color:var(--white);
+  box-shadow:0 8px 22px rgba(255,116,82,.32),inset 0 1px 0 rgba(255,255,255,.22);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(240,101,67,.42)}
+.btn-outline{
+  background:var(--white);
+  color:var(--ink);
+  border:1.5px solid var(--line);
+}
+.btn-outline:hover{border-color:var(--coral-soft);background:var(--coral-tint);color:var(--coral-dark)}
+.btn svg{stroke:currentColor;fill:none;stroke-width:2.2}
+
+/* ── DESCRIPTION ───────────────────────────────────── */
+.pd-descricao-bloco{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:28px;
+}
+.pd-descricao{font-size:1rem;color:var(--ink);line-height:1.72}
+.pd-descricao + .pd-descricao{margin-top:14px}
+.pd-descricao-wrap.colapsado{
+  max-height:240px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom, #000 70%, transparent 100%);
+          mask-image:linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+.pd-descricao-toggle{
+  margin-top:10px;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.88rem;font-weight:700;color:var(--coral-dark);
+  padding:6px 0;
+}
+.pd-descricao-toggle svg{stroke:currentColor;fill:none;stroke-width:2.2;transition:transform .2s}
+.pd-descricao-toggle.aberto svg{transform:rotate(180deg)}
+
+/* ── DONATIONS LIST ────────────────────────────────── */
+.pd-doacoes{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:24px 24px 18px;
+}
+.pd-doacoes-header h3{
+  font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.015em;margin-bottom:18px;
+  display:flex;align-items:center;gap:8px;
+}
+.pd-doacoes-count{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:26px;height:24px;padding:0 8px;
+  background:var(--coral-tint);color:var(--coral-dark);
+  font-family:var(--font-body);font-size:.74rem;font-weight:700;
+  border-radius:var(--r-pill);
+}
+.pd-doacao{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 0;border-bottom:1px solid var(--line);
+}
+.pd-doacao:last-child{border-bottom:none}
+.pd-doacao-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--coral-soft),var(--coral));
+  color:#fff;
+  font-family:var(--font-head);font-size:.84rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pd-doacao-info{flex:1;min-width:0}
+.pd-doacao-nome{font-size:.94rem;font-weight:700;color:var(--ink)}
+.pd-doacao-meta{font-size:.78rem;color:var(--muted);margin-top:1px}
+.pd-doacao-valor{
+  font-family:var(--font-head);font-size:.94rem;font-weight:800;color:var(--coral-dark);
+  flex-shrink:0;
+}
+.pd-doacoes-ver-todas{
+  display:block;width:100%;
+  padding:12px;margin-top:14px;
+  border-radius:var(--r-pill);
+  background:var(--surface);
+  font-size:.86rem;font-weight:600;color:var(--ink);
+  transition:background .15s, color .15s;
+}
+.pd-doacoes-ver-todas:hover{background:var(--coral-tint);color:var(--coral-dark)}
+
+/* ── WORDS OF SUPPORT ──────────────────────────────── */
+.pd-words{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:24px 24px 20px;
+}
+.pd-words-header h3{
+  font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.015em;margin-bottom:18px;
+  display:flex;align-items:center;gap:8px;
+}
+.pd-words-lista{display:flex;flex-direction:column;gap:8px}
+.pd-word{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+.pd-word:last-child{border-bottom:none}
+.pd-word-content{flex:1;min-width:0}
+.pd-word-top{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  margin-bottom:6px;flex-wrap:wrap;
+}
+.pd-word-amount{
+  display:inline-flex;align-items:center;
+  padding:3px 10px;border-radius:var(--r-pill);
+  background:var(--coral-tint);color:var(--coral-dark);
+  font-family:var(--font-head);font-size:.78rem;font-weight:800;
+  flex-shrink:0;
+}
+.pd-word-text{
+  font-size:.94rem;color:var(--ink);line-height:1.6;
+  margin-bottom:6px;font-style:italic;
+}
+
+/* ── ORGANIZER BLOCK ───────────────────────────────── */
+.pd-organizador{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:28px;
+}
+.pd-org-eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;
+}
+.pd-org-info{display:flex;align-items:center;gap:14px}
+.pd-org-avatar{
+  width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  color:#fff;
+  font-family:var(--font-head);font-size:1.05rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pd-org-texto{min-width:0}
+.pd-org-nome{font-family:var(--font-head);font-size:1.02rem;font-weight:700;color:var(--ink)}
+.pd-org-meta{font-size:.84rem;color:var(--muted);margin-top:2px}
+.pd-org-sep{margin:0 4px;color:var(--subtle,#A89D97)}
+.pd-org-divisor{height:1px;background:var(--line);margin:20px 0}
+.pd-org-meta-linha{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted);flex-wrap:wrap}
+.pd-org-categoria{color:var(--coral-dark);font-weight:600}
+.pd-org-protected{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-top:14px;
+  padding:7px 14px;border-radius:var(--r-pill);
+  background:var(--coral-tint);
+  font-size:.82rem;font-weight:600;color:var(--coral-dark);
+}
+.pd-org-protected svg{stroke:currentColor;fill:none;stroke-width:2}
+
+/* ── REPORT LINK ───────────────────────────────────── */
+.pd-reportar-bloco{text-align:center}
+.pd-reportar-link{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;border-radius:var(--r-pill);
+  font-size:.86rem;color:var(--muted);font-weight:600;
+  transition:color .15s, background .15s;
+}
+.pd-reportar-link:hover{color:var(--coral-dark);background:var(--coral-tint)}
+.pd-reportar-link svg{stroke:currentColor;fill:none;stroke-width:2}
+
+/* ── SHARE BLOCK ───────────────────────────────────── */
+.pd-share-v2{
+  background:var(--coral-tint);
+  border:1px solid rgba(255,116,82,.20);
+  border-radius:var(--r-md);
+  padding:32px 28px 28px;
+  text-align:center;
+}
+.pd-share-titulo{
+  font-family:var(--font-head);
+  font-size:1.15rem;font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;margin-bottom:8px;
+}
+.pd-share-texto{font-size:.92rem;color:var(--slate);line-height:1.65;margin-bottom:22px}
+.pd-share-texto strong{color:var(--coral-dark);font-weight:700}
+.pd-share-icons{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.pd-share-circle{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--white);
+  border:1px solid var(--line);
+  color:var(--coral-dark);
+  transition:transform .15s, box-shadow .15s, background .15s, color .15s, border-color .15s;
+}
+.pd-share-circle:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px rgba(255,116,82,.22);
+  background:var(--coral);
+  border-color:var(--coral);
+  color:var(--white);
+}
+
+/* ── PROMO FAN ─────────────────────────────────────── */
+.pd-promo{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:36px 28px 32px;
+  text-align:center;
+}
+.pd-promo-titulo{
+  font-family:var(--font-head);
+  font-size:1.2rem;font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;margin-bottom:8px;
+}
+.pd-promo-sub{font-size:.92rem;color:var(--slate);line-height:1.6;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
+.pd-promo-fan{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  min-height:360px;
+}
+.pd-promo-card{
+  flex:0 0 240px;width:240px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:0 14px 36px rgba(45,49,53,.10), 0 4px 12px rgba(45,49,53,.05);
+  text-align:left;
+  transition:transform .3s, box-shadow .3s;
+}
+.pd-promo-card-left{transform:rotate(-7deg);opacity:.78}
+.pd-promo-card-right{transform:rotate(7deg);opacity:.78}
+.pd-promo-card-main{
+  transform:translateY(-12px);
+  z-index:2;
+  border-color:var(--coral-soft);
+  box-shadow:0 20px 48px rgba(255,116,82,.20), 0 6px 16px rgba(45,49,53,.06);
+}
+.pd-promo-img{
+  width:100%;height:140px;
+  background:var(--surface) center/cover no-repeat;
+}
+.pd-promo-card-left  .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80')}
+.pd-promo-card-main  .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80')}
+.pd-promo-card-right .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80')}
+.pd-promo-corpo{padding:14px 16px 16px}
+.pd-promo-titulo-card{
+  font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--ink);
+  line-height:1.4;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.pd-promo-org{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.pd-promo-org-avatar{
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  color:#fff;font-size:.6rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);
+}
+.pd-promo-org-by{font-size:.72rem;color:var(--muted)}
+.pd-promo-prog{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pd-promo-prog-valor{font-family:var(--font-head);font-size:.92rem;font-weight:800;color:var(--ink)}
+.pd-promo-prog-label{font-size:.66rem;color:var(--muted)}
+.pd-promo-prog-ring{position:relative;width:42px;height:42px}
+.pd-promo-prog-ring svg{width:100%;height:100%}
+.pd-promo-ring-bg{fill:none;stroke:var(--surface);stroke-width:5}
+.pd-promo-ring-fill{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 1s}
+.pd-promo-ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:.62rem;font-weight:800;color:var(--coral-dark)}
+.pd-promo-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;margin-top:12px;
+  padding:10px;border-radius:var(--r-pill);
+  background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+  color:#fff;
+  font-family:var(--font-body);font-size:.82rem;font-weight:700;
+  box-shadow:0 6px 16px rgba(255,116,82,.30);
+  transition:transform .12s, box-shadow .15s;
+}
+.pd-promo-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(240,101,67,.40)}
+
+@media(max-width:600px){
+  .pd-promo-fan{gap:6px;min-height:auto}
+  .pd-promo-card-left,.pd-promo-card-right{display:none}
+  .pd-promo-card-main{flex:0 0 100%;width:100%;transform:none}
+}
+
+/* ── DEFINE GRADIENT ID FOR RING STROKES ───────────── */
+.cp-ring-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ── ASIDE / SIDEBAR (desktop) ─────────────────────── */
+.pd-sidebar{display:none}
+@media(min-width:900px){
+  .pd-sidebar{display:block;position:sticky;top:108px;align-self:flex-start}
+}
+.pd-sidebar-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:24px;
+  box-shadow:var(--s-sm,0 2px 8px rgba(45,49,53,.05));
+}
+.pd-sidebar-prog{display:flex;align-items:center;gap:18px;margin-bottom:18px}
+.pd-sidebar-ring{position:relative;width:88px;height:88px;flex-shrink:0}
+.pd-sidebar-ring svg{width:100%;height:100%}
+.pd-sidebar-vals{min-width:0;flex:1}
+.pd-sidebar-raised{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--ink)}
+.pd-sidebar-raised strong{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;display:block;margin-bottom:2px}
+.pd-sidebar-raised span{font-size:.84rem;color:var(--muted);font-weight:500}
+.pd-sidebar-meta{font-size:.82rem;color:var(--muted);margin-top:2px}
+.pd-sidebar-btn-doe{width:100%;margin-bottom:10px}
+.pd-sidebar-btn-share{width:100%}
+.pd-sidebar-recent{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.pd-sidebar-recent h4{
+  font-family:var(--font-head);font-size:.92rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.pd-sidebar-recent-count{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:24px;height:22px;padding:0 7px;
+  background:var(--coral-tint);color:var(--coral-dark);
+  font-size:.7rem;font-weight:700;border-radius:var(--r-pill);
+}
+
+/* ── TRUST SECTION ─────────────────────────────────── */
+.pd-trust-bloco{
+  background:var(--surface);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:80px 5%;
+  text-align:center;
+}
+.pd-trust-bloco h2{
+  font-family:var(--font-head);
+  font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:800;color:var(--ink);
+  letter-spacing:-.025em;line-height:1.2;
+  max-width:680px;margin:0 auto 48px;
+}
+.pd-trust-features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+  max-width:1080px;margin:0 auto;
+}
+.pd-trust-feature{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:32px 26px;
+  text-align:center;
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+}
+.pd-trust-feature:hover{transform:translateY(-3px);border-color:var(--coral-soft);box-shadow:0 8px 24px rgba(255,116,82,.10)}
+.pd-trust-icon{
+  width:60px;height:60px;border-radius:18px;
+  background:var(--coral-tint);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;
+  color:var(--coral-dark);
+}
+.pd-trust-feature strong{
+  display:block;font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--ink);
+  margin-bottom:8px;letter-spacing:-.01em;
+}
+.pd-trust-feature p{font-size:.9rem;color:var(--muted);line-height:1.65}
+
+@media(max-width:900px){.pd-trust-features{grid-template-columns:1fr;gap:14px}.pd-trust-bloco{padding:56px 5%}}
+
+/* ── SHOWCASE — more campaigns ─────────────────────── */
+.cs-section{
+  background:var(--white);
+  padding:80px 5% 96px;
+  position:relative;
+}
+.cs-inner{max-width:1180px;margin:0 auto 28px}
+.cs-titulo{
+  font-family:var(--font-head);
+  font-size:clamp(1.5rem,2.4vw,2rem);font-weight:800;color:var(--ink);
+  letter-spacing:-.025em;line-height:1.22;margin-bottom:24px;
+  max-width:580px;
+}
+.cs-titulo em{font-style:normal;color:var(--coral)}
+.cs-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.cs-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:var(--r-pill);
+  border:1.5px solid var(--line);background:var(--white);
+  font-size:.86rem;font-weight:600;color:var(--slate);
+  transition:border-color .15s, color .15s, background .15s;
+}
+.cs-pill:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.cs-pill svg{stroke:currentColor;fill:none}
+.cs-nav{display:flex;gap:8px}
+.cs-nav-btn{
+  width:38px;height:38px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--white);
+  color:var(--slate);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s, color .15s, background .15s;
+}
+.cs-nav-btn:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.cs-nav-btn svg{stroke:currentColor;fill:none}
+
+.cs-rail{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(280px,300px);
+  gap:18px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:6px 5% 14px;
+  max-width:1180px;margin:0 auto;
+  scrollbar-width:none;
+}
+.cs-rail::-webkit-scrollbar{display:none}
+.cs-card{
+  scroll-snap-align:start;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+  display:flex;flex-direction:column;
+}
+.cs-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 36px rgba(255,116,82,.13), 0 4px 12px rgba(45,49,53,.06);
+  border-color:var(--coral-soft);
+}
+.cs-card-img{width:100%;height:160px;background:var(--surface) center/cover no-repeat;position:relative}
+.cs-card-cat{
+  position:absolute;top:12px;left:12px;
+  font-size:.62rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  background:rgba(255,255,255,.95);color:var(--coral-dark);
+  padding:4px 10px;border-radius:var(--r-pill);
+}
+.cs-card-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.cs-card-titulo{
+  font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--ink);
+  line-height:1.4;margin-bottom:12px;flex:1;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.cs-card-prog{font-size:.82rem;color:var(--muted);margin-bottom:8px}
+.cs-card-prog strong{color:var(--ink);font-weight:800}
+.cs-card-barra{height:5px;background:var(--surface);border-radius:5px;overflow:hidden}
+.cs-card-barra-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--coral-dark));border-radius:5px}
+
+/* ── ANIMATIONS ────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.pd-desktop-wrap,.pd-trust-bloco,.cs-section{animation:fadeUp .5s ease both}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media(max-width:600px){
+  .pd-imagem-container{aspect-ratio:4/3;border-radius:18px}
+  .pd-progresso-bloco{flex-direction:column;align-items:flex-start;gap:16px;padding:20px}
+  .pd-botoes{flex-direction:column}
+  .pd-promo-fan{padding:0 6px}
+  body{padding-bottom:80px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═════════ SVG defs — gradient used by all progress rings ═════════ -->
+<svg class="cp-ring-defs" aria-hidden="true">
+  <defs>
+    <linearGradient id="cpRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7452"/>
+      <stop offset="100%" stop-color="#F06543"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ═════════ STICKY DONATE BAR (mobile only) ═════════ -->
+<div class="pd-sticky" id="pdSticky">
+  <div class="pd-sticky-topo">
+    <div class="pd-sticky-circulo">
+      <svg viewBox="0 0 48 48">
+        <circle class="sticky-circ-bg" cx="24" cy="24" r="19"/>
+        <circle id="pdStickyFill" class="sticky-circ-fill" cx="24" cy="24" r="19"
+                stroke="url(#cpRingGrad)"
+                stroke-dasharray="119.38"
+                stroke-dashoffset="31"
+                transform="rotate(-90 24 24)"/>
+      </svg>
+      <span class="pd-sticky-pct" id="pdStickyPct">74%</span>
+    </div>
+    <div class="pd-sticky-info">
+      <div class="pd-sticky-valor">$18,420 raised</div>
+      <div class="pd-sticky-meta">of $25,000 goal · 312 donors</div>
+    </div>
+  </div>
+  <div class="pd-sticky-btns">
+    <a href="donate.html" class="btn btn-primary">Donate</a>
+  </div>
+</div>
+
+<!-- ═════════ HEADER NAV ═════════ -->
+<header class="pd-header-nav">
+  <button class="btn-voltar" onclick="history.length>1 ? history.back() : (location.href='index.html')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <a class="logo" href="index.html">
+    <span class="logo-mark">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </span>
+    Carelift
+  </a>
+  <div class="pd-header-actions">
+    <button class="btn-busca" aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ═════════ DESKTOP WRAP (main + sidebar) ═════════ -->
+<div class="pd-desktop-wrap">
+
+  <main class="pd-desktop-main">
+
+    <!-- Desktop title (visible ≥900px) -->
+    <h1 class="pd-titulo-desktop">Help Maria finish her cancer treatment this winter</h1>
+
+    <!-- Image carousel + organizer overlay + mobile title overlay -->
+    <div class="pd-imagem-container">
+
+      <!-- Carousel track -->
+      <div class="pd-img-track" id="pdImgTrack">
+        <div class="pd-img-slide" style="background-image:url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=80')"></div>
+        <div class="pd-img-slide" style="background-image:url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=1400&q=80')"></div>
+        <div class="pd-img-slide" style="background-image:url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1400&q=80')"></div>
+        <div class="pd-img-slide" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1400&q=80')"></div>
+      </div>
+
+      <!-- Bottom dark gradient for title legibility -->
+      <div class="pd-imagem-grad" aria-hidden="true"></div>
+
+      <!-- Carousel navigation -->
+      <button class="pd-car-btn pd-car-prev" id="pdCarPrev" aria-label="Previous image">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="pd-car-btn pd-car-next" id="pdCarNext" aria-label="Next image">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Dot indicators -->
+      <div class="pd-car-dots" id="pdCarDots">
+        <button class="pd-car-dot active" data-idx="0" aria-label="Image 1"></button>
+        <button class="pd-car-dot" data-idx="1" aria-label="Image 2"></button>
+        <button class="pd-car-dot" data-idx="2" aria-label="Image 3"></button>
+        <button class="pd-car-dot" data-idx="3" aria-label="Image 4"></button>
+      </div>
+
+      <!-- Organizer overlay (top-left) -->
+      <div class="pd-org-overlay">
+        <div class="pd-org-overlay-avatar">MR</div>
+        <span class="pd-org-overlay-nome">Marta R.</span>
+      </div>
+
+      <!-- Mobile title overlay (bottom, hidden on desktop) -->
+      <h2 class="pd-titulo-overlay">Help Maria finish her cancer treatment</h2>
+    </div>
+
+    <div class="pd-conteudo">
+
+      <span class="pd-badge">Health</span>
+      <h1 class="pd-titulo">Help Maria finish her cancer treatment this winter</h1>
+
+      <!-- Progress block -->
+      <div class="pd-progresso-bloco">
+        <div class="pd-circulo-wrap">
+          <svg viewBox="0 0 88 88">
+            <circle class="circ-bg" cx="44" cy="44" r="37"/>
+            <circle class="circ-fill" cx="44" cy="44" r="37"
+                    stroke="url(#cpRingGrad)" transform="rotate(-90 44 44)"/>
+          </svg>
+          <div class="circ-centro"><span class="circ-centro-pct">74%</span></div>
+        </div>
+        <div class="pd-valores-lado">
+          <div class="pd-val-arrecadado">$18,420 <span class="pd-val-raised-suffix">raised</span></div>
+          <div class="pd-val-meta">of $25,000 goal</div>
+          <a class="pd-val-ticker" href="#donations">
+            <span class="pd-val-ticker-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            </span>
+            <span>312 people have donated</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="pd-botoes">
+        <a class="btn btn-primary" href="donate.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Donate now
+        </a>
+        <button class="btn btn-outline" onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{alert('Copy the link to share this campaign.')}">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share
+        </button>
+      </div>
+
+      <!-- Description -->
+      <div class="pd-descricao-bloco">
+        <div class="pd-descricao-wrap colapsado" id="pdDescricaoWrap">
+          <p class="pd-descricao">Maria is 38, a mother of two, and a kindergarten teacher in a small town near Lisbon. Last September she was diagnosed with stage III breast cancer.</p>
+          <p class="pd-descricao">Maria's treatment plan covers six rounds of chemotherapy followed by surgery and radiation. Her medical insurance covers most of the procedure — but the supplemental therapies, transportation to the cancer center 90km away, and time off work add up to over $25,000 her family simply doesn't have.</p>
+          <p class="pd-descricao">Maria's sister Marta started this campaign because watching someone you love fight for their life shouldn't also mean watching them drown in bills. Every dollar raised goes directly to medical costs and to keeping the family afloat while Maria recovers.</p>
+          <p class="pd-descricao">"I want my kids to remember this year as the year mom got better," Maria wrote. "Not the year we lost everything trying."</p>
+        </div>
+        <button class="pd-descricao-toggle" id="pdDescricaoToggle">
+          <span class="pd-descricao-toggle-label">Read more</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Donations list -->
+      <div class="pd-doacoes" id="donations">
+        <div class="pd-doacoes-header">
+          <h3>Donations <span class="pd-doacoes-count">312</span></h3>
+        </div>
+        <div class="pd-doacoes-lista">
+
+          <div class="pd-doacao">
+            <div class="pd-doacao-avatar">MS</div>
+            <div class="pd-doacao-info">
+              <div class="pd-doacao-nome">Marie S.</div>
+              <div class="pd-doacao-meta">2 minutes ago · "Thinking of your family ✦"</div>
+            </div>
+            <div class="pd-doacao-valor">$25</div>
+          </div>
+
+          <div class="pd-doacao">
+            <div class="pd-doacao-avatar">DT</div>
+            <div class="pd-doacao-info">
+              <div class="pd-doacao-nome">Daniel T.</div>
+              <div class="pd-doacao-meta">7 minutes ago</div>
+            </div>
+            <div class="pd-doacao-valor">$100</div>
+          </div>
+
+          <div class="pd-doacao">
+            <div class="pd-doacao-avatar">PR</div>
+            <div class="pd-doacao-info">
+              <div class="pd-doacao-nome">Priya R.</div>
+              <div class="pd-doacao-meta">13 minutes ago · "Sending love from Mumbai."</div>
+            </div>
+            <div class="pd-doacao-valor">$50</div>
+          </div>
+
+          <div class="pd-doacao">
+            <div class="pd-doacao-avatar">AL</div>
+            <div class="pd-doacao-info">
+              <div class="pd-doacao-nome">Ana L.</div>
+              <div class="pd-doacao-meta">22 minutes ago</div>
+            </div>
+            <div class="pd-doacao-valor">$300</div>
+          </div>
+
+          <div class="pd-doacao">
+            <div class="pd-doacao-avatar">KA</div>
+            <div class="pd-doacao-info">
+              <div class="pd-doacao-nome">Kenji A.</div>
+              <div class="pd-doacao-meta">31 minutes ago · "Força, Maria."</div>
+            </div>
+            <div class="pd-doacao-valor">$75</div>
+          </div>
+
+        </div>
+        <button class="pd-doacoes-ver-todas">See all 312 donations</button>
+      </div>
+
+      <!-- Words of support -->
+      <div class="pd-words">
+        <div class="pd-words-header">
+          <h3>Words of support <span class="pd-doacoes-count">48</span></h3>
+        </div>
+        <div class="pd-words-lista">
+
+          <div class="pd-word">
+            <div class="pd-doacao-avatar">MS</div>
+            <div class="pd-word-content">
+              <div class="pd-word-top">
+                <div class="pd-doacao-nome">Marie S.</div>
+                <span class="pd-word-amount">$25</span>
+              </div>
+              <div class="pd-word-text">"Thinking of your family ✦ Maria, you've got this. From a stranger across the ocean rooting for you."</div>
+              <div class="pd-doacao-meta">2 minutes ago</div>
+            </div>
+          </div>
+
+          <div class="pd-word">
+            <div class="pd-doacao-avatar">PR</div>
+            <div class="pd-word-content">
+              <div class="pd-word-top">
+                <div class="pd-doacao-nome">Priya R.</div>
+                <span class="pd-word-amount">$50</span>
+              </div>
+              <div class="pd-word-text">"Sending love from Mumbai. May the road ahead be lighter than you fear. Stay strong, Maria."</div>
+              <div class="pd-doacao-meta">13 minutes ago</div>
+            </div>
+          </div>
+
+          <div class="pd-word">
+            <div class="pd-doacao-avatar">KA</div>
+            <div class="pd-word-content">
+              <div class="pd-word-top">
+                <div class="pd-doacao-nome">Kenji A.</div>
+                <span class="pd-word-amount">$75</span>
+              </div>
+              <div class="pd-word-text">"Força, Maria. Treatment is just a chapter — not the whole story. We're with you."</div>
+              <div class="pd-doacao-meta">31 minutes ago</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Organizer block -->
+      <div class="pd-organizador">
+        <div class="pd-org-eyebrow">Organizer and beneficiary</div>
+        <div class="pd-org-info">
+          <div class="pd-org-avatar">MR</div>
+          <div class="pd-org-texto">
+            <div class="pd-org-nome">Marta Ribeiro</div>
+            <div class="pd-org-meta">
+              <span>Organizer</span>
+              <span class="pd-org-sep" aria-hidden="true">·</span>
+              <span>Lisbon, Portugal</span>
+            </div>
+          </div>
+        </div>
+        <div class="pd-org-divisor" aria-hidden="true"></div>
+        <div class="pd-org-meta-linha">
+          <span>Created · November 14, 2025</span>
+          <span class="pd-org-sep" aria-hidden="true">·</span>
+          <span class="pd-org-categoria">Health</span>
+        </div>
+        <div class="pd-org-protected">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          Donation protected
+        </div>
+      </div>
+
+      <!-- Report fundraiser -->
+      <div class="pd-reportar-bloco">
+        <button class="pd-reportar-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="22" x2="4" y2="15"/><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/></svg>
+          Report fundraiser
+        </button>
+      </div>
+
+      <!-- Share block -->
+      <section class="pd-share-v2">
+        <h3 class="pd-share-titulo">Sharing helps more than you think</h3>
+        <p class="pd-share-texto">On average, <strong>each share can inspire $50</strong> in donations by helping this campaign reach more caring hearts.</p>
+        <div class="pd-share-icons">
+          <button class="pd-share-circle" type="button" aria-label="Share on Facebook">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.51h-2l-.396 3.98h2.396v8.01z"/></svg>
+          </button>
+          <button class="pd-share-circle" type="button" aria-label="Share on Instagram">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <button class="pd-share-circle" type="button" aria-label="Share on TikTok">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.16a8.16 8.16 0 0 0 4.77 1.52V6.23a4.85 4.85 0 0 1-1.84-.54z"/></svg>
+          </button>
+          <button class="pd-share-circle" type="button" aria-label="Share on WhatsApp">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </button>
+          <button class="pd-share-circle" type="button" aria-label="More sharing options">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="18" cy="12" r="1.8"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Promo fan (3-card preview) -->
+      <section class="pd-promo">
+        <h3 class="pd-promo-titulo">Share this campaign with impact</h3>
+        <p class="pd-promo-sub">A preview of this story — share it anywhere and inspire more people to lift Maria up.</p>
+        <div class="pd-promo-fan">
+
+          <article class="pd-promo-card pd-promo-card-left" aria-hidden="true">
+            <div class="pd-promo-img"></div>
+            <div class="pd-promo-corpo">
+              <h4 class="pd-promo-titulo-card">A safe home for 9 families displaced by the floods</h4>
+              <div class="pd-promo-org">
+                <span class="pd-promo-org-avatar">CA</span>
+                <span class="pd-promo-org-by">by <span>Casa Aberta</span></span>
+              </div>
+              <div class="pd-promo-prog">
+                <div>
+                  <div class="pd-promo-prog-valor">$31,800</div>
+                  <div class="pd-promo-prog-label">raised of $40,000</div>
+                </div>
+                <div class="pd-promo-prog-ring">
+                  <svg viewBox="0 0 56 56">
+                    <circle class="pd-promo-ring-bg" cx="28" cy="28" r="24"/>
+                    <circle class="pd-promo-ring-fill" cx="28" cy="28" r="24"
+                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="31.7"
+                            transform="rotate(-90 28 28)"/>
+                  </svg>
+                  <div class="pd-promo-ring-pct"><span>79%</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="pd-promo-card pd-promo-card-main">
+            <div class="pd-promo-img"></div>
+            <div class="pd-promo-corpo">
+              <h4 class="pd-promo-titulo-card">Help Maria finish her cancer treatment this winter</h4>
+              <div class="pd-promo-org">
+                <span class="pd-promo-org-avatar">MR</span>
+                <span class="pd-promo-org-by">by <span>Marta Ribeiro</span></span>
+              </div>
+              <div class="pd-promo-prog">
+                <div>
+                  <div class="pd-promo-prog-valor">$18,420</div>
+                  <div class="pd-promo-prog-label">raised of $25,000</div>
+                </div>
+                <div class="pd-promo-prog-ring">
+                  <svg viewBox="0 0 56 56">
+                    <circle class="pd-promo-ring-bg" cx="28" cy="28" r="24"/>
+                    <circle class="pd-promo-ring-fill" cx="28" cy="28" r="24"
+                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="39.2"
+                            transform="rotate(-90 28 28)"/>
+                  </svg>
+                  <div class="pd-promo-ring-pct"><span>74%</span></div>
+                </div>
+              </div>
+              <a href="donate.html" class="pd-promo-btn">
+                Donate now!
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="pd-promo-card pd-promo-card-right" aria-hidden="true">
+            <div class="pd-promo-img"></div>
+            <div class="pd-promo-corpo">
+              <h4 class="pd-promo-titulo-card">Send 120 girls back to school with full supply kits</h4>
+              <div class="pd-promo-org">
+                <span class="pd-promo-org-avatar">DK</span>
+                <span class="pd-promo-org-by">by <span>Bright Futures</span></span>
+              </div>
+              <div class="pd-promo-prog">
+                <div>
+                  <div class="pd-promo-prog-valor">$8,240</div>
+                  <div class="pd-promo-prog-label">raised of $14,000</div>
+                </div>
+                <div class="pd-promo-prog-ring">
+                  <svg viewBox="0 0 56 56">
+                    <circle class="pd-promo-ring-bg" cx="28" cy="28" r="24"/>
+                    <circle class="pd-promo-ring-fill" cx="28" cy="28" r="24"
+                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="63.3"
+                            transform="rotate(-90 28 28)"/>
+                  </svg>
+                  <div class="pd-promo-ring-pct"><span>58%</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </div><!-- /.pd-conteudo -->
+
+  </main>
+
+  <!-- ═════════ ASIDE / SIDEBAR (desktop sticky) ═════════ -->
+  <aside class="pd-sidebar" aria-hidden="false">
+    <div class="pd-sidebar-card">
+      <div class="pd-sidebar-prog">
+        <div class="pd-sidebar-ring">
+          <svg viewBox="0 0 88 88">
+            <circle class="circ-bg" cx="44" cy="44" r="37"/>
+            <circle class="circ-fill" cx="44" cy="44" r="37"
+                    stroke="url(#cpRingGrad)" transform="rotate(-90 44 44)"/>
+          </svg>
+          <div class="circ-centro"><span class="circ-centro-pct">74%</span></div>
+        </div>
+        <div class="pd-sidebar-vals">
+          <div class="pd-sidebar-raised">
+            <strong>$18,420</strong>
+            <span>raised of $25,000</span>
+          </div>
+          <div class="pd-sidebar-meta">312 donors · 12 days left</div>
+        </div>
+      </div>
+      <a class="btn btn-primary pd-sidebar-btn-doe" href="donate.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Donate now
+      </a>
+      <button class="btn btn-outline pd-sidebar-btn-share" onclick="if(navigator.share){navigator.share({title:document.title,url:location.href})}else{alert('Copy the link to share this campaign.')}">
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+
+      <div class="pd-sidebar-recent">
+        <h4>Recent donations <span class="pd-sidebar-recent-count">5</span></h4>
+        <div class="pd-doacao" style="padding:8px 0;border-bottom:1px solid var(--line)">
+          <div class="pd-doacao-avatar" style="width:32px;height:32px;font-size:.74rem">MS</div>
+          <div class="pd-doacao-info"><div class="pd-doacao-nome" style="font-size:.86rem">Marie S.</div><div class="pd-doacao-meta" style="font-size:.72rem">2 minutes ago</div></div>
+          <div class="pd-doacao-valor" style="font-size:.86rem">$25</div>
+        </div>
+        <div class="pd-doacao" style="padding:8px 0;border-bottom:1px solid var(--line)">
+          <div class="pd-doacao-avatar" style="width:32px;height:32px;font-size:.74rem">DT</div>
+          <div class="pd-doacao-info"><div class="pd-doacao-nome" style="font-size:.86rem">Daniel T.</div><div class="pd-doacao-meta" style="font-size:.72rem">7 minutes ago</div></div>
+          <div class="pd-doacao-valor" style="font-size:.86rem">$100</div>
+        </div>
+        <div class="pd-doacao" style="padding:8px 0;border-bottom:none">
+          <div class="pd-doacao-avatar" style="width:32px;height:32px;font-size:.74rem">PR</div>
+          <div class="pd-doacao-info"><div class="pd-doacao-nome" style="font-size:.86rem">Priya R.</div><div class="pd-doacao-meta" style="font-size:.72rem">13 minutes ago</div></div>
+          <div class="pd-doacao-valor" style="font-size:.86rem">$50</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</div><!-- /.pd-desktop-wrap -->
+
+<!-- ═════════ TRUST SECTION ═════════ -->
+<section class="pd-trust-bloco">
+  <h2>Your easy, powerful, and trusted home for care</h2>
+  <div class="pd-trust-features">
+
+    <div class="pd-trust-feature">
+      <div class="pd-trust-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <strong>Easy</strong>
+      <p>Donate in seconds — no account needed, no friction, no upsells.</p>
+    </div>
+
+    <div class="pd-trust-feature">
+      <div class="pd-trust-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <strong>Powerful</strong>
+      <p>Send help straight to the people and causes you care about, anywhere in the world.</p>
+    </div>
+
+    <div class="pd-trust-feature">
+      <div class="pd-trust-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </div>
+      <strong>Trusted</strong>
+      <p>Every campaign is verified before going live and protected by the Carelift Care Promise.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═════════ SHOWCASE — more campaigns ═════════ -->
+<section class="cs-section">
+  <div class="cs-inner">
+    <h2 class="cs-titulo">More ways to make a difference.<br><em>Find causes that move you.</em></h2>
+    <div class="cs-toolbar">
+      <button class="cs-pill" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>Happening worldwide</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="cs-nav">
+        <button class="cs-nav-btn" type="button" id="csPrev" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="cs-nav-btn" type="button" id="csNext" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-rail" id="csRail" role="region" aria-label="More campaigns">
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Education</span></div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">Send 120 girls back to school with full supply kits</h4>
+        <div class="cs-card-prog"><strong>$8,240</strong> raised of $14,000 · 58%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:58%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Shelter</span></div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">A safe home for 9 families displaced by the floods</h4>
+        <div class="cs-card-prog"><strong>$31,800</strong> raised of $40,000 · 79%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:79%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Food</span></div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">Hot meals every evening for 200 neighbors this season</h4>
+        <div class="cs-card-prog"><strong>$5,640</strong> raised of $12,000 · 47%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:47%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Elders</span></div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">In-home care for 28 elderly without family support</h4>
+        <div class="cs-card-prog"><strong>$12,140</strong> raised of $20,000 · 61%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:61%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Community</span></div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">Build a community center for 600 families in need</h4>
+        <div class="cs-card-prog"><strong>$48,300</strong> raised of $80,000 · 60%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:60%"></div></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<script>
+// ── Animate ring progress (dasharray = 2πr; r=37 → 232.5) ──
+document.addEventListener('DOMContentLoaded', () => {
+  const PCT = 74;
+  const C = 232.5;
+  const offset = C - (C * PCT) / 100;
+  document.querySelectorAll('.circ-fill').forEach(c => {
+    c.setAttribute('stroke-dasharray', C);
+    c.setAttribute('stroke-dashoffset', String(offset));
+  });
+});
+
+// ── Description toggle ──
+document.getElementById('pdDescricaoToggle').addEventListener('click', () => {
+  const wrap = document.getElementById('pdDescricaoWrap');
+  const btn = document.getElementById('pdDescricaoToggle');
+  const label = btn.querySelector('.pd-descricao-toggle-label');
+  const open = wrap.classList.toggle('colapsado') === false;
+  btn.classList.toggle('aberto', open);
+  if (label) label.textContent = open ? 'Read less' : 'Read more';
+  wrap.style.maxHeight = open ? 'none' : '';
+});
+
+// ── Showcase rail nav ──
+const rail = document.getElementById('csRail');
+document.getElementById('csPrev').addEventListener('click', () => rail.scrollBy({left:-320,behavior:'smooth'}));
+document.getElementById('csNext').addEventListener('click', () => rail.scrollBy({left:320,behavior:'smooth'}));
+
+// ── Image carousel ──
+(function(){
+  const track = document.getElementById('pdImgTrack');
+  const prev  = document.getElementById('pdCarPrev');
+  const next  = document.getElementById('pdCarNext');
+  const dots  = document.querySelectorAll('.pd-car-dot');
+  if (!track || !prev || !next) return;
+
+  const total = track.children.length;
+  let current = 0;
+  let autoplay = null;
+
+  function go(idx){
+    current = (idx + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function startAutoplay(){
+    stopAutoplay();
+    autoplay = setInterval(() => go(current + 1), 6000);
+  }
+  function stopAutoplay(){
+    if (autoplay) { clearInterval(autoplay); autoplay = null; }
+  }
+
+  prev.addEventListener('click', () => { go(current - 1); startAutoplay(); });
+  next.addEventListener('click', () => { go(current + 1); startAutoplay(); });
+  dots.forEach((d, i) => d.addEventListener('click', () => { go(i); startAutoplay(); }));
+
+  // Touch swipe
+  let touchStart = 0;
+  track.addEventListener('touchstart', e => { touchStart = e.touches[0].clientX; stopAutoplay(); }, {passive:true});
+  track.addEventListener('touchend', e => {
+    const diff = touchStart - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) go(current + (diff > 0 ? 1 : -1));
+    startAutoplay();
+  }, {passive:true});
+
+  // Pause on hover (desktop)
+  const container = track.closest('.pd-imagem-container');
+  if (container) {
+    container.addEventListener('mouseenter', stopAutoplay);
+    container.addEventListener('mouseleave', startAutoplay);
+  }
+
+  startAutoplay();
+})();
+</script>
+
+</body>
+</html>

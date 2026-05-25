@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate — Carelift</title>
+<meta name="description" content="Give what feels right. Every contribution lifts someone's life today.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   CARELIFT — Donate flow
+   Adapted from FellowHope donate-page.html · structure
+   preserved (hero, amount grid, ticker, submit, protected
+   card, showcase) and reskinned to the Carelift coral system.
+   ══════════════════════════════════════════════════════════ */
+
+:root{
+  --coral:       #FF7452;
+  --coral-dark:  #F06543;
+  --coral-soft:  #FFC2B2;
+  --coral-tint:  #FFE9E1;
+  --paper:       #FFF8F4;
+  --white:       #FFFFFF;
+  --surface:     #F9EEE8;
+  --line:        #E7D6CC;
+  --ink:         #2D3135;
+  --slate:       #6A7C89;
+  --muted:       #7E736D;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-pill: 100px;
+  --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+
+/* ── PAGE HEADER (back + title) ────────────────────── */
+.dn-header{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 5%;
+  background:rgba(255,248,244,.86);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:50;
+}
+.btn-voltar{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 16px;border-radius:var(--r-pill);
+  border:1.5px solid var(--line);background:var(--white);
+  font-family:var(--font-body);font-size:.88rem;font-weight:600;color:var(--slate);
+  transition:border-color .15s, color .15s, background .15s;
+}
+.btn-voltar:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.btn-voltar svg{stroke:currentColor;fill:none;stroke-width:2.4}
+.dn-header h1{
+  font-family:var(--font-head);
+  font-size:1.15rem;font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;
+}
+
+/* ── LAYOUT ────────────────────────────────────────── */
+.dn-page{
+  max-width:780px;margin:0 auto;
+  padding:36px 5% 88px;
+  animation:fadeUp .5s ease both;
+}
+
+/* ── HERO (campaign you're supporting) ─────────────── */
+.dn-hero{
+  position:relative;border-radius:24px;overflow:hidden;
+  box-shadow:0 14px 40px rgba(45,49,53,.10), 0 2px 8px rgba(45,49,53,.04);
+  border:1px solid var(--line);
+  background:var(--surface);
+  margin-bottom:40px;
+  min-height:360px;
+}
+.dn-hero-img{
+  width:100%;height:auto;display:block;object-fit:cover;
+  max-height:520px;
+}
+.dn-hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, rgba(45,49,53,0) 0%, rgba(45,49,53,.05) 40%, rgba(45,49,53,.78) 100%);
+  pointer-events:none;
+}
+.dn-hero-texto{
+  position:absolute;left:28px;right:28px;bottom:160px;
+  color:var(--white);z-index:2;
+}
+.dn-hero-eyebrow{
+  display:inline-block;
+  font-size:.7rem;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;
+  color:var(--coral-soft);
+  background:rgba(45,49,53,.55);
+  backdrop-filter:blur(8px);
+  padding:6px 12px;border-radius:var(--r-pill);
+  margin-bottom:14px;
+}
+.dn-hero-titulo{
+  font-family:var(--font-head);
+  font-size:clamp(1.4rem,3vw,1.95rem);font-weight:800;
+  line-height:1.18;letter-spacing:-.02em;
+  text-shadow:0 2px 14px rgba(0,0,0,.42);
+}
+
+/* Progress (sticky-feel inside hero bottom) */
+.dn-hero-progresso{
+  position:absolute;left:24px;right:24px;bottom:24px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);
+  border-radius:16px;
+  padding:18px 22px;
+  box-shadow:0 8px 28px rgba(0,0,0,.18);
+  z-index:2;
+}
+.dn-hero-prog-num{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.dn-hero-prog-num > span:first-child{
+  font-family:var(--font-head);font-size:1.4rem;font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;
+}
+.dn-hero-prog-of{font-size:.85rem;color:var(--muted);font-weight:500}
+.dn-hero-prog-of span{color:var(--ink);font-weight:700}
+.dn-hero-prog-barra{
+  height:8px;background:var(--surface);border-radius:8px;overflow:hidden;
+  margin-bottom:10px;
+}
+.dn-hero-prog-fill{
+  height:100%;width:74%;
+  background:linear-gradient(90deg,var(--coral) 0%,var(--coral-dark) 100%);
+  border-radius:8px;
+  transition:width 1s cubic-bezier(.4,0,.2,1);
+}
+.dn-hero-prog-rodape{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.84rem;color:var(--muted);
+}
+.dn-hero-prog-rodape strong{color:var(--ink);font-weight:700}
+.dn-hero-prog-pct{color:var(--coral-dark);font-weight:700}
+
+@media(max-width:600px){
+  .dn-hero-texto{left:18px;right:18px;bottom:180px}
+  .dn-hero-progresso{left:14px;right:14px;bottom:14px;padding:14px 16px}
+}
+
+/* ── FALTA / MOTIVATIONAL LINE ─────────────────────── */
+.dn-falta{
+  text-align:center;
+  font-size:.96rem;color:var(--slate);
+  margin-bottom:32px;
+}
+.dn-falta strong{color:var(--coral-dark);font-weight:700}
+
+/* ── SECTION TITLES ────────────────────────────────── */
+.dn-secao-titulo{
+  font-family:var(--font-head);
+  font-size:1.15rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.015em;margin-bottom:18px;
+}
+
+/* ── AMOUNT GRID ───────────────────────────────────── */
+.dn-valores{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-bottom:32px;
+}
+.dn-valor{
+  position:relative;
+  padding:24px 16px;
+  border-radius:var(--r-md);
+  border:1.5px solid var(--line);
+  background:var(--white);
+  font-family:var(--font-head);font-size:1.2rem;font-weight:800;color:var(--ink);
+  transition:border-color .15s, background .15s, transform .12s, box-shadow .15s;
+  letter-spacing:-.01em;
+}
+.dn-valor:hover{
+  border-color:var(--coral-soft);
+  background:var(--coral-tint);
+  transform:translateY(-2px);
+}
+.dn-valor.ativo{
+  border-color:var(--coral);
+  background:linear-gradient(135deg, #FFE9E1 0%, #FFC2B2 100%);
+  color:var(--coral-dark);
+  box-shadow:0 8px 22px rgba(255,116,82,.20);
+}
+.dn-sugerido-tag{
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  display:inline-flex;align-items:center;gap:4px;
+  background:linear-gradient(135deg,var(--coral) 0%,var(--coral-dark) 100%);
+  color:var(--white);
+  font-family:var(--font-body);font-size:.6rem;font-weight:800;letter-spacing:1.2px;
+  padding:3px 9px;border-radius:var(--r-pill);
+  box-shadow:0 4px 12px rgba(255,116,82,.40);
+  white-space:nowrap;
+}
+.dn-sugerido-tag svg{fill:#fff}
+
+@media(max-width:480px){
+  .dn-valores{grid-template-columns:repeat(2,1fr);gap:10px}
+  .dn-valor{padding:20px 12px;font-size:1.1rem}
+}
+
+/* ── CUSTOM AMOUNT ─────────────────────────────────── */
+.dn-custom{
+  display:flex;align-items:center;gap:10px;
+  background:var(--white);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-md);
+  padding:14px 18px;
+  margin-bottom:32px;
+  transition:border-color .15s;
+}
+.dn-custom:focus-within{border-color:var(--coral)}
+.dn-custom span{font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--muted)}
+.dn-custom input{
+  flex:1;border:none;outline:none;
+  font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--ink);
+  background:transparent;
+}
+.dn-custom input::placeholder{color:var(--muted);font-weight:500}
+
+/* ── TICKER ────────────────────────────────────────── */
+.dn-ticker{
+  display:flex;align-items:center;gap:10px;
+  background:var(--coral-tint);
+  border:1px solid rgba(255,116,82,.20);
+  border-radius:var(--r-md);
+  padding:12px 14px 12px 16px;
+  margin-bottom:24px;
+  font-size:.88rem;color:var(--ink);
+  animation:tickerSlide .5s ease both;
+}
+.dn-ticker svg{stroke:var(--coral);flex-shrink:0}
+.dn-ticker strong{color:var(--coral-dark);font-weight:700}
+.dn-ticker-fechar{
+  margin-left:auto;font-size:1.2rem;color:var(--muted);line-height:1;
+  padding:2px 6px;
+}
+.dn-ticker-fechar:hover{color:var(--ink)}
+
+/* ── SUBMIT BUTTON ─────────────────────────────────── */
+.dn-submit{
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:20px 28px;
+  border-radius:var(--r-pill);
+  background:linear-gradient(135deg, #FF7452 0%, #F06543 100%);
+  color:var(--white);
+  box-shadow:0 14px 36px rgba(255,116,82,.36), inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .15s, box-shadow .2s, background .2s;
+  margin-bottom:22px;
+}
+.dn-submit:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 44px rgba(240,101,67,.46), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.dn-submit-main{
+  font-family:var(--font-head);font-size:1.08rem;font-weight:800;letter-spacing:-.01em;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.dn-submit-sub{
+  font-size:.78rem;font-weight:500;color:rgba(255,255,255,.84);letter-spacing:.02em;
+}
+
+/* ── PROTECTED CARD ────────────────────────────────── */
+.dn-protected{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:18px 20px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  margin-bottom:48px;
+}
+.dn-protected-icon{
+  width:42px;height:42px;border-radius:12px;
+  background:var(--coral-tint);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.dn-protected-icon svg{stroke:var(--coral-dark);fill:none;stroke-width:2}
+.dn-protected-texto{font-size:.86rem;color:var(--muted);line-height:1.6}
+.dn-protected-texto strong{display:block;color:var(--ink);font-weight:700;margin-bottom:3px;font-size:.92rem}
+
+/* ── SHOWCASE — more campaigns ─────────────────────── */
+.cs-section{
+  background:var(--white);
+  border-top:1px solid var(--line);
+  padding:64px 5% 72px;
+  position:relative;
+}
+.cs-inner{max-width:1180px;margin:0 auto 28px}
+.cs-titulo{
+  font-family:var(--font-head);
+  font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:800;color:var(--ink);
+  letter-spacing:-.025em;line-height:1.25;margin-bottom:20px;
+  max-width:560px;
+}
+.cs-titulo em{font-style:normal;color:var(--coral)}
+.cs-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  flex-wrap:wrap;
+}
+.cs-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:var(--r-pill);
+  border:1.5px solid var(--line);background:var(--white);
+  font-family:var(--font-body);font-size:.86rem;font-weight:600;color:var(--slate);
+  transition:border-color .15s, color .15s, background .15s;
+}
+.cs-pill:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.cs-pill svg{stroke:currentColor;fill:none}
+.cs-nav{display:flex;gap:8px}
+.cs-nav-btn{
+  width:38px;height:38px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--white);
+  color:var(--slate);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s, color .15s, background .15s;
+}
+.cs-nav-btn:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.cs-nav-btn svg{stroke:currentColor;fill:none}
+
+.cs-rail{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(280px,300px);
+  gap:18px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:6px 5% 14px;
+  max-width:1180px;margin:0 auto;
+  scrollbar-width:none;
+}
+.cs-rail::-webkit-scrollbar{display:none}
+
+.cs-card{
+  scroll-snap-align:start;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+  cursor:pointer;
+  display:flex;flex-direction:column;
+}
+.cs-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 36px rgba(255,116,82,.13), 0 4px 12px rgba(45,49,53,.06);
+  border-color:var(--coral-soft);
+}
+.cs-card-img{
+  width:100%;height:160px;
+  background:var(--surface) center/cover no-repeat;
+  position:relative;
+}
+.cs-card-cat{
+  position:absolute;top:12px;left:12px;
+  font-size:.62rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  background:rgba(255,255,255,.95);
+  color:var(--coral-dark);
+  padding:4px 10px;border-radius:var(--r-pill);
+}
+.cs-card-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.cs-card-titulo{
+  font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--ink);
+  line-height:1.4;margin-bottom:12px;flex:1;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.cs-card-prog{
+  font-size:.82rem;color:var(--muted);margin-bottom:8px;
+}
+.cs-card-prog strong{color:var(--ink);font-weight:800}
+.cs-card-barra{height:5px;background:var(--surface);border-radius:5px;overflow:hidden}
+.cs-card-barra-fill{
+  height:100%;background:linear-gradient(90deg,var(--coral),var(--coral-dark));
+  border-radius:5px;
+}
+
+/* ── ANIMATIONS ────────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes tickerSlide{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═════════ HEADER ═════════ -->
+<header class="dn-header">
+  <button class="btn-voltar" onclick="history.length>1 ? history.back() : (location.href='index.html')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </button>
+  <h1>Donate</h1>
+</header>
+
+<!-- ═════════ PAGE BODY ═════════ -->
+<main class="dn-page">
+
+  <!-- Editorial hero with campaign image + sticky-feel progress -->
+  <section class="dn-hero">
+    <img class="dn-hero-img" id="dnHeroImg"
+         src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1200&q=80"
+         alt="Maria's family">
+    <div class="dn-hero-grad" aria-hidden="true"></div>
+
+    <div class="dn-hero-texto">
+      <span class="dn-hero-eyebrow">You're supporting</span>
+      <h2 class="dn-hero-titulo" id="dnHeroTitulo">Help Maria finish her cancer treatment this winter</h2>
+    </div>
+
+    <div class="dn-hero-progresso">
+      <div class="dn-hero-prog-num">
+        <span id="dnHeroArrecadado">$18,420</span>
+        <span class="dn-hero-prog-of">raised of <span id="dnHeroMeta">$25,000</span></span>
+      </div>
+      <div class="dn-hero-prog-barra" aria-hidden="true">
+        <div class="dn-hero-prog-fill" id="dnHeroProgFill" style="width:74%"></div>
+      </div>
+      <div class="dn-hero-prog-rodape">
+        <span><strong id="dnHeroDoacoes">312</strong> donations</span>
+        <span class="dn-hero-prog-pct" id="dnHeroPct">74%</span>
+      </div>
+    </div>
+  </section>
+
+  <p class="dn-falta">
+    Just <strong>$6,580</strong> away from a full life-saving fund. Be the next to lift Maria up.
+  </p>
+
+  <!-- Amount selector -->
+  <h3 class="dn-secao-titulo">Choose your donation amount</h3>
+  <div class="dn-valores" id="dnValores">
+    <button class="dn-valor" data-v="25">$25</button>
+    <button class="dn-valor" data-v="50">$50</button>
+    <button class="dn-valor ativo" data-v="100">
+      <span class="dn-sugerido-tag">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        SUGGESTED
+      </span>
+      $100
+    </button>
+    <button class="dn-valor" data-v="300">$300</button>
+    <button class="dn-valor" data-v="500">$500</button>
+    <button class="dn-valor" data-v="1000">$1,000</button>
+  </div>
+
+  <!-- Custom amount -->
+  <label class="dn-custom" for="dnCustomInput">
+    <span>$</span>
+    <input id="dnCustomInput" type="number" min="1" step="1" inputmode="numeric" placeholder="Or enter a custom amount">
+  </label>
+
+  <!-- Live ticker -->
+  <div class="dn-ticker" id="dnTicker">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+    <span id="dnTickerTexto"><strong>Marie S.</strong> just donated $25 · 2 minutes ago</span>
+    <button class="dn-ticker-fechar" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">&times;</button>
+  </div>
+
+  <!-- Submit -->
+  <button class="dn-submit" onclick="processarDoacao()">
+    <span class="dn-submit-main">
+      Give care
+      <span id="dnTotalLabel">$100.00</span>
+    </span>
+    <span class="dn-submit-sub">Your kindness lifts a real life today</span>
+  </button>
+
+  <!-- Donation protected card -->
+  <div class="dn-protected">
+    <div class="dn-protected-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </svg>
+    </div>
+    <div class="dn-protected-texto">
+      <strong>Your donation is protected</strong>
+      Every contribution is governed by Carelift's refund policy, privacy commitments, and verified-cause guarantee. Donate with confidence — your data and money are safe.
+    </div>
+  </div>
+
+</main>
+
+<!-- ═════════ SHOWCASE — more campaigns ═════════ -->
+<section class="cs-section">
+  <div class="cs-inner">
+    <h2 class="cs-titulo">More ways to make a difference.<br><em>Find causes that move you.</em></h2>
+
+    <div class="cs-toolbar">
+      <button class="cs-pill" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>Happening worldwide</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="cs-nav">
+        <button class="cs-nav-btn" type="button" id="csPrev" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="cs-nav-btn" type="button" id="csNext" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-rail" id="csRail" role="region" aria-label="Featured campaigns">
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80')">
+        <span class="cs-card-cat">Education</span>
+      </div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">Send 120 girls back to school with full supply kits</h4>
+        <div class="cs-card-prog"><strong>$8,240</strong> raised of $14,000 · 58%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:58%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80')">
+        <span class="cs-card-cat">Shelter</span>
+      </div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">A safe home for 9 families displaced by the floods</h4>
+        <div class="cs-card-prog"><strong>$31,800</strong> raised of $40,000 · 79%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:79%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80')">
+        <span class="cs-card-cat">Food</span>
+      </div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">Hot meals every evening for 200 neighbors this season</h4>
+        <div class="cs-card-prog"><strong>$5,640</strong> raised of $12,000 · 47%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:47%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80')">
+        <span class="cs-card-cat">Elders</span>
+      </div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">In-home care for 28 elderly without family support</h4>
+        <div class="cs-card-prog"><strong>$12,140</strong> raised of $20,000 · 61%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:61%"></div></div>
+      </div>
+    </a>
+    <a href="campaign.html" class="cs-card">
+      <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=600&q=80')">
+        <span class="cs-card-cat">Community</span>
+      </div>
+      <div class="cs-card-body">
+        <h4 class="cs-card-titulo">Build a community center for 600 families in need</h4>
+        <div class="cs-card-prog"><strong>$48,300</strong> raised of $80,000 · 60%</div>
+        <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:60%"></div></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<script>
+// ── Amount selector ────────────────────────────────
+let valorSelecionado = 100;
+const fmt = n => '$' + Number(n||0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+function atualizarTotal(){
+  const el = document.getElementById('dnTotalLabel');
+  if (el) el.textContent = fmt(valorSelecionado);
+}
+
+document.querySelectorAll('.dn-valor').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.dn-valor').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    valorSelecionado = Number(btn.dataset.v) || 0;
+    document.getElementById('dnCustomInput').value = '';
+    atualizarTotal();
+  });
+});
+
+document.getElementById('dnCustomInput').addEventListener('input', e => {
+  const v = Number(e.target.value);
+  if (v > 0) {
+    document.querySelectorAll('.dn-valor').forEach(b => b.classList.remove('ativo'));
+    valorSelecionado = v;
+    atualizarTotal();
+  }
+});
+
+// ── Submit ─────────────────────────────────────────
+function processarDoacao(){
+  if (!valorSelecionado || valorSelecionado < 1){
+    alert('Please choose or enter a donation amount.');
+    return;
+  }
+  // Stash the donation so thanks.html can pick it up
+  try{
+    localStorage.setItem('carelift:pending', JSON.stringify({
+      v: valorSelecionado,
+      c: 'maria-cancer-treatment',
+      t: Date.now()
+    }));
+  }catch(e){}
+  location.href = 'thanks.html';
+}
+
+// ── Showcase rail nav ──────────────────────────────
+const rail = document.getElementById('csRail');
+document.getElementById('csPrev').addEventListener('click', () => rail.scrollBy({left:-320,behavior:'smooth'}));
+document.getElementById('csNext').addEventListener('click', () => rail.scrollBy({left:320,behavior:'smooth'}));
+
+// ── Rotating ticker (cosmetic) ─────────────────────
+const tickerItems = [
+  { name:'Marie S.',  amt:25,  ago:'2 minutes ago' },
+  { name:'Daniel T.', amt:100, ago:'7 minutes ago' },
+  { name:'Priya R.',  amt:50,  ago:'13 minutes ago' },
+  { name:'Ana L.',    amt:300, ago:'22 minutes ago' },
+  { name:'Kenji A.',  amt:75,  ago:'31 minutes ago' },
+];
+let tickerIdx = 0;
+const tickerEl = document.getElementById('dnTickerTexto');
+setInterval(() => {
+  if (!tickerEl || !document.getElementById('dnTicker').isConnected) return;
+  tickerIdx = (tickerIdx + 1) % tickerItems.length;
+  const it = tickerItems[tickerIdx];
+  tickerEl.innerHTML = `<strong>${it.name}</strong> just donated $${it.amt} · ${it.ago}`;
+}, 5000);
+</script>
+
+</body>
+</html>

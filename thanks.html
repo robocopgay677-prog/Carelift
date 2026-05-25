@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you — Carelift</title>
+<meta name="description" content="Your donation just made someone's tomorrow a little brighter.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   CARELIFT — Thank you page
+   Adapted from the FellowHope thanks.html aesthetic, but
+   reskinned to the Carelift warm-coral system. Same
+   architecture: centered card · animated halo · italic title
+   · amount chip · footer signature.
+   ══════════════════════════════════════════════════════════ */
+
+:root{
+  --coral:       #FF7452;
+  --coral-dark:  #F06543;
+  --coral-soft:  #FFC2B2;
+  --coral-tint:  #FFE9E1;
+  --paper:       #FFF8F4;
+  --white:       #FFFFFF;
+  --surface:     #F9EEE8;
+  --line:        #E7D6CC;
+  --ink:         #2D3135;
+  --slate:       #6A7C89;
+  --muted:       #7E736D;
+  --font-head:   'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body:   'Inter', system-ui, -apple-system, sans-serif;
+  --r-pill:      100px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,116,82,.18) 0%, rgba(255,116,82,0) 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,194,178,.18) 0%, rgba(255,194,178,0) 60%),
+    linear-gradient(180deg, var(--white) 0%, var(--paper) 100%);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+  overflow-x:hidden;
+}
+
+/* ── WRAP ──────────────────────────────────────────── */
+.ty-wrap{
+  width:100%;
+  max-width:580px;
+  text-align:center;
+  animation:tyFadeUp .9s cubic-bezier(.4,0,.2,1) both;
+}
+
+/* ── HEART DISC ────────────────────────────────────── */
+.ty-star-wrap{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  width:138px;height:138px;
+  margin:0 auto 36px;
+}
+.ty-star-wrap::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,116,82,.50) 0%, rgba(255,116,82,0) 65%);
+  filter:blur(10px);
+  animation:tyPulse 3.2s ease-in-out infinite;
+  pointer-events:none;
+}
+.ty-star-disc{
+  position:relative;
+  width:108px;height:108px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 45%),
+    linear-gradient(135deg, #FFB098 0%, #FF7452 55%, #C44A2D 100%);
+  box-shadow:
+    0 14px 36px rgba(196,74,45,.32),
+    0 4px 12px rgba(196,74,45,.22),
+    inset 0 -4px 12px rgba(196,74,45,.20);
+  display:flex;align-items:center;justify-content:center;
+  animation:tyFloat 4s ease-in-out infinite;
+}
+.ty-star-disc svg{
+  width:54px;height:54px;
+  color:var(--white);
+  filter:drop-shadow(0 2px 4px rgba(196,74,45,.35));
+}
+
+/* Sparkles */
+.ty-spark{
+  position:absolute;
+  width:8px;height:8px;
+  background:var(--coral);
+  border-radius:50%;
+  opacity:0;
+  animation:tySpark 2.6s ease-in-out infinite;
+  box-shadow:0 0 8px rgba(255,116,82,.6);
+}
+.ty-spark:nth-child(1){top:6px;left:12px;animation-delay:0s}
+.ty-spark:nth-child(2){top:22px;right:4px;animation-delay:.6s;width:6px;height:6px}
+.ty-spark:nth-child(3){bottom:18px;left:2px;animation-delay:1.2s;width:5px;height:5px}
+.ty-spark:nth-child(4){bottom:4px;right:22px;animation-delay:1.8s}
+.ty-spark:nth-child(5){top:50%;left:-6px;animation-delay:.9s;width:4px;height:4px}
+.ty-spark:nth-child(6){top:50%;right:-6px;animation-delay:1.5s;width:4px;height:4px}
+
+/* ── TEXT ──────────────────────────────────────────── */
+.ty-eyebrow{
+  display:inline-block;
+  font-family:var(--font-body);
+  font-size:.72rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--coral-dark);
+  background:var(--coral-tint);
+  padding:9px 18px;
+  border-radius:var(--r-pill);
+  margin-bottom:24px;
+}
+
+.ty-titulo{
+  font-family:var(--font-head);
+  font-size:clamp(2.2rem,6.2vw,3.6rem);
+  font-weight:800;
+  line-height:1.05;letter-spacing:-.028em;
+  margin-bottom:20px;
+  color:var(--ink);
+}
+.ty-titulo em{
+  font-style:italic;font-weight:700;
+  background:linear-gradient(135deg, #FF7452 0%, #C44A2D 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+
+.ty-amount{
+  display:inline-block;
+  margin:0 0 24px;
+  padding:9px 20px;
+  background:var(--coral-tint);
+  color:var(--coral-dark);
+  border:1px solid rgba(255,116,82,.28);
+  border-radius:999px;
+  font-family:var(--font-head);
+  font-size:1.05rem;
+  font-weight:800;
+  letter-spacing:-.01em;
+}
+
+.ty-frase{
+  font-size:clamp(.98rem,2.2vw,1.12rem);
+  line-height:1.65;
+  color:var(--slate);
+  max-width:480px;
+  margin:0 auto 38px;
+}
+
+/* ── DIVIDER ───────────────────────────────────────── */
+.ty-divisor{
+  display:flex;align-items:center;gap:12px;justify-content:center;
+  margin:0 auto 36px;
+  max-width:280px;
+}
+.ty-divisor-linha{
+  flex:1;height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,116,82,.40), transparent);
+}
+.ty-divisor-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--coral);
+  box-shadow:0 0 12px rgba(255,116,82,.65);
+}
+
+/* ── BUTTON ────────────────────────────────────────── */
+.ty-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-body);
+  font-size:1rem;font-weight:700;color:var(--white);
+  background:linear-gradient(135deg, #FF7452 0%, #F06543 100%);
+  border:none;
+  border-radius:var(--r-pill);
+  padding:16px 34px;
+  cursor:pointer;
+  text-decoration:none;
+  box-shadow:
+    0 8px 24px rgba(255,116,82,.36),
+    inset 0 1px 0 rgba(255,255,255,.3);
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.ty-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 12px 32px rgba(240,101,67,.46),
+    inset 0 1px 0 rgba(255,255,255,.3);
+}
+.ty-btn:active{transform:translateY(0)}
+.ty-btn svg{width:16px;height:16px}
+
+/* ── SECONDARY ACTIONS ─────────────────────────────── */
+.ty-actions-row{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:18px;flex-wrap:wrap;
+}
+.ty-link{
+  font-size:.86rem;color:var(--coral-dark);font-weight:600;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:8px 14px;border-radius:var(--r-pill);
+  transition:background .15s, color .15s;
+}
+.ty-link:hover{background:var(--coral-tint);color:var(--coral)}
+
+/* ── FOOT ──────────────────────────────────────────── */
+.ty-foot{
+  margin-top:36px;
+  font-size:.82rem;
+  color:var(--muted);
+  line-height:1.6;
+}
+.ty-foot strong{color:var(--slate);font-weight:600}
+
+/* ── ANIMATIONS ────────────────────────────────────── */
+@keyframes tyFadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes tyPulse{
+  0%,100%{transform:scale(1);opacity:.85}
+  50%{transform:scale(1.16);opacity:1}
+}
+@keyframes tyFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+@keyframes tySpark{
+  0%,100%{opacity:0;transform:scale(.6)}
+  50%{opacity:1;transform:scale(1.2)}
+}
+
+@media(max-width:480px){
+  .ty-star-wrap{width:118px;height:118px;margin-bottom:28px}
+  .ty-star-disc{width:94px;height:94px}
+  .ty-star-disc svg{width:46px;height:46px}
+}
+</style>
+</head>
+<body>
+
+<main class="ty-wrap" role="main">
+
+  <div class="ty-star-wrap" aria-hidden="true">
+    <span class="ty-spark"></span>
+    <span class="ty-spark"></span>
+    <span class="ty-spark"></span>
+    <span class="ty-spark"></span>
+    <span class="ty-spark"></span>
+    <span class="ty-spark"></span>
+    <div class="ty-star-disc">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </div>
+  </div>
+
+  <span class="ty-eyebrow">Donation received</span>
+
+  <h1 class="ty-titulo">You just lifted<br>someone's <em>life.</em></h1>
+
+  <p class="ty-amount" id="tyAmount" style="display:none" aria-hidden="true"></p>
+
+  <p class="ty-frase">
+    Somewhere right now, a family is breathing a little easier — and you're the reason why.
+    Thank you for being part of someone's tomorrow.
+  </p>
+
+  <div class="ty-divisor" aria-hidden="true">
+    <span class="ty-divisor-linha"></span>
+    <span class="ty-divisor-dot"></span>
+    <span class="ty-divisor-linha"></span>
+  </div>
+
+  <a class="ty-btn" href="index.html">
+    Back to Carelift
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
+    </svg>
+  </a>
+
+  <div class="ty-actions-row">
+    <a class="ty-link" href="index.html#campaigns">
+      Explore more causes
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a class="ty-link" href="#" onclick="navigator.share ? navigator.share({title:'I just donated on Carelift',url:window.location.origin}) : (navigator.clipboard && navigator.clipboard.writeText(window.location.origin)); return false;">
+      Share Carelift
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    </a>
+  </div>
+
+  <p class="ty-foot">
+    A receipt was sent to your email.<br>
+    With gratitude, <strong>the Carelift team</strong>
+  </p>
+
+</main>
+
+<script>
+// Show the amount the user just donated, if a pending donation is stored.
+(function(){
+  let raw=null;
+  try{ raw=localStorage.getItem('carelift:pending'); }catch(e){return}
+  if(!raw) return;
+  let pending=null;
+  try{ pending=JSON.parse(raw); }catch(e){}
+  if(!pending) return;
+  try{ localStorage.removeItem('carelift:pending'); }catch(e){}
+  const v=Number(pending.v)||0;
+  if(v>0){
+    const el=document.getElementById('tyAmount');
+    if(el){
+      el.textContent='$'+v.toLocaleString('en-US')+' donated';
+      el.style.display='';
+      el.setAttribute('aria-hidden','false');
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
