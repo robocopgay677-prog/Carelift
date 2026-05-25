@@ -52,46 +52,41 @@ img{max-width:100%;display:block}
 
 /* ── NAV ───────────────────────────────────────────── */
 nav.site-nav{
-  background:rgba(255,248,244,.86);
+  background:rgba(255,248,244,.78);
   backdrop-filter:saturate(180%) blur(14px);
   -webkit-backdrop-filter:saturate(180%) blur(14px);
-  border-bottom:1px solid var(--line);
-  height:84px;padding:0 5%;
-  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  border-bottom:none;
+  height:104px;padding:0 5%;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
   position:sticky;top:0;z-index:50;
 }
+.nav-search,
 .nav-hamburger{
-  width:46px;height:46px;border-radius:50%;
-  border:1.5px solid var(--line);background:var(--white);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  cursor:pointer;justify-self:start;
+  width:52px;height:52px;border-radius:16px;
+  border:1px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
   transition:border-color .18s, background .18s, box-shadow .18s;
 }
+.nav-search:hover,
 .nav-hamburger:hover{border-color:var(--coral);background:var(--coral-tint);box-shadow:0 4px 14px rgba(255,116,82,.18)}
-.nav-hamburger span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:background .15s}
+.nav-search{justify-self:start;text-decoration:none;color:var(--ink)}
+.nav-search svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;transition:stroke .15s}
+.nav-search:hover svg{stroke:var(--coral-dark)}
+.nav-hamburger{justify-self:end;flex-direction:column;gap:5px}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:background .15s}
 .nav-hamburger:hover span{background:var(--coral-dark)}
 .nav-logo{justify-self:center;display:flex;align-items:center;text-decoration:none;transition:transform .25s}
-.nav-logo-img{height:56px;width:auto;display:block;object-fit:contain}
+.nav-logo-img{height:82px;width:auto;display:block;object-fit:contain}
 .nav-logo:hover{transform:scale(1.04)}
-nav.site-nav .btn-cta{
-  justify-self:end;
-  padding:12px 22px;border-radius:var(--r-pill);
-  font-family:var(--font-body);font-weight:700;font-size:.92rem;color:var(--white);
-  background:var(--coral);
-  text-decoration:none;
-  box-shadow:0 4px 14px rgba(255,116,82,.30);
-  transition:background .15s, box-shadow .18s, transform .12s;
-  white-space:nowrap;
-  display:inline-flex;align-items:center;justify-content:center;
+@media(max-width:700px){
+  nav.site-nav{height:78px;gap:12px}
+  .nav-logo-img{height:54px}
+  .nav-search,
+  .nav-hamburger{width:44px;height:44px;border-radius:14px}
+  .nav-search svg{width:18px;height:18px}
+  .nav-hamburger span{width:18px}
 }
-nav.site-nav .btn-cta:hover{background:var(--coral-dark);box-shadow:0 8px 22px rgba(240,101,67,.40);transform:translateY(-1px)}
-@media(max-width:600px){
-  nav.site-nav{height:72px}
-  .nav-logo-img{height:46px}
-  .nav-hamburger{width:42px;height:42px}
-  nav.site-nav .btn-cta{padding:10px 16px;font-size:.84rem}
-}
-@media(max-width:420px){nav.site-nav .btn-cta{padding:9px 14px;font-size:.78rem}}
 
 /* ── MOBILE MENU OVERLAY (side drawer) ─────────────── */
 .mobile-menu{
@@ -890,13 +885,15 @@ body.menu-open{overflow:hidden}
 
 <!-- ═════════ NAV ═════════ -->
 <nav class="site-nav">
+  <a class="nav-search" href="index.html#campaigns" aria-label="Browse campaigns">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </a>
+  <a class="nav-logo" href="index.html" aria-label="Carelift home">
+    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="82" height="82" fetchpriority="high">
+  </a>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <a class="nav-logo" href="index.html" aria-label="Carelift home">
-    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="56" height="56" fetchpriority="high">
-  </a>
-  <a class="btn-cta" href="donate.html">Start Helping</a>
 </nav>
 
 <!-- ═════════ MOBILE MENU OVERLAY ═════════ -->

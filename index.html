@@ -73,37 +73,51 @@ img{max-width:100%;display:block}
 ul{list-style:none}
 
 /* ── NAV ───────────────────────────────────────────── */
+/* Structure mirrors the reference: [search] [big centered logo] [hamburger].
+   No border, sticky over the hero, soft paper-blur background that
+   stays usable when scrolling onto sections below. */
 nav{
-  background:rgba(255,248,244,.86);
+  background:rgba(255,248,244,.78);
   backdrop-filter:saturate(180%) blur(14px);
   -webkit-backdrop-filter:saturate(180%) blur(14px);
-  border-bottom:1px solid var(--line);
-  height:84px;
+  border-bottom:none;
+  height:104px;
   padding:0 5%;
   display:grid;
-  grid-template-columns:1fr auto 1fr;
+  grid-template-columns:auto 1fr auto;
+  gap:16px;
   align-items:center;
   position:sticky;
   top:0;
   z-index:100;
 }
+.nav-search,
 .nav-hamburger{
-  width:46px;height:46px;border-radius:50%;
-  border:1.5px solid var(--line);
+  width:52px;height:52px;
+  border-radius:16px;
+  border:1px solid var(--line);
   background:var(--white);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;
-  cursor:pointer;justify-self:start;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
   transition:border-color .18s, background .18s, box-shadow .18s, transform .15s;
 }
+.nav-search:hover,
 .nav-hamburger:hover{
   border-color:var(--coral);
   background:var(--coral-tint);
   box-shadow:0 4px 14px rgba(255,116,82,.18);
 }
+.nav-search{justify-self:start;text-decoration:none;color:var(--ink)}
+.nav-search svg{
+  width:20px;height:20px;
+  stroke:currentColor;fill:none;stroke-width:2.2;
+  transition:stroke .15s;
+}
+.nav-search:hover svg{stroke:var(--coral-dark)}
+.nav-hamburger{justify-self:end;flex-direction:column;gap:5px}
 .nav-hamburger span{
   display:block;
-  width:18px;height:2px;
+  width:20px;height:2px;
   background:var(--ink);
   border-radius:2px;
   transition:background .15s, transform .25s;
@@ -116,35 +130,18 @@ nav{
   transition:transform .25s;
 }
 .nav-logo-img{
-  height:56px;width:auto;
+  height:82px;width:auto;
   display:block;
   object-fit:contain;
 }
 .nav-logo:hover{transform:scale(1.04)}
-nav .btn-cta{
-  justify-self:end;
-  padding:12px 22px;border-radius:100px;
-  font-family:var(--font-body);font-weight:700;font-size:.92rem;color:var(--white);
-  background:var(--coral);
-  text-decoration:none;
-  box-shadow:0 4px 14px rgba(255,116,82,.30);
-  transition:background .15s, box-shadow .18s, transform .12s;
-  white-space:nowrap;
-  display:inline-flex;align-items:center;justify-content:center;
-}
-nav .btn-cta:hover{
-  background:var(--coral-dark);
-  box-shadow:0 8px 22px rgba(240,101,67,.40);
-  transform:translateY(-1px);
-}
-@media(max-width:600px){
-  nav{height:72px;padding:0 5%}
-  .nav-logo-img{height:46px}
-  .nav-hamburger{width:42px;height:42px}
-  nav .btn-cta{padding:10px 16px;font-size:.84rem}
-}
-@media(max-width:420px){
-  nav .btn-cta{padding:9px 14px;font-size:.78rem}
+@media(max-width:700px){
+  nav{height:78px;padding:0 5%;gap:12px}
+  .nav-logo-img{height:54px}
+  .nav-search,
+  .nav-hamburger{width:44px;height:44px;border-radius:14px}
+  .nav-search svg{width:18px;height:18px}
+  .nav-hamburger span{width:18px}
 }
 
 /* ── MOBILE MENU OVERLAY (side drawer) ─────────────── */
@@ -281,113 +278,94 @@ body.menu-open{overflow:hidden}
 }
 
 /* ── HERO ──────────────────────────────────────────── */
+/* Full-bleed photographic background with a warm coral wash
+   from the top so the headline + sub + single CTA sit
+   legibly in the upper portion of the frame — mirroring the
+   reference's composition with the Carelift palette. */
 .hero{
-  background:linear-gradient(180deg,var(--paper) 0%,#FDF2EC 100%);
-  min-height:640px;
-  display:grid;
-  grid-template-columns:1fr 520px 1fr;
-  align-items:center;
-  padding:88px 5% 96px;
   position:relative;
+  min-height:88vh;
   overflow:hidden;
+  background:var(--paper);
+  margin-top:-104px;          /* pull the photo up under the transparent nav */
+  padding-top:104px;          /* but keep content clear of the nav */
 }
-.hero::before{
-  content:'';position:absolute;
-  width:680px;height:680px;border-radius:50%;
-  border:1.5px dashed rgba(255,116,82,.14);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  pointer-events:none;z-index:0;
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=1800&q=80');
+  background-size:cover;
+  background-position:center 35%;
+  z-index:0;
+  animation:heroBgFade 1.2s ease both;
 }
-.hero::after{
-  content:'';position:absolute;
-  width:980px;height:980px;border-radius:50%;
-  border:1.5px dashed rgba(255,116,82,.07);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  pointer-events:none;z-index:0;
+@keyframes heroBgFade{
+  from{opacity:0;transform:scale(1.04)}
+  to{opacity:1;transform:scale(1)}
 }
-.hero-center{
-  text-align:center;z-index:1;position:relative;padding:0 12px;
-  animation:fadeUp .6s ease both;
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg,
+      rgba(255,248,244,.96) 0%,
+      rgba(255,248,244,.82) 28%,
+      rgba(255,248,244,.42) 58%,
+      rgba(255,248,244,.10) 100%),
+    linear-gradient(135deg,
+      rgba(255,116,82,.08) 0%,
+      rgba(255,194,178,.05) 100%);
 }
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--coral-dark);
-  background:var(--coral-tint);
-  padding:7px 14px;border-radius:100px;
-  margin-bottom:22px;
-}
-.hero-eyebrow::before{
-  content:'';width:6px;height:6px;border-radius:50%;background:var(--coral);
-  box-shadow:0 0 0 4px rgba(255,116,82,.18);
+.hero-content{
+  position:relative;z-index:2;
+  padding:48px 6% 96px;
+  max-width:780px;
+  animation:fadeUp .7s ease both;
 }
 .hero-h1{
   font-family:var(--font-head);
-  font-size:clamp(2.2rem,4vw,3.5rem);
-  font-weight:800;color:var(--ink);
+  font-size:clamp(2.4rem, 6.5vw, 4.2rem);
+  font-weight:900;color:var(--ink);
   line-height:1.05;letter-spacing:-.035em;
-  margin-bottom:20px;
+  margin-bottom:24px;
 }
-.hero-h1 em{font-style:normal;color:var(--coral)}
+.hero-h1 em{
+  display:inline-block;
+  font-style:italic;font-weight:800;
+  color:var(--coral);
+  background-image:linear-gradient(180deg, transparent 78%, rgba(255,116,82,.22) 78%);
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  padding:0 2px;
+}
 .hero-sub{
-  font-size:1rem;color:var(--slate);line-height:1.7;
-  margin:0 auto 32px;max-width:440px;font-weight:400;
+  font-size:clamp(1rem, 1.6vw, 1.12rem);
+  color:var(--slate);line-height:1.7;
+  margin-bottom:34px;max-width:560px;
+  font-weight:400;
 }
-.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:14px 28px;border-radius:100px;
-  font-family:var(--font-body);font-size:.95rem;font-weight:700;color:var(--white);
-  background:var(--coral);
-  box-shadow:0 6px 20px rgba(255,116,82,.32),0 0 0 1px rgba(255,116,82,.10);
-  transition:background .15s,transform .12s,box-shadow .18s;
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 34px;border-radius:100px;
+  font-family:var(--font-body);font-size:1rem;font-weight:700;
+  color:var(--white);text-decoration:none;
+  background:linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
+  box-shadow:0 10px 28px rgba(255,116,82,.36), inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .15s, box-shadow .2s, background .2s;
 }
-.btn-primary:hover{background:var(--coral-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(240,101,67,.45)}
-.btn-secondary{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:14px 24px;border-radius:100px;
-  font-family:var(--font-body);font-size:.95rem;font-weight:600;color:var(--ink);
-  background:var(--white);border:1.5px solid var(--line);
-  transition:border-color .15s,background .15s;
+.hero-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 36px rgba(240,101,67,.46), inset 0 1px 0 rgba(255,255,255,.22);
 }
-.btn-secondary:hover{border-color:var(--coral-soft);background:var(--surface)}
-.hero-side{position:relative;height:480px;z-index:1}
-.hf-card{
-  position:absolute;
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 18px 40px rgba(45,49,53,.10),0 4px 12px rgba(45,49,53,.05);
-  border:4px solid var(--white);
-  transform:rotate(var(--rot,0deg));
-  transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s;
-  cursor:pointer;
-  background:var(--surface);
-}
-.hf-card:hover{
-  transform:rotate(0deg) translateY(-8px) scale(1.04);
-  box-shadow:0 24px 56px rgba(45,49,53,.16);
-  z-index:10;
-}
-.hf-card img{width:100%;height:100%;object-fit:cover;display:block}
-.hf-label{
-  position:absolute;bottom:0;left:0;right:0;
-  background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);
-  color:#fff;font-size:.66rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:1.4px;
-  padding:22px 10px 10px;text-align:center;
-}
-.hf-tl{width:152px;height:196px;--rot:-7deg;top:14px;left:22%}
-.hf-ml{width:134px;height:172px;--rot:5deg;top:40%;left:5%}
-.hf-bl{width:148px;height:188px;--rot:-3deg;top:62%;left:30%}
-.hf-tr{width:148px;height:188px;--rot:6deg;top:10px;right:20%}
-.hf-mr{width:136px;height:174px;--rot:-5deg;top:38%;right:4%}
-.hf-br{width:152px;height:196px;--rot:3deg;top:60%;right:28%}
-@media(max-width:1100px){.hero{grid-template-columns:1fr 460px 1fr}}
+.hero-cta svg{stroke:currentColor;fill:none;stroke-width:2.4;width:14px;height:14px}
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;padding:56px 5% 64px;min-height:auto}
-  .hero-side{display:none}
-  .hero::before,.hero::after{display:none}
-  .hero-center{padding:0}
+  .hero{min-height:90vh}
+  .hero-content{padding:32px 6% 80px}
+}
+@media(max-width:600px){
+  .hero{min-height:86vh}
+  .hero-content{padding:24px 6% 64px}
+  .hero-h1{font-size:clamp(2rem, 8.5vw, 3rem);margin-bottom:18px}
+  .hero-sub{font-size:.98rem;margin-bottom:26px}
+  .hero-cta{padding:14px 28px;font-size:.94rem}
 }
 
 /* ── SECTION PRIMITIVES ────────────────────────────── */
@@ -630,6 +608,98 @@ body.menu-open{overflow:hidden}
   .dc-featured{grid-column:1 / 3;grid-row:auto;min-height:360px}
   .dc-small{min-height:260px}
   .disc-section{padding:64px 5%}
+}
+
+/* ── HEART BUTTON (on every campaign card) ─────────── */
+.dc-heart{
+  position:absolute;top:14px;right:14px;z-index:4;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(6px);
+  border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(45,49,53,.12);
+  transition:background .15s, transform .15s, box-shadow .15s;
+}
+.dc-heart:hover{
+  background:var(--coral-tint);
+  transform:scale(1.10);
+  box-shadow:0 4px 12px rgba(255,116,82,.22);
+}
+.dc-heart svg{
+  width:18px;height:18px;
+  stroke:var(--slate);fill:none;stroke-width:2;
+  transition:stroke .15s, fill .15s;
+}
+.dc-heart:hover svg{stroke:var(--coral)}
+.dc-heart.liked svg{
+  stroke:var(--coral-dark);
+  fill:var(--coral);
+  animation:heartPop .35s cubic-bezier(.4,0,.2,1);
+}
+@keyframes heartPop{
+  0%{transform:scale(1)}
+  35%{transform:scale(.85)}
+  70%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+.dc-small .dc-heart{
+  width:32px;height:32px;top:10px;right:10px;
+}
+.dc-small .dc-heart svg{width:16px;height:16px}
+
+/* ── SOCIAL ROW (avatar pile + supporters on featured cards) ── */
+.dcf-social{
+  display:flex;align-items:center;gap:6px;
+  margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--line);
+}
+.dcf-avs{display:flex}
+.dcf-av{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid var(--white);
+  margin-right:-8px;
+  font-family:var(--font-head);font-size:.6rem;font-weight:800;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.dcf-av:nth-child(1){background:linear-gradient(135deg,#FF7452,#F06543)}
+.dcf-av:nth-child(2){background:linear-gradient(135deg,#FFC2B2,#FF7452)}
+.dcf-av:nth-child(3){background:linear-gradient(135deg,#6A7C89,#4A5660)}
+.dcf-av:nth-child(4){background:linear-gradient(135deg,#F06543,#C44A2D);font-size:.56rem}
+.dcf-supporters{
+  font-size:.82rem;color:var(--muted);font-weight:500;
+  margin-left:14px;
+}
+.dcf-supporters strong{color:var(--ink);font-weight:700}
+
+/* ── FILTER DROPDOWN (Roots pattern, coral skin) ────── */
+.disc-filter-wrap{position:relative}
+.disc-filter-box{
+  position:absolute;top:calc(100% + 8px);left:0;
+  background:var(--white);
+  border-radius:14px;
+  box-shadow:0 14px 36px rgba(45,49,53,.12), 0 2px 8px rgba(45,49,53,.05);
+  border:1px solid var(--line);
+  padding:8px;min-width:220px;
+  z-index:200;
+  opacity:0;visibility:hidden;transform:translateY(-4px);
+  transition:opacity .18s, transform .18s, visibility .18s;
+}
+.disc-filter-box.open{opacity:1;visibility:visible;transform:translateY(0)}
+.disc-cat-opt{
+  display:block;width:100%;text-align:left;
+  padding:10px 14px;border:none;background:transparent;
+  border-radius:10px;
+  font-family:var(--font-body);font-size:.88rem;color:var(--slate);
+  cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.disc-cat-opt:hover{background:var(--surface);color:var(--ink)}
+.disc-cat-opt.active{background:var(--coral-tint);color:var(--coral-dark);font-weight:600}
+@media(max-width:600px){
+  .disc-filter-box{left:auto;right:0}
 }
 @media(max-width:600px){
   .disc-layout{grid-template-columns:1fr}
@@ -1111,13 +1181,15 @@ footer{
 
 <!-- ═══════════ NAV ═══════════ -->
 <nav>
+  <a class="nav-search" href="#campaigns" aria-label="Browse campaigns">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </a>
+  <a class="nav-logo" href="index.html" aria-label="Carelift home">
+    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="82" height="82" fetchpriority="high">
+  </a>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-  <a class="nav-logo" href="index.html" aria-label="Carelift home">
-    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="56" height="56" fetchpriority="high">
-  </a>
-  <a class="btn-cta" href="donate.html">Start Helping</a>
 </nav>
 
 <!-- ═══════════ MOBILE MENU OVERLAY ═══════════ -->
@@ -1191,48 +1263,23 @@ footer{
 
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
 
-  <div class="hero-side hero-side-left">
-    <div class="hf-card hf-tl">
-      <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=400&q=80" alt="Family together" loading="eager">
-      <div class="hf-label">Families</div>
-    </div>
-    <div class="hf-card hf-ml">
-      <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=400&q=80" alt="Generations" loading="eager">
-      <div class="hf-label">Elders</div>
-    </div>
-    <div class="hf-card hf-bl">
-      <img src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?auto=format&fit=crop&w=400&q=80" alt="Helping hands" loading="eager">
-      <div class="hf-label">Community</div>
-    </div>
-  </div>
-
-  <div class="hero-center">
-    <span class="hero-eyebrow">Trusted by 84,000+ donors</span>
-    <h1 class="hero-h1">Lift someone's<br><em>life</em> today.</h1>
-    <p class="hero-sub">Carelift brings together the people who need help and the people ready to give it. Real causes. Real impact. Zero noise.</p>
-    <div class="hero-ctas">
-      <a href="donate.html" class="btn-primary">
-        Start Helping
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="#how" class="btn-secondary">How it works</a>
-    </div>
-  </div>
-
-  <div class="hero-side hero-side-right">
-    <div class="hf-card hf-tr">
-      <img src="https://images.unsplash.com/photo-1542884748-2b87b36c6b90?auto=format&fit=crop&w=400&q=80" alt="Caring hands" loading="eager">
-      <div class="hf-label">Care</div>
-    </div>
-    <div class="hf-card hf-mr">
-      <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=400&q=80" alt="Volunteer" loading="eager">
-      <div class="hf-label">Volunteers</div>
-    </div>
-    <div class="hf-card hf-br">
-      <img src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=400&q=80" alt="Children learning" loading="eager">
-      <div class="hf-label">Children</div>
-    </div>
+  <div class="hero-content">
+    <h1 class="hero-h1">
+      Real stories.<br>
+      Real people.<br>
+      <em>One needs lifting today.</em>
+    </h1>
+    <p class="hero-sub">
+      Behind every campaign is a real person holding hope in their hands.
+      A little from you goes a long way.
+    </p>
+    <a href="#campaigns" class="hero-cta">
+      Browse campaigns
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
   </div>
 </section>
 
@@ -1241,11 +1288,22 @@ footer{
   <div class="disc-header">
     <h2 class="disc-title">Real people. Real causes.<br><em>Find the one that moves you.</em></h2>
     <div class="disc-controls">
-      <button class="disc-pill" type="button">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <span>Happening worldwide</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
+      <div class="disc-filter-wrap">
+        <button class="disc-pill" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>Happening worldwide</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="disc-filter-box">
+          <button class="disc-cat-opt active">All categories</button>
+          <button class="disc-cat-opt">Health</button>
+          <button class="disc-cat-opt">Education</button>
+          <button class="disc-cat-opt">Shelter</button>
+          <button class="disc-cat-opt">Food</button>
+          <button class="disc-cat-opt">Elders</button>
+          <button class="disc-cat-opt">Children</button>
+        </div>
+      </div>
       <div class="disc-arrows">
         <button class="disc-arrow" aria-label="Previous">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1743,6 +1801,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   });
 });
+
+// ── Inject heart button on every campaign card ─────
+(function(){
+  const heartSvg = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+
+  document.querySelectorAll('.dc-featured, .dc-small').forEach(card => {
+    const btn = document.createElement('button');
+    btn.className = 'dc-heart';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Save this campaign');
+    btn.innerHTML = heartSvg;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.toggle('liked');
+    });
+    card.appendChild(btn);
+  });
+})();
+
+// ── Inject avatar pile + supporters count on featured cards ───
+(function(){
+  // Initials per card position so the two featured cards don't look identical
+  const variants = [
+    { initials: ['M', 'A', 'J', '+'], count: 312 },
+    { initials: ['L', 'C', 'B', '+'], count: 84  }
+  ];
+  document.querySelectorAll('.dc-featured').forEach((card, i) => {
+    const body = card.querySelector('.dcf-body');
+    if (!body) return;
+    const v = variants[i] || variants[0];
+    const row = document.createElement('div');
+    row.className = 'dcf-social';
+    row.innerHTML = `
+      <div class="dcf-avs">
+        ${v.initials.map(n => `<span class="dcf-av">${n}</span>`).join('')}
+      </div>
+      <span class="dcf-supporters"><strong>${v.count.toLocaleString()}</strong> people supporting</span>
+    `;
+    body.appendChild(row);
+  });
+})();
+
+// ── Filter dropdown (click pill → toggle box, pick category → update label) ───
+(function(){
+  document.querySelectorAll('.disc-filter-wrap').forEach(wrap => {
+    const pill  = wrap.querySelector('.disc-pill');
+    const box   = wrap.querySelector('.disc-filter-box');
+    const label = pill?.querySelector('span');
+    if (!pill || !box) return;
+
+    pill.addEventListener('click', e => {
+      e.stopPropagation();
+      box.classList.toggle('open');
+    });
+    box.addEventListener('click', e => e.stopPropagation());
+
+    wrap.querySelectorAll('.disc-cat-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        wrap.querySelectorAll('.disc-cat-opt').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        if (label) label.textContent = opt.textContent;
+        box.classList.remove('open');
+      });
+    });
+  });
+  // Click anywhere else closes any open filter box
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.disc-filter-box.open').forEach(b => b.classList.remove('open'));
+  });
+})();
 </script>
 
 </body>
