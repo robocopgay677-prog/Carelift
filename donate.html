@@ -102,15 +102,15 @@ nav.site-nav{
   pointer-events:auto;
 }
 .mobile-menu-inner{
-  position:absolute;top:0;left:0;bottom:0;
+  position:absolute;top:0;right:0;bottom:0;
   width:420px;max-width:calc(100vw - 48px);
   background:var(--paper);
   padding:24px 30px 24px;
   display:flex;flex-direction:column;
   overflow:hidden;
-  transform:translateX(-100%);
+  transform:translateX(100%);
   transition:transform .42s cubic-bezier(.4,0,.2,1);
-  box-shadow:14px 0 44px rgba(45,49,53,.18);
+  box-shadow:-14px 0 44px rgba(45,49,53,.18);
 }
 .mobile-menu.open .mobile-menu-inner{transform:translateX(0)}
 .mobile-menu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;padding-top:6px}
@@ -145,7 +145,7 @@ nav.site-nav{
   letter-spacing:-.025em;text-decoration:none;
   transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .22s;
   position:relative;
-  opacity:0;transform:translateX(-12px);
+  opacity:0;transform:translateX(12px);
   flex:0 0 auto;
 }
 .mobile-menu-link:last-child{border-bottom:none}
@@ -534,7 +534,7 @@ body.menu-open{overflow:hidden}
 
 <!-- ═════════ NAV ═════════ -->
 <nav class="site-nav">
-  <a class="nav-search" href="index.html#campaigns" aria-label="Browse campaigns">
+  <a class="nav-search" href="campaigns.html" aria-label="Browse campaigns">
     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
   </a>
   <a class="nav-logo" href="index.html" aria-label="Carelift home">
@@ -565,7 +565,7 @@ body.menu-open{overflow:hidden}
         <span class="mobile-menu-link-num">01</span>
         <span class="mobile-menu-link-text">Home</span>
       </a>
-      <a href="index.html#campaigns" class="mobile-menu-link">
+      <a href="campaigns.html" class="mobile-menu-link">
         <span class="mobile-menu-link-num">02</span>
         <span class="mobile-menu-link-text">Campaigns</span>
       </a>
@@ -588,9 +588,9 @@ body.menu-open{overflow:hidden}
     </nav>
 
     <footer class="mobile-menu-footer">
-      <a href="donate.html" class="mobile-menu-cta">
-        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Donate Now
+      <a href="campaigns.html" class="mobile-menu-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Browse Campaigns
       </a>
     </footer>
   </div>

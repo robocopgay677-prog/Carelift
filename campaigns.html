@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Campaigns — Carelift</title>
+<meta name="description" content="Browse every active Carelift campaign. Real stories. Real people. Real impact.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   CARELIFT — Campaigns listing page
+   Same design system as the rest of the site. Cards reuse the
+   .dc-small pattern from index.html for consistency.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── DESIGN TOKENS ─────────────────────────────────── */
+:root{
+  --coral:       #FF7452;
+  --coral-dark:  #F06543;
+  --coral-soft:  #FFC2B2;
+  --coral-tint:  #FFE9E1;
+  --paper:       #FFF8F4;
+  --white:       #FFFFFF;
+  --surface:     #F9EEE8;
+  --line:        #E7D6CC;
+  --ink:         #2D3135;
+  --slate:       #6A7C89;
+  --muted:       #7E736D;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-pill: 100px;
+  --s-xs: 0 1px 2px rgba(45,49,53,.04);
+  --s-sm: 0 2px 8px rgba(45,49,53,.05), 0 1px 3px rgba(45,49,53,.03);
+  --s-md: 0 8px 24px rgba(255,116,82,.10), 0 2px 8px rgba(45,49,53,.04);
+  --s-lg: 0 14px 36px rgba(255,116,82,.13), 0 4px 12px rgba(45,49,53,.06);
+  --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── RESET ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* ── NAV (same pattern as other pages) ─────────────── */
+nav.site-nav{
+  background:rgba(255,248,244,.78);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:none;
+  height:104px;padding:0 5%;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  position:sticky;top:0;z-index:50;
+}
+.nav-search,
+.nav-hamburger{
+  width:52px;height:52px;border-radius:16px;
+  border:1px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:border-color .18s, background .18s, box-shadow .18s;
+}
+.nav-search:hover,
+.nav-hamburger:hover{border-color:var(--coral);background:var(--coral-tint);box-shadow:0 4px 14px rgba(255,116,82,.18)}
+.nav-search{justify-self:start;text-decoration:none;color:var(--ink)}
+.nav-search svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;transition:stroke .15s}
+.nav-search:hover svg{stroke:var(--coral-dark)}
+.nav-hamburger{justify-self:end;flex-direction:column;gap:5px}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:background .15s}
+.nav-hamburger:hover span{background:var(--coral-dark)}
+.nav-logo{justify-self:center;display:flex;align-items:center;text-decoration:none;transition:transform .25s}
+.nav-logo-img{height:82px;width:auto;display:block;object-fit:contain}
+.nav-logo:hover{transform:scale(1.04)}
+@media(max-width:700px){
+  nav.site-nav{height:78px;gap:12px}
+  .nav-logo-img{height:54px}
+  .nav-search,
+  .nav-hamburger{width:44px;height:44px;border-radius:14px}
+  .nav-search svg{width:18px;height:18px}
+  .nav-hamburger span{width:18px}
+}
+
+/* ── MOBILE MENU DRAWER (opens from right) ─────────── */
+.mobile-menu{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(45,49,53,0);
+  pointer-events:none;
+  transition:background .35s ease;
+}
+.mobile-menu.open{
+  background:rgba(45,49,53,.38);
+  pointer-events:auto;
+}
+.mobile-menu-inner{
+  position:absolute;top:0;right:0;bottom:0;
+  width:420px;max-width:calc(100vw - 48px);
+  background:var(--paper);
+  padding:24px 30px 24px;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transform:translateX(100%);
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+  box-shadow:-14px 0 44px rgba(45,49,53,.18);
+}
+.mobile-menu.open .mobile-menu-inner{transform:translateX(0)}
+.mobile-menu-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:36px;padding-top:6px;
+}
+.mobile-menu-logo{display:inline-flex;align-items:center;text-decoration:none}
+.mobile-menu-logo-img{height:52px;width:auto;display:block;object-fit:contain}
+.mobile-menu-close{
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--white);
+  color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:border-color .15s, background .15s, color .15s, transform .35s cubic-bezier(.4,0,.2,1);
+}
+.mobile-menu-close:hover{border-color:var(--coral);background:var(--coral-tint);color:var(--coral-dark);transform:rotate(90deg)}
+.mobile-menu-close svg{stroke:currentColor;fill:none}
+
+.mobile-menu-nav{
+  display:flex;flex-direction:column;
+  flex:1;min-height:0;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+  padding:4px 4px 8px 0;
+}
+.mobile-menu-nav::-webkit-scrollbar{width:5px}
+.mobile-menu-nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+
+.mobile-menu-link{
+  display:flex;width:100%;box-sizing:border-box;
+  align-items:center;gap:22px;
+  padding:24px 4px;
+  border-bottom:1px solid var(--line);
+  font-family:var(--font-head);
+  font-size:clamp(1.55rem, 5vw, 2rem);
+  font-weight:700;color:var(--ink);
+  letter-spacing:-.025em;text-decoration:none;
+  transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .22s;
+  position:relative;
+  opacity:0;transform:translateX(12px);
+  flex:0 0 auto;
+}
+.mobile-menu-link:last-child{border-bottom:none}
+.mobile-menu-link:hover{padding-left:16px;color:var(--coral-dark)}
+.mobile-menu-link-num{
+  font-family:var(--font-body);font-size:.68rem;font-weight:700;
+  color:var(--muted);letter-spacing:2.4px;
+  flex-shrink:0;width:28px;transition:color .22s;
+}
+.mobile-menu-link:hover .mobile-menu-link-num{color:var(--coral)}
+.mobile-menu-link-text{flex:1;line-height:1.1}
+
+.mobile-menu.open .mobile-menu-link{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
+.mobile-menu.open .mobile-menu-link:nth-child(1){animation-delay:.08s}
+.mobile-menu.open .mobile-menu-link:nth-child(2){animation-delay:.14s}
+.mobile-menu.open .mobile-menu-link:nth-child(3){animation-delay:.20s}
+.mobile-menu.open .mobile-menu-link:nth-child(4){animation-delay:.26s}
+.mobile-menu.open .mobile-menu-link:nth-child(5){animation-delay:.32s}
+.mobile-menu.open .mobile-menu-link:nth-child(6){animation-delay:.38s}
+@keyframes mmLinkIn{to{opacity:1;transform:translateX(0)}}
+
+.mobile-menu-footer{
+  flex-shrink:0;
+  padding:22px 0 4px;margin-top:10px;
+  border-top:1px solid var(--line);
+  opacity:0;
+}
+.mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.46s}
+@keyframes mmFooterIn{to{opacity:1}}
+.mobile-menu-cta{
+  display:flex;width:100%;align-items:center;justify-content:center;gap:10px;
+  padding:18px 28px;border-radius:var(--r-pill);
+  background:linear-gradient(135deg,var(--coral) 0%,var(--coral-dark) 100%);
+  color:var(--white);text-decoration:none;
+  font-family:var(--font-body);font-size:1rem;font-weight:700;letter-spacing:-.005em;
+  box-shadow:0 12px 36px rgba(255,116,82,.36), 0 0 0 4px rgba(255,116,82,.06), inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .15s, box-shadow .22s, background .2s;
+}
+.mobile-menu-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 44px rgba(240,101,67,.46), 0 0 0 6px rgba(255,116,82,.10), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.mobile-menu-cta svg{stroke:currentColor;fill:none;stroke-width:2.6}
+
+body.menu-open{overflow:hidden}
+@media(max-width:600px){
+  .mobile-menu-inner{padding:18px 22px 18px;width:340px}
+  .mobile-menu-header{margin-bottom:24px}
+  .mobile-menu-logo-img{height:42px}
+  .mobile-menu-link{padding:20px 4px;font-size:1.5rem}
+  .mobile-menu-link-num{width:24px;font-size:.64rem}
+  .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
+}
+
+/* ── PAGE HEADER ───────────────────────────────────── */
+.campaigns-hero{
+  padding:72px 5% 48px;
+  background:linear-gradient(180deg, var(--paper) 0%, #FDF2EC 100%);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.campaigns-hero::before{
+  content:'';position:absolute;
+  width:580px;height:580px;border-radius:50%;
+  border:1.5px dashed rgba(255,116,82,.10);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;z-index:0;
+}
+.campaigns-hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.campaigns-hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--coral-dark);
+  background:var(--coral-tint);
+  padding:7px 14px;border-radius:var(--r-pill);
+  margin-bottom:20px;
+}
+.campaigns-hero-eyebrow::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--coral);
+  box-shadow:0 0 0 4px rgba(255,116,82,.18);
+}
+.campaigns-hero-title{
+  font-family:var(--font-head);
+  font-size:clamp(2rem, 4.5vw, 3.2rem);
+  font-weight:800;color:var(--ink);
+  line-height:1.08;letter-spacing:-.03em;
+  margin-bottom:16px;
+}
+.campaigns-hero-title em{font-style:normal;color:var(--coral)}
+.campaigns-hero-sub{
+  font-size:1.02rem;color:var(--slate);
+  line-height:1.7;max-width:540px;
+  margin:0 auto;
+}
+
+/* ── FILTER / TOOLBAR ──────────────────────────────── */
+.campaigns-toolbar{
+  max-width:1280px;margin:0 auto;
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:14px;
+  margin-bottom:28px;
+}
+.campaigns-count{
+  font-size:.86rem;color:var(--muted);font-weight:500;
+}
+.campaigns-count strong{color:var(--ink);font-weight:700}
+.disc-filter-wrap{position:relative}
+.disc-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:var(--r-pill);
+  border:1.5px solid var(--line);background:var(--white);
+  font-family:var(--font-body);font-size:.86rem;font-weight:600;color:var(--slate);
+  transition:border-color .15s, color .15s, background .15s;
+  cursor:pointer;
+}
+.disc-pill:hover{border-color:var(--coral);color:var(--coral-dark);background:var(--coral-tint)}
+.disc-pill svg{stroke:currentColor;fill:none}
+.disc-filter-box{
+  position:absolute;top:calc(100% + 8px);left:0;
+  background:var(--white);
+  border-radius:14px;
+  box-shadow:0 14px 36px rgba(45,49,53,.12), 0 2px 8px rgba(45,49,53,.05);
+  border:1px solid var(--line);
+  padding:8px;min-width:220px;
+  z-index:200;
+  opacity:0;visibility:hidden;transform:translateY(-4px);
+  transition:opacity .18s, transform .18s, visibility .18s;
+}
+.disc-filter-box.open{opacity:1;visibility:visible;transform:translateY(0)}
+.disc-cat-opt{
+  display:block;width:100%;text-align:left;
+  padding:10px 14px;border:none;background:transparent;
+  border-radius:10px;
+  font-family:var(--font-body);font-size:.88rem;color:var(--slate);
+  cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.disc-cat-opt:hover{background:var(--surface);color:var(--ink)}
+.disc-cat-opt.active{background:var(--coral-tint);color:var(--coral-dark);font-weight:600}
+
+/* ── CAMPAIGNS GRID ────────────────────────────────── */
+.campaigns-section{
+  padding:0 5% 96px;
+  background:var(--paper);
+}
+.campaigns-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:22px;
+  max-width:1280px;margin:0 auto;
+}
+.dc-small{
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  position:relative;
+  border:1px solid var(--line);
+  background:var(--white);
+  box-shadow:var(--s-xs);
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+  cursor:pointer;
+  display:flex;flex-direction:column;
+  text-decoration:none;
+  color:inherit;
+  min-height:360px;
+}
+.dc-small:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--s-md);
+  border-color:var(--coral-soft);
+}
+.dcs-img{
+  position:relative;
+  flex:1 1 auto;
+  background:var(--surface);
+  min-height:200px;
+  overflow:hidden;
+}
+.dcs-img img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s ease;
+}
+.dc-small:hover .dcs-img img{transform:scale(1.04)}
+.dcs-cat{
+  position:absolute;top:10px;left:10px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);
+  color:var(--coral-dark);
+  font-size:.6rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  padding:4px 10px;border-radius:var(--r-pill);
+  z-index:3;
+}
+.dcs-body{
+  flex:0 0 auto;
+  padding:14px 16px 16px;
+  background:var(--white);
+}
+.dcs-org{font-size:.74rem;color:var(--muted);margin-bottom:5px;font-weight:500}
+.dcs-org strong{color:var(--coral-dark);font-weight:700}
+.dcs-title{
+  font-family:var(--font-head);
+  font-size:.92rem;font-weight:700;color:var(--ink);
+  line-height:1.32;letter-spacing:-.005em;margin-bottom:11px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  min-height:2.6em;
+}
+.dcs-raised{
+  font-family:var(--font-head);
+  font-size:.92rem;font-weight:800;color:var(--ink);margin-bottom:7px;
+}
+.dcs-raised span{color:var(--muted);font-weight:400;font-size:.76rem;margin-left:3px}
+.dcs-bar-wrap{
+  height:4px;background:var(--surface);
+  border-radius:4px;overflow:hidden;
+}
+.dcs-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--coral),var(--coral-dark));
+  border-radius:4px;
+  transition:width 1s cubic-bezier(.4,0,.2,1);
+}
+
+/* Heart button on every card */
+.dc-heart{
+  position:absolute;top:12px;right:12px;z-index:4;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(6px);
+  border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(45,49,53,.12);
+  transition:background .15s, transform .15s, box-shadow .15s;
+}
+.dc-heart:hover{
+  background:var(--coral-tint);
+  transform:scale(1.10);
+  box-shadow:0 4px 12px rgba(255,116,82,.22);
+}
+.dc-heart svg{
+  width:16px;height:16px;
+  stroke:var(--slate);fill:none;stroke-width:2;
+  transition:stroke .15s, fill .15s;
+}
+.dc-heart:hover svg{stroke:var(--coral)}
+.dc-heart.liked svg{
+  stroke:var(--coral-dark);
+  fill:var(--coral);
+  animation:heartPop .35s cubic-bezier(.4,0,.2,1);
+}
+@keyframes heartPop{
+  0%{transform:scale(1)}
+  35%{transform:scale(.85)}
+  70%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+
+@media(max-width:600px){
+  .campaigns-hero{padding:48px 5% 32px}
+  .campaigns-section{padding:0 5% 64px}
+  .campaigns-grid{grid-template-columns:1fr;gap:16px}
+  .dc-small{min-height:300px}
+}
+
+/* ── FOOTER CTA STRIP ──────────────────────────────── */
+.footer-cta-strip{
+  background:linear-gradient(135deg, var(--coral-dark) 0%, var(--coral) 100%);
+  padding:44px 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:28px;flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.footer-cta-strip::before{
+  content:'';position:absolute;
+  top:-100px;right:-80px;width:300px;height:300px;border-radius:50%;
+  background:rgba(255,255,255,.08);pointer-events:none;
+}
+.footer-cta-text{position:relative;z-index:1;max-width:600px}
+.footer-cta-text h3{
+  font-family:var(--font-head);
+  font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:800;
+  color:var(--white);letter-spacing:-.025em;line-height:1.2;
+}
+.footer-cta-text p{
+  font-size:.92rem;color:rgba(255,255,255,.80);
+  margin-top:6px;line-height:1.6;
+}
+.footer-cta-btn{
+  position:relative;z-index:1;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 30px;border-radius:var(--r-pill);
+  background:var(--white);
+  color:var(--coral-dark);text-decoration:none;
+  font-family:var(--font-body);font-size:.95rem;font-weight:700;
+  box-shadow:0 6px 22px rgba(0,0,0,.16);
+  transition:transform .15s, box-shadow .2s, background .2s, color .2s;
+  flex-shrink:0;white-space:nowrap;
+}
+.footer-cta-btn:hover{
+  transform:translateY(-2px);
+  background:var(--ink);color:var(--white);
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+.footer-cta-btn svg{stroke:currentColor;fill:none;stroke-width:2.4}
+@media(max-width:700px){
+  .footer-cta-strip{flex-direction:column;align-items:flex-start;padding:36px 5%;gap:18px}
+}
+
+/* ── FOOTER ────────────────────────────────────────── */
+footer{
+  background:#1A1D20;
+  color:rgba(255,255,255,.7);
+  padding:64px 5% 32px;
+}
+.footer-inner{max-width:1240px;margin:0 auto}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:48px;
+}
+.footer-logo{display:inline-block;margin-bottom:18px;line-height:0}
+.footer-logo-img{
+  height:48px;width:auto;display:block;object-fit:contain;
+  filter:brightness(0) invert(1);
+  transition:filter .2s, opacity .2s;
+}
+.footer-logo:hover .footer-logo-img{opacity:.85}
+.footer-brand p{
+  font-size:.88rem;line-height:1.75;
+  color:rgba(255,255,255,.6);max-width:300px;
+}
+.footer-social{display:flex;gap:10px;margin-top:18px}
+.soc-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,border-color .15s;
+}
+.soc-btn:hover{background:var(--coral);border-color:var(--coral)}
+.soc-btn svg{stroke:rgba(255,255,255,.65);fill:none;stroke-width:2;width:16px;height:16px;transition:stroke .15s}
+.soc-btn:hover svg{stroke:#fff}
+.footer-col h4{
+  font-family:var(--font-head);
+  font-size:.72rem;font-weight:700;color:rgba(255,255,255,.55);
+  text-transform:uppercase;letter-spacing:1.6px;margin-bottom:18px;
+}
+.footer-col li{margin-bottom:11px}
+.footer-col a{
+  color:rgba(255,255,255,.72);font-size:.88rem;
+  transition:color .15s;display:inline-block;
+}
+.footer-col a:hover{color:var(--coral-soft)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:24px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  font-size:.78rem;color:rgba(255,255,255,.45);
+}
+.footer-bottom-links{display:flex;gap:22px;flex-wrap:wrap}
+.footer-bottom-links a{color:rgba(255,255,255,.45);transition:color .15s}
+.footer-bottom-links a:hover{color:var(--coral-soft)}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}footer{padding:48px 5% 28px}}
+
+/* ── ANIMATIONS ────────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.campaigns-hero, .campaigns-section, .footer-cta-strip{animation:fadeUp .5s ease both}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="site-nav">
+  <a class="nav-search" href="campaigns.html" aria-label="Browse campaigns">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </a>
+  <a class="nav-logo" href="index.html" aria-label="Carelift home">
+    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="82" height="82" fetchpriority="high">
+  </a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════ MOBILE MENU OVERLAY ═══════════ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Site menu">
+  <div class="mobile-menu-inner">
+
+    <header class="mobile-menu-header">
+      <a href="index.html" class="mobile-menu-logo" aria-label="Carelift home">
+        <img class="mobile-menu-logo-img" src="Logo-Icontext.png" alt="Carelift">
+      </a>
+      <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </header>
+
+    <nav class="mobile-menu-nav" aria-label="Primary">
+      <a href="index.html" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">01</span>
+        <span class="mobile-menu-link-text">Home</span>
+      </a>
+      <a href="campaigns.html" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">02</span>
+        <span class="mobile-menu-link-text">Campaigns</span>
+      </a>
+      <a href="index.html#how" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">03</span>
+        <span class="mobile-menu-link-text">How it Works</span>
+      </a>
+      <a href="index.html#impact" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">04</span>
+        <span class="mobile-menu-link-text">Impact</span>
+      </a>
+      <a href="index.html#stories" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">05</span>
+        <span class="mobile-menu-link-text">Stories</span>
+      </a>
+      <a href="donate.html" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">06</span>
+        <span class="mobile-menu-link-text">Donate</span>
+      </a>
+    </nav>
+
+    <footer class="mobile-menu-footer">
+      <a href="campaigns.html" class="mobile-menu-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Browse Campaigns
+      </a>
+    </footer>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE HEADER ═══════════ -->
+<section class="campaigns-hero">
+  <div class="campaigns-hero-inner">
+    <span class="campaigns-hero-eyebrow">All campaigns</span>
+    <h1 class="campaigns-hero-title">Find a cause<br><em>that moves you.</em></h1>
+    <p class="campaigns-hero-sub">Every campaign here is hand-reviewed and tied to a real human story. Pick one, lift a life.</p>
+  </div>
+</section>
+
+<!-- ═══════════ TOOLBAR (filter + count) ═══════════ -->
+<div class="campaigns-toolbar">
+  <div class="disc-filter-wrap">
+    <button class="disc-pill" type="button" id="filterPill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span id="filterLabel">All categories</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="disc-filter-box" id="filterBox">
+      <button class="disc-cat-opt active" data-cat="all">All categories</button>
+      <button class="disc-cat-opt" data-cat="Health">Health</button>
+      <button class="disc-cat-opt" data-cat="Education">Education</button>
+      <button class="disc-cat-opt" data-cat="Shelter">Shelter</button>
+      <button class="disc-cat-opt" data-cat="Food">Food</button>
+      <button class="disc-cat-opt" data-cat="Elders">Elders</button>
+      <button class="disc-cat-opt" data-cat="Children">Children</button>
+      <button class="disc-cat-opt" data-cat="Medical">Medical</button>
+      <button class="disc-cat-opt" data-cat="Disaster">Disaster</button>
+      <button class="disc-cat-opt" data-cat="Community">Community</button>
+    </div>
+  </div>
+  <div class="campaigns-count"><strong id="campaignsCount">0</strong> active campaigns</div>
+</div>
+
+<!-- ═══════════ GRID ═══════════ -->
+<section class="campaigns-section">
+  <div class="campaigns-grid" id="campaignsGrid"></div>
+</section>
+
+<!-- ═══════════ FOOTER CTA STRIP ═══════════ -->
+<section class="footer-cta-strip">
+  <div class="footer-cta-text">
+    <h3>Have a cause that needs lifting?</h3>
+    <p>Tell the story, set the goal, and let people who care show up.</p>
+  </div>
+  <a href="donate.html" class="footer-cta-btn">
+    Start a campaign
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html" aria-label="Carelift home">
+          <img class="footer-logo-img" src="Logo-Icontext.png" alt="Carelift">
+        </a>
+        <p>A home for every cause. A heart for every story. Lifting lives, one donation at a time.</p>
+        <div class="footer-social">
+          <a href="#" class="soc-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="soc-btn" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="campaigns.html">Browse campaigns</a></li>
+          <li><a href="donate.html">Start a campaign</a></li>
+          <li><a href="index.html#impact">Our impact</a></li>
+          <li><a href="index.html#stories">Stories</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Carelift</a></li>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="#">Press &amp; media</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Trust &amp; safety</a></li>
+          <li><a href="#">Privacy &amp; terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Carelift. Made with care.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Mobile menu open/close ────────────────────────
+(function(){
+  const menu  = document.getElementById('mobileMenu');
+  const open  = document.getElementById('navHamburger');
+  const close = document.getElementById('mobileMenuClose');
+  if (!menu || !open || !close) return;
+  function openMenu(){
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden','false');
+    open.setAttribute('aria-expanded','true');
+    document.body.classList.add('menu-open');
+  }
+  function closeMenu(){
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden','true');
+    open.setAttribute('aria-expanded','false');
+    document.body.classList.remove('menu-open');
+  }
+  open.addEventListener('click', openMenu);
+  close.addEventListener('click', closeMenu);
+  menu.addEventListener('click', e => { if (e.target === menu) closeMenu(); });
+  menu.querySelectorAll('.mobile-menu-link, .mobile-menu-cta, .mobile-menu-logo').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu(); });
+})();
+
+// ── Campaigns data ────────────────────────────────
+const CAMPAIGNS = [
+  { title:"Help Maria finish her cancer treatment this winter",
+    org:"Maria's family", loc:"Lisbon", cat:"Health",
+    img:"https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80",
+    raised:18420, goal:25000 },
+
+  { title:"Emergency heart surgery for Lucas — every hour counts",
+    org:"Lucas, 6", loc:"Buenos Aires", cat:"Medical",
+    img:"https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=600&q=80",
+    raised:22180, goal:35000 },
+
+  { title:"Send 120 girls back to school with full supply kits",
+    org:"Bright Futures", loc:"Kenya", cat:"Education",
+    img:"https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80",
+    raised:8240, goal:14000 },
+
+  { title:"A safe home for 9 families displaced by the floods",
+    org:"Casa Aberta", loc:"São Paulo", cat:"Shelter",
+    img:"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80",
+    raised:31800, goal:40000 },
+
+  { title:"Hot meals every evening for 200 neighbors this season",
+    org:"Mesa Cheia", loc:"Porto", cat:"Food",
+    img:"https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80",
+    raised:5640, goal:12000 },
+
+  { title:"In-home care for 28 elderly without family support",
+    org:"Vida Plena", loc:"Madrid", cat:"Elders",
+    img:"https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80",
+    raised:12140, goal:20000 },
+
+  { title:"Emergency shelter for 40 families this week",
+    org:"Flood survivors", loc:"Valencia", cat:"Disaster",
+    img:"https://images.unsplash.com/photo-1542884748-2b87b36c6b90?auto=format&fit=crop&w=600&q=80",
+    raised:14920, goal:30000 },
+
+  { title:"Critical medication supply for 6 month treatment",
+    org:"Ana", loc:"Lima", cat:"Health",
+    img:"https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80",
+    raised:3820, goal:8000 },
+
+  { title:"Safe night shelter for 60 children sleeping on streets",
+    org:"Refugio Niños", loc:"Bogotá", cat:"Children",
+    img:"https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=600&q=80",
+    raised:9650, goal:18000 },
+
+  { title:"Weekly food kits for 280 families with no income",
+    org:"Banco Solidário", loc:"Quito", cat:"Food",
+    img:"https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80",
+    raised:6310, goal:15000 },
+
+  { title:"Build a community center for 600 families in need",
+    org:"Community Lift", loc:"Montevideo", cat:"Community",
+    img:"https://images.unsplash.com/photo-1518398046578-8cca57782e17?auto=format&fit=crop&w=600&q=80",
+    raised:48300, goal:80000 },
+
+  { title:"Mobile mental health clinic for rural towns",
+    org:"Conexão Salud", loc:"La Paz", cat:"Health",
+    img:"https://images.unsplash.com/photo-1559757175-5c350d0d3c56?auto=format&fit=crop&w=600&q=80",
+    raised:11400, goal:22000 }
+];
+
+// ── Helpers ───────────────────────────────────────
+function fmtMoney(n){ return '$' + n.toLocaleString('en-US'); }
+
+const HEART_SVG = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+
+// ── Render the grid ───────────────────────────────
+function renderCampaigns(list){
+  const grid = document.getElementById('campaignsGrid');
+  if (!grid) return;
+  if (!list.length){
+    grid.innerHTML = '<p style="color:var(--muted);font-size:.95rem;padding:40px 0;text-align:center;grid-column:1/-1">No campaigns in this category yet.</p>';
+    document.getElementById('campaignsCount').textContent = '0';
+    return;
+  }
+  grid.innerHTML = list.map(c => {
+    const pct = c.goal > 0 ? Math.min(Math.round((c.raised / c.goal) * 100), 100) : 0;
+    return `
+      <a href="campaign.html" class="dc-small">
+        <div class="dcs-img">
+          <span class="dcs-cat">${c.cat}</span>
+          <img src="${c.img}" alt="${c.title}" loading="lazy">
+        </div>
+        <div class="dcs-body">
+          <div class="dcs-org">for <strong>${c.org}</strong> · ${c.loc}</div>
+          <div class="dcs-title">${c.title}</div>
+          <div class="dcs-raised">${fmtMoney(c.raised)} <span>of ${fmtMoney(c.goal)} · ${pct}%</span></div>
+          <div class="dcs-bar-wrap"><div class="dcs-bar" style="width:${pct}%"></div></div>
+        </div>
+      </a>
+    `;
+  }).join('');
+
+  document.getElementById('campaignsCount').textContent = list.length;
+
+  // Inject heart button on every card (click doesn't trigger card navigation)
+  grid.querySelectorAll('.dc-small').forEach(card => {
+    const btn = document.createElement('button');
+    btn.className = 'dc-heart';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Save this campaign');
+    btn.innerHTML = HEART_SVG;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.toggle('liked');
+    });
+    card.appendChild(btn);
+  });
+
+  // Animate progress bars
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('.dcs-bar').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0%';
+      requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = w; }));
+    });
+  });
+}
+
+// ── Filter logic ──────────────────────────────────
+let currentCat = 'all';
+function applyFilter(){
+  const list = currentCat === 'all' ? CAMPAIGNS : CAMPAIGNS.filter(c => c.cat === currentCat);
+  renderCampaigns(list);
+}
+
+document.getElementById('filterPill').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('filterBox').classList.toggle('open');
+});
+document.getElementById('filterBox').addEventListener('click', e => e.stopPropagation());
+
+document.querySelectorAll('.disc-cat-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.disc-cat-opt').forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+    currentCat = opt.dataset.cat;
+    document.getElementById('filterLabel').textContent = opt.textContent;
+    document.getElementById('filterBox').classList.remove('open');
+    applyFilter();
+  });
+});
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.disc-filter-box.open').forEach(b => b.classList.remove('open'));
+});
+
+// ── Initial render ────────────────────────────────
+renderCampaigns(CAMPAIGNS);
+</script>
+
+</body>
+</html>

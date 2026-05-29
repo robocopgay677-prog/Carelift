@@ -158,15 +158,15 @@ nav{
   pointer-events:auto;
 }
 .mobile-menu-inner{
-  position:absolute;top:0;left:0;bottom:0;
+  position:absolute;top:0;right:0;bottom:0;
   width:420px;max-width:calc(100vw - 48px);
   background:var(--paper);
   padding:24px 30px 24px;
   display:flex;flex-direction:column;
   overflow:hidden;
-  transform:translateX(-100%);
+  transform:translateX(100%);
   transition:transform .42s cubic-bezier(.4,0,.2,1);
-  box-shadow:14px 0 44px rgba(45,49,53,.18);
+  box-shadow:-14px 0 44px rgba(45,49,53,.18);
 }
 .mobile-menu.open .mobile-menu-inner{transform:translateX(0)}
 .mobile-menu-header{
@@ -220,7 +220,7 @@ nav{
   text-decoration:none;
   transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .22s;
   position:relative;
-  opacity:0;transform:translateX(-12px);
+  opacity:0;transform:translateX(12px);
   flex:0 0 auto;
 }
 .mobile-menu-link:last-child{border-bottom:none}
@@ -1195,7 +1195,7 @@ footer{
 
 <!-- ═══════════ NAV ═══════════ -->
 <nav>
-  <a class="nav-search" href="#campaigns" aria-label="Browse campaigns">
+  <a class="nav-search" href="campaigns.html" aria-label="Browse campaigns">
     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
   </a>
   <a class="nav-logo" href="index.html" aria-label="Carelift home">
@@ -1226,7 +1226,7 @@ footer{
         <span class="mobile-menu-link-num">01</span>
         <span class="mobile-menu-link-text">Home</span>
       </a>
-      <a href="index.html#campaigns" class="mobile-menu-link">
+      <a href="campaigns.html" class="mobile-menu-link">
         <span class="mobile-menu-link-num">02</span>
         <span class="mobile-menu-link-text">Campaigns</span>
       </a>
@@ -1249,9 +1249,9 @@ footer{
     </nav>
 
     <footer class="mobile-menu-footer">
-      <a href="donate.html" class="mobile-menu-cta">
-        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Donate Now
+      <a href="campaigns.html" class="mobile-menu-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Browse Campaigns
       </a>
     </footer>
   </div>
@@ -1272,8 +1272,8 @@ footer{
       Behind every campaign is a real person holding hope in their hands.
       A little from you goes a long way.
     </p>
-    <a href="#campaigns" class="hero-cta">
-      Browse campaigns
+    <a href="campaigns.html" class="hero-cta">
+      Browse Campaigns
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
   </div>
@@ -1411,7 +1411,7 @@ footer{
       </div>
       <h2 class="disc-title">People holding on —<br><em>waiting for someone like you.</em></h2>
     </div>
-    <a href="campaign.html" class="see-more">
+    <a href="campaigns.html" class="see-more">
       See all urgent campaigns
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -1708,7 +1708,7 @@ footer{
       <div class="footer-col">
         <h4>Platform</h4>
         <ul>
-          <li><a href="#campaigns">Browse campaigns</a></li>
+          <li><a href="campaigns.html">Browse campaigns</a></li>
           <li><a href="donate.html">Start a campaign</a></li>
           <li><a href="#impact">Our impact</a></li>
           <li><a href="#stories">Stories</a></li>
