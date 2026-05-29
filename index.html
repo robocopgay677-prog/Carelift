@@ -161,10 +161,9 @@ nav{
   position:absolute;top:0;left:0;bottom:0;
   width:420px;max-width:calc(100vw - 48px);
   background:var(--paper);
-  padding:24px 32px 32px;
+  padding:24px 30px 24px;
   display:flex;flex-direction:column;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
+  overflow:hidden;
   transform:translateX(-100%);
   transition:transform .42s cubic-bezier(.4,0,.2,1);
   box-shadow:14px 0 44px rgba(45,49,53,.18);
@@ -194,87 +193,101 @@ nav{
   transform:rotate(90deg);
 }
 .mobile-menu-close svg{stroke:currentColor;fill:none}
-.mobile-menu-nav{display:flex;flex-direction:column;flex:1}
-.mobile-menu-link{
-  display:flex;align-items:center;gap:14px;
-  padding:18px 2px;
-  border-bottom:1px solid var(--line);
-  font-family:var(--font-head);
-  font-size:1.25rem;
-  font-weight:700;color:var(--ink);
-  letter-spacing:-.02em;
-  text-decoration:none;
-  transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .2s;
-  position:relative;
-  opacity:0;transform:translateX(-12px);
+/* Scrollable middle, sticky footer */
+.mobile-menu-nav{
+  flex:1;min-height:0;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent;
+  padding-right:4px;
 }
-.mobile-menu.open .mobile-menu-link{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
-.mobile-menu.open .mobile-menu-link:nth-child(1){animation-delay:.08s}
-.mobile-menu.open .mobile-menu-link:nth-child(2){animation-delay:.14s}
-.mobile-menu.open .mobile-menu-link:nth-child(3){animation-delay:.20s}
-.mobile-menu.open .mobile-menu-link:nth-child(4){animation-delay:.26s}
-.mobile-menu.open .mobile-menu-link:nth-child(5){animation-delay:.32s}
-.mobile-menu.open .mobile-menu-link:nth-child(6){animation-delay:.38s}
-@keyframes mmLinkIn{to{opacity:1;transform:translateX(0)}}
-.mobile-menu-link:hover{padding-left:20px;color:var(--coral-dark)}
-.mobile-menu-link-num{
+.mobile-menu-nav::-webkit-scrollbar{width:5px}
+.mobile-menu-nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+
+/* Grouped sections — adapted from Grace structure, restyled coral-modern */
+.mm-section{
+  padding:22px 0 18px;
+  border-top:1px solid var(--line);
+  opacity:0;transform:translateY(8px);
+}
+.mm-section:first-child{border-top:none;padding-top:4px}
+.mobile-menu.open .mm-section{animation:mmSectionIn .5s cubic-bezier(.4,0,.2,1) forwards}
+.mobile-menu.open .mm-section:nth-child(1){animation-delay:.10s}
+.mobile-menu.open .mm-section:nth-child(2){animation-delay:.20s}
+.mobile-menu.open .mm-section:nth-child(3){animation-delay:.30s}
+@keyframes mmSectionIn{to{opacity:1;transform:translateY(0)}}
+
+.mm-section-label{
+  display:flex;align-items:center;gap:10px;
   font-family:var(--font-body);
-  font-size:.72rem;font-weight:700;color:var(--muted);
-  letter-spacing:1.6px;
-  flex-shrink:0;width:30px;
-  transition:color .2s;
+  font-size:.66rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:2.4px;
+  color:var(--coral-dark);
+  margin-bottom:14px;
 }
-.mobile-menu-link:hover .mobile-menu-link-num{color:var(--coral)}
-.mobile-menu-link-text{flex:1}
-.mobile-menu-link-arrow{
-  opacity:0;transform:translateX(-8px);
-  transition:opacity .25s, transform .25s;
-  stroke:var(--coral);fill:none;stroke-width:2.2;
+.mm-section-label::before{
+  content:'';
+  width:14px;height:2px;
+  background:var(--coral);
+  border-radius:2px;
   flex-shrink:0;
 }
-.mobile-menu-link:hover .mobile-menu-link-arrow{opacity:1;transform:translateX(0)}
-.mobile-menu-footer{margin-top:40px;padding-top:32px;opacity:0}
-.mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.46s}
+.mm-link{
+  display:block;
+  padding:11px 0;
+  font-family:var(--font-head);
+  font-size:1.28rem;font-weight:600;
+  color:var(--ink);
+  letter-spacing:-.018em;
+  text-decoration:none;
+  transition:color .18s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+.mm-link:hover{
+  color:var(--coral-dark);
+  transform:translateX(6px);
+}
+
+/* Sticky bottom CTA — light + integrated */
+.mobile-menu-footer{
+  flex-shrink:0;
+  padding:18px 0 4px;
+  margin-top:8px;
+  border-top:1px solid var(--line);
+  opacity:0;
+}
+.mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.42s}
 @keyframes mmFooterIn{to{opacity:1}}
 .mobile-menu-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:16px 32px;border-radius:100px;
+  display:flex;width:100%;align-items:center;justify-content:center;gap:10px;
+  padding:18px 28px;border-radius:100px;
   background:linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
   color:var(--white);
   font-family:var(--font-body);font-size:1rem;font-weight:700;
+  letter-spacing:-.005em;
   text-decoration:none;
-  box-shadow:0 8px 28px rgba(255,116,82,.36), inset 0 1px 0 rgba(255,255,255,.22);
-  transition:transform .15s, box-shadow .2s;
+  box-shadow:
+    0 12px 36px rgba(255,116,82,.36),
+    0 0 0 4px rgba(255,116,82,.06),
+    inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .15s, box-shadow .22s, background .2s;
 }
 .mobile-menu-cta:hover{
   transform:translateY(-2px);
-  box-shadow:0 14px 36px rgba(240,101,67,.46), inset 0 1px 0 rgba(255,255,255,.22);
+  box-shadow:
+    0 16px 44px rgba(240,101,67,.46),
+    0 0 0 6px rgba(255,116,82,.10),
+    inset 0 1px 0 rgba(255,255,255,.22);
 }
-.mobile-menu-cta svg{stroke:currentColor;fill:none;stroke-width:2.4}
-.mobile-menu-tagline{
-  font-size:.92rem;color:var(--muted);
-  margin-top:22px;max-width:380px;line-height:1.6;
-}
-.mobile-menu-social{display:flex;gap:10px;margin-top:20px}
-.mobile-menu-social a{
-  width:40px;height:40px;border-radius:50%;
-  background:var(--white);border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--muted);
-  transition:background .15s, color .15s, border-color .15s, transform .15s;
-}
-.mobile-menu-social a:hover{
-  background:var(--coral);border-color:var(--coral);color:var(--white);
-  transform:translateY(-2px);
-}
-.mobile-menu-social svg{stroke:currentColor;fill:none;stroke-width:2;width:16px;height:16px}
+.mobile-menu-cta svg{stroke:currentColor;fill:none;stroke-width:2.6}
+
 body.menu-open{overflow:hidden}
 @media(max-width:600px){
-  .mobile-menu-inner{padding:20px 24px 28px;width:340px}
-  .mobile-menu-header{margin-bottom:28px}
+  .mobile-menu-inner{padding:18px 22px 18px;width:340px}
+  .mobile-menu-header{margin-bottom:24px}
   .mobile-menu-logo-img{height:42px}
-  .mobile-menu-link{padding:15px 2px;font-size:1.15rem}
-  .mobile-menu-link-num{width:22px;font-size:.64rem}
+  .mm-section{padding:18px 0 14px}
+  .mm-link{font-size:1.18rem;padding:9px 0}
+  .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
 }
 
 /* ── HERO ──────────────────────────────────────────── */
@@ -1208,55 +1221,36 @@ footer{
     </header>
 
     <nav class="mobile-menu-nav" aria-label="Primary">
-      <a href="index.html" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">01</span>
-        <span class="mobile-menu-link-text">Home</span>
-        <svg class="mobile-menu-link-arrow" width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="index.html#campaigns" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">02</span>
-        <span class="mobile-menu-link-text">Campaigns</span>
-        <svg class="mobile-menu-link-arrow" width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="index.html#how" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">03</span>
-        <span class="mobile-menu-link-text">How it works</span>
-        <svg class="mobile-menu-link-arrow" width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="index.html#impact" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">04</span>
-        <span class="mobile-menu-link-text">Impact</span>
-        <svg class="mobile-menu-link-arrow" width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="index.html#stories" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">05</span>
-        <span class="mobile-menu-link-text">Stories</span>
-        <svg class="mobile-menu-link-arrow" width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="donate.html" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">06</span>
-        <span class="mobile-menu-link-text">Donate</span>
-        <svg class="mobile-menu-link-arrow" width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
+
+      <section class="mm-section">
+        <h3 class="mm-section-label">Explore</h3>
+        <a href="index.html" class="mm-link">Home</a>
+        <a href="index.html#campaigns" class="mm-link">Campaigns</a>
+        <a href="index.html#stories" class="mm-link">Stories</a>
+        <a href="index.html#impact" class="mm-link">Impact</a>
+      </section>
+
+      <section class="mm-section">
+        <h3 class="mm-section-label">Get Involved</h3>
+        <a href="donate.html" class="mm-link">Start Helping</a>
+        <a href="donate.html" class="mm-link">Start a Campaign</a>
+        <a href="index.html#how" class="mm-link">How It Works</a>
+      </section>
+
+      <section class="mm-section">
+        <h3 class="mm-section-label">Company</h3>
+        <a href="#" class="mm-link">About</a>
+        <a href="#" class="mm-link">Contact</a>
+        <a href="#" class="mm-link">Privacy Policy</a>
+      </section>
+
     </nav>
 
     <footer class="mobile-menu-footer">
       <a href="donate.html" class="mobile-menu-cta">
-        Start Helping
-        <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Donate Now
       </a>
-      <p class="mobile-menu-tagline">Lifting lives, one donation at a time. Real causes. Real impact. Zero noise.</p>
-      <div class="mobile-menu-social">
-        <a href="#" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="#" aria-label="Twitter">
-          <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-        </a>
-        <a href="#" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        </a>
-      </div>
     </footer>
   </div>
 </div>
@@ -1776,7 +1770,7 @@ footer{
   close.addEventListener('click', closeMenu);
   // Click on backdrop (anywhere outside the drawer panel) closes
   menu.addEventListener('click', e => { if (e.target === menu) closeMenu(); });
-  menu.querySelectorAll('.mobile-menu-link, .mobile-menu-cta, .mobile-menu-logo').forEach(a => a.addEventListener('click', closeMenu));
+  menu.querySelectorAll('.mm-link, .mobile-menu-cta, .mobile-menu-logo').forEach(a => a.addEventListener('click', closeMenu));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu(); });
 })();
 
