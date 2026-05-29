@@ -696,24 +696,40 @@ body.menu-open{overflow:hidden}
 }
 .pd-promo-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(240,101,67,.40)}
 
-/* Mobile: preserve the 3-card fan layout instead of hiding the side
-   cards. Cards shrink, overlap heavily through negative margins so the
-   side cards peek out from behind the main one. .pd-promo gets
-   overflow:hidden in case any rotation bleeds slightly past the card. */
+/* Mobile: the outer .pd-promo card was caging the fan into a too-small
+   inner width, making the side cards barely peek. Drop the box on
+   mobile and let the section bleed to the viewport edges (same trick
+   as .pd-words) so the fan has the full viewport width to breathe and
+   the side cards can sit at a natural offset behind the main one. */
 @media(max-width:768px){
-  .pd-promo{padding:32px 16px 28px;overflow:hidden}
-  .pd-promo-sub{margin-bottom:22px}
-  .pd-promo-fan{gap:0;min-height:330px}
+  .pd-promo{
+    background:transparent;
+    border:none;
+    border-radius:0;
+    /* Pull past the .pd-conteudo 24px horizontal padding so the section
+       reaches the viewport edges */
+    margin:0 -24px;
+    padding:36px 24px 32px;
+    overflow:hidden;
+    text-align:center;
+  }
+  /* The fan itself bleeds even further so it spans the full viewport
+     while the title + sub above it stay inside the 24px padding */
+  .pd-promo-fan{
+    margin:0 -24px;
+    gap:0;
+    min-height:340px;
+  }
   .pd-promo-card-left,
   .pd-promo-card-right{display:flex}
   .pd-promo-card{flex:0 0 180px;width:180px}
   .pd-promo-card-left{
-    margin-right:-105px;
+    margin-right:-110px;
     z-index:1;
     transform:rotate(-7deg) translateY(8px);
   }
   .pd-promo-card-right{
-    margin-left:-105px;
+    margin-left:-110px;
     z-index:1;
     transform:rotate(7deg) translateY(8px);
   }
@@ -724,11 +740,14 @@ body.menu-open{overflow:hidden}
   }
 }
 @media(max-width:600px){
-  .pd-promo{padding:28px 12px 24px}
+  /* Smaller phones: tighten the cards a hair so the main card stays
+     comfortable centered without crowding the side previews */
+  .pd-promo{padding:32px 20px 28px}
+  .pd-promo-fan{margin:0 -20px}
   .pd-promo-card{flex:0 0 160px;width:160px}
-  .pd-promo-card-main{flex:0 0 180px;width:180px}
-  .pd-promo-card-left{margin-right:-95px}
-  .pd-promo-card-right{margin-left:-95px}
+  .pd-promo-card-main{flex:0 0 185px;width:185px}
+  .pd-promo-card-left{margin-right:-100px}
+  .pd-promo-card-right{margin-left:-100px}
 }
 
 /* ── DEFINE GRADIENT ID FOR RING STROKES ───────────── */
