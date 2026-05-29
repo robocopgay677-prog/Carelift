@@ -655,9 +655,12 @@ body.menu-open{overflow:hidden}
   width:100%;height:140px;
   background:var(--surface) center/cover no-repeat;
 }
-.pd-promo-card-left  .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80')}
-.pd-promo-card-main  .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80')}
-.pd-promo-card-right .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80')}
+/* All 3 promo cards show the SAME current campaign — they're just
+   styled previews of how this campaign would look when shared */
+.pd-promo-card .pd-promo-img{background-image:url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80')}
+/* And the entire promo section is decorative — no clicks pass through */
+.pd-promo-card,
+.pd-promo-btn{pointer-events:none;cursor:default}
 .pd-promo-corpo{padding:14px 16px 16px}
 .pd-promo-titulo-card{
   font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--ink);
@@ -693,10 +696,39 @@ body.menu-open{overflow:hidden}
 }
 .pd-promo-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(240,101,67,.40)}
 
+/* Mobile: preserve the 3-card fan layout instead of hiding the side
+   cards. Cards shrink, overlap heavily through negative margins so the
+   side cards peek out from behind the main one. .pd-promo gets
+   overflow:hidden in case any rotation bleeds slightly past the card. */
+@media(max-width:768px){
+  .pd-promo{padding:32px 16px 28px;overflow:hidden}
+  .pd-promo-sub{margin-bottom:22px}
+  .pd-promo-fan{gap:0;min-height:330px}
+  .pd-promo-card-left,
+  .pd-promo-card-right{display:flex}
+  .pd-promo-card{flex:0 0 180px;width:180px}
+  .pd-promo-card-left{
+    margin-right:-105px;
+    z-index:1;
+    transform:rotate(-7deg) translateY(8px);
+  }
+  .pd-promo-card-right{
+    margin-left:-105px;
+    z-index:1;
+    transform:rotate(7deg) translateY(8px);
+  }
+  .pd-promo-card-main{
+    z-index:2;
+    transform:translateY(-8px);
+    flex:0 0 200px;width:200px;
+  }
+}
 @media(max-width:600px){
-  .pd-promo-fan{gap:6px;min-height:auto}
-  .pd-promo-card-left,.pd-promo-card-right{display:none}
-  .pd-promo-card-main{flex:0 0 100%;width:100%;transform:none}
+  .pd-promo{padding:28px 12px 24px}
+  .pd-promo-card{flex:0 0 160px;width:160px}
+  .pd-promo-card-main{flex:0 0 180px;width:180px}
+  .pd-promo-card-left{margin-right:-95px}
+  .pd-promo-card-right{margin-left:-95px}
 }
 
 /* ── DEFINE GRADIENT ID FOR RING STROKES ───────────── */
@@ -1336,24 +1368,24 @@ body.menu-open{overflow:hidden}
           <article class="pd-promo-card pd-promo-card-left" aria-hidden="true">
             <div class="pd-promo-img"></div>
             <div class="pd-promo-corpo">
-              <h4 class="pd-promo-titulo-card">A safe home for 9 families displaced by the floods</h4>
+              <h4 class="pd-promo-titulo-card">Help Maria finish her cancer treatment this winter</h4>
               <div class="pd-promo-org">
-                <span class="pd-promo-org-avatar">CA</span>
-                <span class="pd-promo-org-by">by <span>Casa Aberta</span></span>
+                <span class="pd-promo-org-avatar">MR</span>
+                <span class="pd-promo-org-by">by <span>Marta Ribeiro</span></span>
               </div>
               <div class="pd-promo-prog">
                 <div>
-                  <div class="pd-promo-prog-valor">$31,800</div>
-                  <div class="pd-promo-prog-label">raised of $40,000</div>
+                  <div class="pd-promo-prog-valor">$18,420</div>
+                  <div class="pd-promo-prog-label">raised of $25,000</div>
                 </div>
                 <div class="pd-promo-prog-ring">
                   <svg viewBox="0 0 56 56">
                     <circle class="pd-promo-ring-bg" cx="28" cy="28" r="24"/>
                     <circle class="pd-promo-ring-fill" cx="28" cy="28" r="24"
-                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="31.7"
+                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="39.2"
                             transform="rotate(-90 28 28)"/>
                   </svg>
-                  <div class="pd-promo-ring-pct"><span>79%</span></div>
+                  <div class="pd-promo-ring-pct"><span>74%</span></div>
                 </div>
               </div>
             </div>
@@ -1382,34 +1414,34 @@ body.menu-open{overflow:hidden}
                   <div class="pd-promo-ring-pct"><span>74%</span></div>
                 </div>
               </div>
-              <a href="donate.html" class="pd-promo-btn">
+              <span class="pd-promo-btn" aria-hidden="true">
                 Donate now!
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
+              </span>
             </div>
           </article>
 
           <article class="pd-promo-card pd-promo-card-right" aria-hidden="true">
             <div class="pd-promo-img"></div>
             <div class="pd-promo-corpo">
-              <h4 class="pd-promo-titulo-card">Send 120 girls back to school with full supply kits</h4>
+              <h4 class="pd-promo-titulo-card">Help Maria finish her cancer treatment this winter</h4>
               <div class="pd-promo-org">
-                <span class="pd-promo-org-avatar">DK</span>
-                <span class="pd-promo-org-by">by <span>Bright Futures</span></span>
+                <span class="pd-promo-org-avatar">MR</span>
+                <span class="pd-promo-org-by">by <span>Marta Ribeiro</span></span>
               </div>
               <div class="pd-promo-prog">
                 <div>
-                  <div class="pd-promo-prog-valor">$8,240</div>
-                  <div class="pd-promo-prog-label">raised of $14,000</div>
+                  <div class="pd-promo-prog-valor">$18,420</div>
+                  <div class="pd-promo-prog-label">raised of $25,000</div>
                 </div>
                 <div class="pd-promo-prog-ring">
                   <svg viewBox="0 0 56 56">
                     <circle class="pd-promo-ring-bg" cx="28" cy="28" r="24"/>
                     <circle class="pd-promo-ring-fill" cx="28" cy="28" r="24"
-                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="63.3"
+                            stroke="url(#cpRingGrad)" stroke-dasharray="150.8" stroke-dashoffset="39.2"
                             transform="rotate(-90 28 28)"/>
                   </svg>
-                  <div class="pd-promo-ring-pct"><span>58%</span></div>
+                  <div class="pd-promo-ring-pct"><span>74%</span></div>
                 </div>
               </div>
             </div>
