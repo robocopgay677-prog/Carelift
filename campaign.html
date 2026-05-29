@@ -722,32 +722,42 @@ body.menu-open{overflow:hidden}
   }
   .pd-promo-card-left,
   .pd-promo-card-right{display:flex}
-  .pd-promo-card{flex:0 0 180px;width:180px}
+  .pd-promo-card{flex:0 0 190px;width:190px}
+  /* Lighter overlap so each side card stays about half visible —
+     enough to read the photo + first chunk of the title, matching
+     the balanced fan in the reference */
   .pd-promo-card-left{
-    margin-right:-110px;
+    margin-right:-95px;
     z-index:1;
     transform:rotate(-7deg) translateY(8px);
   }
   .pd-promo-card-right{
-    margin-left:-110px;
+    margin-left:-95px;
     z-index:1;
     transform:rotate(7deg) translateY(8px);
   }
   .pd-promo-card-main{
     z-index:2;
     transform:translateY(-8px);
-    flex:0 0 200px;width:200px;
+    flex:0 0 210px;width:210px;
   }
 }
 @media(max-width:600px){
-  /* Smaller phones: tighten the cards a hair so the main card stays
-     comfortable centered without crowding the side previews */
+  /* Narrower phones: scale cards down proportionally but keep the
+     same ~50% side-card visibility */
   .pd-promo{padding:32px 20px 28px}
   .pd-promo-fan{margin:0 -20px}
-  .pd-promo-card{flex:0 0 160px;width:160px}
-  .pd-promo-card-main{flex:0 0 185px;width:185px}
-  .pd-promo-card-left{margin-right:-100px}
-  .pd-promo-card-right{margin-left:-100px}
+  .pd-promo-card{flex:0 0 170px;width:170px}
+  .pd-promo-card-main{flex:0 0 190px;width:190px}
+  .pd-promo-card-left{margin-right:-85px}
+  .pd-promo-card-right{margin-left:-85px}
+}
+@media(max-width:380px){
+  /* Compact phones: pull in a touch more to avoid edge clipping */
+  .pd-promo-card{flex:0 0 158px;width:158px}
+  .pd-promo-card-main{flex:0 0 178px;width:178px}
+  .pd-promo-card-left{margin-right:-80px}
+  .pd-promo-card-right{margin-left:-80px}
 }
 
 /* ── DEFINE GRADIENT ID FOR RING STROKES ───────────── */
