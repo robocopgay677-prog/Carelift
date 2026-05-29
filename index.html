@@ -195,6 +195,7 @@ nav{
 .mobile-menu-close svg{stroke:currentColor;fill:none}
 /* Scrollable middle, sticky footer */
 .mobile-menu-nav{
+  display:flex;flex-direction:column;
   flex:1;min-height:0;
   overflow-y:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:thin;
@@ -207,7 +208,8 @@ nav{
 /* Large editorial vertical navigation — numbered, soft dividers,
    inspired by Grace's spacing rhythm but in Carelift's coral system */
 .mobile-menu-link{
-  display:flex;align-items:center;gap:22px;
+  display:flex;width:100%;box-sizing:border-box;
+  align-items:center;gap:22px;
   padding:24px 4px;
   border-bottom:1px solid var(--line);
   font-family:var(--font-head);
@@ -219,6 +221,7 @@ nav{
   transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .22s;
   position:relative;
   opacity:0;transform:translateX(-12px);
+  flex:0 0 auto;
 }
 .mobile-menu-link:last-child{border-bottom:none}
 .mobile-menu-link:hover{
