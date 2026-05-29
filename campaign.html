@@ -216,6 +216,18 @@ body.menu-open{overflow:hidden}
   box-shadow:0 14px 36px rgba(45,49,53,.16);
   z-index:48;
   align-items:center;gap:14px;
+  /* Smart scroll behavior — hidden until the original progress block
+     scrolls out of view, then fades up. The .visible class is toggled
+     by an IntersectionObserver further down. */
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(20px);
+  transition:opacity .35s ease, transform .42s cubic-bezier(.4,0,.2,1);
+}
+.pd-sticky.visible{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
 }
 .pd-sticky-topo{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
 .pd-sticky-circulo{
@@ -1724,6 +1736,55 @@ document.addEventListener('DOMContentLoaded', () => {
   // First swap shortly after load so users see it animate
   step();
   setInterval(step, 3200);
+})();
+
+// ── Smart sticky donate bar: IntersectionObserver-driven visibility ──
+// • Hidden while the original .pd-progresso-bloco is in view
+// • Visible after the user scrolls past it (story / donations / etc.)
+// • Hidden again when the trust block (near the page end) appears,
+//   so it never overlaps the footer or the showcase rail
+(function(){
+  const sticky    = document.getElementById('pdSticky');
+  const original  = document.querySelector('.pd-progresso-bloco');
+  const endMark   = document.querySelector('.pd-trust-bloco');
+  if (!sticky || !original) return;
+  // Skip the whole thing on desktop where the .pd-sidebar handles
+  // persistent donate access; bail if the bar is display:none
+  if (getComputedStyle(sticky).display === 'none') return;
+
+  let originalState = 'in-view';   // 'in-view' | 'scrolled-past' | 'not-reached'
+  let endReached    = false;
+
+  function update(){
+    const shouldShow = originalState === 'scrolled-past' && !endReached;
+    sticky.classList.toggle('visible', shouldShow);
+  }
+
+  // Original section observer: track which side of the viewport it's on
+  const originalObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        originalState = 'in-view';
+      } else if (entry.boundingClientRect.bottom <= 0) {
+        originalState = 'scrolled-past';   // user has scrolled past it
+      } else {
+        originalState = 'not-reached';     // it's still below the viewport
+      }
+      update();
+    });
+  }, { rootMargin: '0px 0px -40px 0px', threshold: 0 });
+  originalObserver.observe(original);
+
+  // End-of-page observer: hide the bar once trust / footer area appears
+  if (endMark) {
+    const endObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        endReached = entry.isIntersecting;
+        update();
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: 0 });
+    endObserver.observe(endMark);
+  }
 })();
 
 // ── Description toggle ──
