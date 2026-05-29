@@ -921,6 +921,21 @@ body.menu-open{overflow:hidden}
     justify-content:space-between;
     padding:8px 14px;
   }
+  /* Description loses its inner-card chrome on mobile — text flows
+     directly over the warm conteudo surface */
+  .pd-descricao-bloco{
+    background:transparent;
+    border:none;
+    padding:0;
+  }
+}
+
+/* Rotating donor name inside the ticker pill — soft fade transition */
+.pd-val-ticker-text{
+  transition:opacity .42s ease;
+  display:inline-block;
+  text-align:center;
+  flex:1;
 }
 
 @media(max-width:600px){
@@ -1585,6 +1600,35 @@ document.addEventListener('DOMContentLoaded', () => {
     c.setAttribute('stroke-dashoffset', String(offset));
   });
 });
+
+// ── Rotating donor name in the ticker pill (fades through recent donors) ──
+(function(){
+  const el = document.querySelector('.pd-val-ticker-text');
+  if (!el) return;
+  const donors = [
+    { name:'Marie S.',          amount: 25  },
+    { name:'Daniel T.',         amount: 100 },
+    { name:'Priya R.',          amount: 50  },
+    { name:'Ana L.',            amount: 300 },
+    { name:'Kenji A.',          amount: 75  },
+    { name:'Matheus Pacheco',   amount: 100 },
+    { name:'Sofia M.',          amount: 40  },
+    { name:'David K.',          amount: 200 }
+  ];
+  let idx = 0;
+  function step(){
+    el.style.opacity = '0';
+    setTimeout(() => {
+      const d = donors[idx];
+      el.textContent = d.name + ' donated $' + d.amount;
+      el.style.opacity = '1';
+      idx = (idx + 1) % donors.length;
+    }, 420); // matches the CSS transition duration
+  }
+  // First swap shortly after load so users see it animate
+  step();
+  setInterval(step, 3200);
+})();
 
 // ── Description toggle ──
 document.getElementById('pdDescricaoToggle').addEventListener('click', () => {
