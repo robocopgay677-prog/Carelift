@@ -355,14 +355,11 @@ body.menu-open{overflow:hidden}
 
 /* ── PROGRESS BLOCK ────────────────────────────────── */
 .pd-progresso-bloco{
-  display:flex;flex-direction:column;gap:16px;
+  display:flex;align-items:center;gap:24px;
   padding:24px;
   background:var(--white);
   border:1px solid var(--line);
   border-radius:var(--r-md);
-}
-.pd-progresso-top{
-  display:flex;align-items:center;gap:24px;
 }
 .pd-circulo-wrap{position:relative;width:96px;height:96px;flex-shrink:0}
 .pd-circulo-wrap svg{width:100%;height:100%}
@@ -912,14 +909,6 @@ body.menu-open{overflow:hidden}
     background:transparent;
     border:none;
     padding:0;
-    gap:14px;
-  }
-  /* Donor pill stretches full-width below the ring+values row */
-  .pd-val-ticker{
-    display:flex;
-    align-self:stretch;
-    justify-content:space-between;
-    padding:8px 14px;
   }
   /* Description loses its inner-card chrome on mobile — text flows
      directly over the warm conteudo surface */
@@ -930,12 +919,12 @@ body.menu-open{overflow:hidden}
   }
 }
 
-/* Rotating donor name inside the ticker pill — soft fade transition */
+/* Rotating donor name inside the ticker pill — soft fade transition.
+   Ticker itself stays a compact inline-flex pill, sitting naturally
+   below the raised + goal lines inside .pd-valores-lado */
 .pd-val-ticker-text{
   transition:opacity .42s ease;
   display:inline-block;
-  text-align:center;
-  flex:1;
 }
 
 @media(max-width:600px){
@@ -1102,27 +1091,25 @@ body.menu-open{overflow:hidden}
 
       <!-- Progress block -->
       <div class="pd-progresso-bloco">
-        <div class="pd-progresso-top">
-          <div class="pd-circulo-wrap">
-            <svg viewBox="0 0 88 88">
-              <circle class="circ-bg" cx="44" cy="44" r="37"/>
-              <circle class="circ-fill" cx="44" cy="44" r="37"
-                      stroke="url(#cpRingGrad)" transform="rotate(-90 44 44)"/>
-            </svg>
-            <div class="circ-centro"><span class="circ-centro-pct">74%</span></div>
-          </div>
-          <div class="pd-valores-lado">
-            <div class="pd-val-arrecadado">$18,420 <span class="pd-val-raised-suffix">raised</span></div>
-            <div class="pd-val-meta">of $25,000 goal</div>
-          </div>
+        <div class="pd-circulo-wrap">
+          <svg viewBox="0 0 88 88">
+            <circle class="circ-bg" cx="44" cy="44" r="37"/>
+            <circle class="circ-fill" cx="44" cy="44" r="37"
+                    stroke="url(#cpRingGrad)" transform="rotate(-90 44 44)"/>
+          </svg>
+          <div class="circ-centro"><span class="circ-centro-pct">74%</span></div>
         </div>
-        <a class="pd-val-ticker" href="#donations">
-          <span class="pd-val-ticker-icon" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-          </span>
-          <span class="pd-val-ticker-text">312 people have donated</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-        </a>
+        <div class="pd-valores-lado">
+          <div class="pd-val-arrecadado">$18,420 <span class="pd-val-raised-suffix">raised</span></div>
+          <div class="pd-val-meta">of $25,000 goal</div>
+          <a class="pd-val-ticker" href="#donations">
+            <span class="pd-val-ticker-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            </span>
+            <span class="pd-val-ticker-text">312 people have donated</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- Action buttons -->
