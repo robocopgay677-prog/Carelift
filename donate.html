@@ -128,51 +128,49 @@ nav.site-nav{
   flex:1;min-height:0;
   overflow-y:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;
-  padding-right:4px;
+  padding:4px 4px 8px 0;
 }
 .mobile-menu-nav::-webkit-scrollbar{width:5px}
 .mobile-menu-nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
 
-.mm-section{
-  padding:22px 0 18px;
-  border-top:1px solid var(--line);
-  opacity:0;transform:translateY(8px);
+.mobile-menu-link{
+  display:flex;align-items:center;gap:22px;
+  padding:24px 4px;
+  border-bottom:1px solid var(--line);
+  font-family:var(--font-head);
+  font-size:clamp(1.55rem, 5vw, 2rem);
+  font-weight:700;color:var(--ink);
+  letter-spacing:-.025em;text-decoration:none;
+  transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .22s;
+  position:relative;
+  opacity:0;transform:translateX(-12px);
 }
-.mm-section:first-child{border-top:none;padding-top:4px}
-.mobile-menu.open .mm-section{animation:mmSectionIn .5s cubic-bezier(.4,0,.2,1) forwards}
-.mobile-menu.open .mm-section:nth-child(1){animation-delay:.10s}
-.mobile-menu.open .mm-section:nth-child(2){animation-delay:.20s}
-.mobile-menu.open .mm-section:nth-child(3){animation-delay:.30s}
-@keyframes mmSectionIn{to{opacity:1;transform:translateY(0)}}
+.mobile-menu-link:last-child{border-bottom:none}
+.mobile-menu-link:hover{padding-left:16px;color:var(--coral-dark)}
+.mobile-menu-link-num{
+  font-family:var(--font-body);font-size:.68rem;font-weight:700;
+  color:var(--muted);letter-spacing:2.4px;
+  flex-shrink:0;width:28px;transition:color .22s;
+}
+.mobile-menu-link:hover .mobile-menu-link-num{color:var(--coral)}
+.mobile-menu-link-text{flex:1;line-height:1.1}
 
-.mm-section-label{
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--font-body);
-  font-size:.66rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:2.4px;
-  color:var(--coral-dark);
-  margin-bottom:14px;
-}
-.mm-section-label::before{
-  content:'';width:14px;height:2px;
-  background:var(--coral);border-radius:2px;flex-shrink:0;
-}
-.mm-link{
-  display:block;padding:11px 0;
-  font-family:var(--font-head);font-size:1.28rem;font-weight:600;
-  color:var(--ink);letter-spacing:-.018em;
-  text-decoration:none;
-  transition:color .18s, transform .25s cubic-bezier(.4,0,.2,1);
-}
-.mm-link:hover{color:var(--coral-dark);transform:translateX(6px)}
+.mobile-menu.open .mobile-menu-link{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
+.mobile-menu.open .mobile-menu-link:nth-child(1){animation-delay:.08s}
+.mobile-menu.open .mobile-menu-link:nth-child(2){animation-delay:.14s}
+.mobile-menu.open .mobile-menu-link:nth-child(3){animation-delay:.20s}
+.mobile-menu.open .mobile-menu-link:nth-child(4){animation-delay:.26s}
+.mobile-menu.open .mobile-menu-link:nth-child(5){animation-delay:.32s}
+.mobile-menu.open .mobile-menu-link:nth-child(6){animation-delay:.38s}
+@keyframes mmLinkIn{to{opacity:1;transform:translateX(0)}}
 
 .mobile-menu-footer{
   flex-shrink:0;
-  padding:18px 0 4px;margin-top:8px;
+  padding:22px 0 4px;margin-top:10px;
   border-top:1px solid var(--line);
   opacity:0;
 }
-.mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.42s}
+.mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.46s}
 @keyframes mmFooterIn{to{opacity:1}}
 .mobile-menu-cta{
   display:flex;width:100%;align-items:center;justify-content:center;gap:10px;
@@ -194,8 +192,8 @@ body.menu-open{overflow:hidden}
   .mobile-menu-inner{padding:18px 22px 18px;width:340px}
   .mobile-menu-header{margin-bottom:24px}
   .mobile-menu-logo-img{height:42px}
-  .mm-section{padding:18px 0 14px}
-  .mm-link{font-size:1.18rem;padding:9px 0}
+  .mobile-menu-link{padding:20px 4px;font-size:1.5rem}
+  .mobile-menu-link-num{width:24px;font-size:.64rem}
   .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
 }
 
@@ -560,29 +558,30 @@ body.menu-open{overflow:hidden}
     </header>
 
     <nav class="mobile-menu-nav" aria-label="Primary">
-
-      <section class="mm-section">
-        <h3 class="mm-section-label">Explore</h3>
-        <a href="index.html" class="mm-link">Home</a>
-        <a href="index.html#campaigns" class="mm-link">Campaigns</a>
-        <a href="index.html#stories" class="mm-link">Stories</a>
-        <a href="index.html#impact" class="mm-link">Impact</a>
-      </section>
-
-      <section class="mm-section">
-        <h3 class="mm-section-label">Get Involved</h3>
-        <a href="donate.html" class="mm-link">Start Helping</a>
-        <a href="donate.html" class="mm-link">Start a Campaign</a>
-        <a href="index.html#how" class="mm-link">How It Works</a>
-      </section>
-
-      <section class="mm-section">
-        <h3 class="mm-section-label">Company</h3>
-        <a href="#" class="mm-link">About</a>
-        <a href="#" class="mm-link">Contact</a>
-        <a href="#" class="mm-link">Privacy Policy</a>
-      </section>
-
+      <a href="index.html" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">01</span>
+        <span class="mobile-menu-link-text">Home</span>
+      </a>
+      <a href="index.html#campaigns" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">02</span>
+        <span class="mobile-menu-link-text">Campaigns</span>
+      </a>
+      <a href="index.html#how" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">03</span>
+        <span class="mobile-menu-link-text">How it Works</span>
+      </a>
+      <a href="index.html#impact" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">04</span>
+        <span class="mobile-menu-link-text">Impact</span>
+      </a>
+      <a href="index.html#stories" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">05</span>
+        <span class="mobile-menu-link-text">Stories</span>
+      </a>
+      <a href="donate.html" class="mobile-menu-link">
+        <span class="mobile-menu-link-num">06</span>
+        <span class="mobile-menu-link-text">Donate</span>
+      </a>
     </nav>
 
     <footer class="mobile-menu-footer">
@@ -783,7 +782,7 @@ body.menu-open{overflow:hidden}
   open.addEventListener('click', openMenu);
   close.addEventListener('click', closeMenu);
   menu.addEventListener('click', e => { if (e.target === menu) closeMenu(); });
-  menu.querySelectorAll('.mm-link, .mobile-menu-cta, .mobile-menu-logo').forEach(a => a.addEventListener('click', closeMenu));
+  menu.querySelectorAll('.mobile-menu-link, .mobile-menu-cta, .mobile-menu-logo').forEach(a => a.addEventListener('click', closeMenu));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu(); });
 })();
 
