@@ -688,11 +688,53 @@ body.menu-open{overflow:hidden}
 @media(max-width:600px){
   .disc-filter-box{left:auto;right:0}
 }
-@media(max-width:600px){
-  .disc-layout{grid-template-columns:1fr}
-  .dc-featured{grid-column:1;min-height:340px}
-  .dc-small{min-height:280px}
+/* MOBILE: convert the 1+4 grid into a horizontal swipeable rail so the
+   campaigns occupy way less vertical space — peek of the next card is
+   intentional so users discover the swipe affordance. Applies to both
+   the Discover section and the Urgent section since both use .disc-layout. */
+@media(max-width:768px){
+  .disc-layout{
+    display:flex;
+    flex-direction:row;
+    grid-template-columns:none;
+    grid-template-rows:none;
+    height:auto;
+    gap:14px;
+    overflow-x:auto;
+    overflow-y:visible;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    scroll-padding-left:5%;
+    /* Extend the rail to the viewport edges so the peek + snap feel natural */
+    margin:0 -5%;
+    padding:6px 5% 18px;
+    scrollbar-width:none;
+  }
+  .disc-layout::-webkit-scrollbar{display:none}
+
+  /* Both card types become flex snap items at 80% of viewport so
+     the next card peeks ~17% on the right */
+  .dc-featured,
+  .dc-small{
+    grid-column:auto;
+    grid-row:auto;
+    flex:0 0 80%;
+    min-height:auto;
+    scroll-snap-align:start;
+  }
+
+  /* Normalize image area heights so featured + small read uniformly
+     in the horizontal rail */
+  .dc-featured .dcf-img,
+  .dc-small .dcs-img{
+    min-height:220px;
+    flex:1 1 220px;
+  }
+
   .disc-header{flex-direction:column;align-items:flex-start;gap:18px}
+}
+@media(max-width:600px){
+  .disc-filter-box{left:auto;right:0}
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1788,6 +1830,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     card.appendChild(btn);
   });
+})();
+
+// ── Discover prev/next arrows: scroll the mobile rail by one card width ──
+(function(){
+  const layout = document.querySelector('.disc-section .disc-layout');
+  if (!layout) return;
+  const arrows = document.querySelectorAll('.disc-section .disc-arrows .disc-arrow');
+  if (arrows.length < 2) return;
+
+  function step(direction){
+    const first = layout.firstElementChild;
+    if (!first) return;
+    const cardWidth = first.getBoundingClientRect().width;
+    layout.scrollBy({ left: direction * (cardWidth + 14), behavior:'smooth' });
+  }
+  arrows[0].addEventListener('click', () => step(-1));
+  arrows[1].addEventListener('click', () => step(1));
 })();
 
 // ── Filter dropdown (click pill → toggle box, pick category → update label) ───
