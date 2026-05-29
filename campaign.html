@@ -272,10 +272,22 @@ body.menu-open{overflow:hidden}
   position:absolute;inset:0;
   display:flex;
   transition:transform .5s cubic-bezier(.4,0,.2,1);
+  /* Drag affordance + let the browser keep vertical scroll while we
+     capture horizontal motion ourselves */
+  cursor:grab;
+  touch-action:pan-y;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.pd-img-track.dragging{
+  cursor:grabbing;
+  transition:none;   /* follow the pointer 1:1 during drag */
 }
 .pd-img-slide{
   flex:0 0 100%;width:100%;height:100%;
   background:var(--surface) center/cover no-repeat;
+  -webkit-user-drag:none;
+  user-drag:none;
 }
 .pd-car-btn{
   position:absolute;top:50%;transform:translateY(-50%);
@@ -1633,7 +1645,7 @@ const rail = document.getElementById('csRail');
 document.getElementById('csPrev').addEventListener('click', () => rail.scrollBy({left:-320,behavior:'smooth'}));
 document.getElementById('csNext').addEventListener('click', () => rail.scrollBy({left:320,behavior:'smooth'}));
 
-// ── Image carousel ──
+// ── Image carousel with live drag (mouse + touch via pointer events) ──
 (function(){
   const track = document.getElementById('pdImgTrack');
   const prev  = document.getElementById('pdCarPrev');
@@ -1641,13 +1653,27 @@ document.getElementById('csNext').addEventListener('click', () => rail.scrollBy(
   const dots  = document.querySelectorAll('.pd-car-dot');
   if (!track || !prev || !next) return;
 
+  const container = track.closest('.pd-imagem-container');
   const total = track.children.length;
   let current = 0;
   let autoplay = null;
 
+  // Drag state
+  let isDragging = false;
+  let pointerId = null;
+  let startX = 0;
+  let startY = 0;
+  let dragDx = 0;
+  let lockedAxis = null;  // 'x' once we know the gesture is horizontal
+
+  function containerWidth(){
+    return container.getBoundingClientRect().width;
+  }
+
   function go(idx){
     current = (idx + total) % total;
-    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    track.style.transition = '';                                  // restore CSS default
+    track.style.transform  = 'translateX(' + (-current * 100) + '%)';
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
@@ -1663,21 +1689,79 @@ document.getElementById('csNext').addEventListener('click', () => rail.scrollBy(
   next.addEventListener('click', () => { go(current + 1); startAutoplay(); });
   dots.forEach((d, i) => d.addEventListener('click', () => { go(i); startAutoplay(); }));
 
-  // Touch swipe
-  let touchStart = 0;
-  track.addEventListener('touchstart', e => { touchStart = e.touches[0].clientX; stopAutoplay(); }, {passive:true});
-  track.addEventListener('touchend', e => {
-    const diff = touchStart - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) go(current + (diff > 0 ? 1 : -1));
-    startAutoplay();
-  }, {passive:true});
-
-  // Pause on hover (desktop)
-  const container = track.closest('.pd-imagem-container');
+  // Pause on hover (desktop) — autoplay resumes on leave / after a drag
   if (container) {
     container.addEventListener('mouseenter', stopAutoplay);
     container.addEventListener('mouseleave', startAutoplay);
   }
+
+  // ── Pointer drag (covers mouse + touch + pen) ──
+  track.addEventListener('pointerdown', e => {
+    if (e.button && e.button !== 0) return;     // only left mouse / primary
+    isDragging = true;
+    pointerId  = e.pointerId;
+    startX     = e.clientX;
+    startY     = e.clientY;
+    dragDx     = 0;
+    lockedAxis = null;
+    track.classList.add('dragging');
+    track.setPointerCapture?.(pointerId);
+    stopAutoplay();
+  });
+
+  track.addEventListener('pointermove', e => {
+    if (!isDragging || e.pointerId !== pointerId) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    // Decide gesture axis after a small movement; if vertical wins,
+    // bail so the page can scroll normally
+    if (!lockedAxis) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      lockedAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      if (lockedAxis === 'y') {
+        // Hand the gesture back to the browser for vertical scroll
+        isDragging = false;
+        track.classList.remove('dragging');
+        track.releasePointerCapture?.(pointerId);
+        return;
+      }
+    }
+
+    // Horizontal drag: follow the pointer 1:1 in pixels
+    e.preventDefault();
+    dragDx = dx;
+    const baseTranslatePx = -current * containerWidth();
+    track.style.transform = 'translateX(' + (baseTranslatePx + dragDx) + 'px)';
+  });
+
+  function endPointer(e){
+    if (!isDragging || (e && e.pointerId !== pointerId)) return;
+    isDragging = false;
+    track.releasePointerCapture?.(pointerId);
+    track.classList.remove('dragging');
+
+    if (lockedAxis === 'x') {
+      const threshold = Math.max(40, containerWidth() * 0.18);  // 18% of width, min 40px
+      if (Math.abs(dragDx) > threshold) {
+        go(current + (dragDx < 0 ? 1 : -1));
+      } else {
+        go(current);  // snap back to where we were
+      }
+    } else {
+      go(current);    // no axis lock means no drag happened; just resync
+    }
+    dragDx = 0;
+    lockedAxis = null;
+    startAutoplay();
+  }
+
+  track.addEventListener('pointerup',     endPointer);
+  track.addEventListener('pointercancel', endPointer);
+  track.addEventListener('pointerleave',  endPointer);
+
+  // Block native drag of the image / background just in case
+  track.addEventListener('dragstart', e => e.preventDefault());
 
   startAutoplay();
 })();
