@@ -901,11 +901,20 @@ body.menu-open{overflow:hidden}
   }
   /* Inline title is redundant on mobile — overlay on the image already shows it */
   .pd-conteudo > .pd-titulo{display:none}
+  /* Category badge feels redundant on the mobile detail layout */
+  .pd-badge{display:none}
+  /* Drop the inner-card chrome on the progress block — the conteudo card
+     already provides the container, no need for a nested box */
+  .pd-progresso-bloco{
+    background:transparent;
+    border:none;
+    padding:0;
+  }
 }
 
 @media(max-width:600px){
   /* Smaller-phone tweaks: stack the progress block + buttons, tighten promo fan */
-  .pd-progresso-bloco{flex-direction:column;align-items:flex-start;gap:16px;padding:20px}
+  .pd-progresso-bloco{flex-direction:column;align-items:flex-start;gap:16px}
   .pd-botoes{flex-direction:column}
   .pd-promo-fan{padding:0 6px}
   body{padding-bottom:80px}
