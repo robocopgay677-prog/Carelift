@@ -929,6 +929,21 @@ body.menu-open{overflow:hidden}
     border:none;
     padding:0;
   }
+  /* Words of support: drop the box, bleed edge-to-edge with a soft
+     white-to-paper gradient so it visually separates itself from the
+     boxed Donations section above it without feeling caged */
+  .pd-words{
+    border:none;
+    border-radius:0;
+    /* Pull past the .pd-conteudo 24px horizontal padding so the band
+       reaches the viewport edges */
+    margin:0 -24px;
+    padding:28px 24px 24px;
+    background:linear-gradient(180deg,
+      var(--white) 0%,
+      var(--white) 70%,
+      var(--paper) 100%);
+  }
 }
 
 /* Rotating donor name inside the ticker pill — soft fade transition.
