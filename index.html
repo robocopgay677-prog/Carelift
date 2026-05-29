@@ -709,8 +709,21 @@ body.menu-open{overflow:hidden}
     margin:0 -5%;
     padding:6px 5% 18px;
     scrollbar-width:none;
+    /* Drag-to-scroll affordance + safety */
+    cursor:grab;
+    user-select:none;
+    -webkit-user-select:none;
   }
   .disc-layout::-webkit-scrollbar{display:none}
+  .disc-layout.dragging{
+    cursor:grabbing;
+    scroll-snap-type:none;       /* don't fight the drag with snapping */
+    scroll-behavior:auto;        /* snap re-enables on mouseup */
+  }
+  .disc-layout img{
+    -webkit-user-drag:none;
+    user-drag:none;
+  }
 
   /* Both card types become flex snap items at 80% of viewport so
      the next card peeks ~17% on the right */
@@ -1847,6 +1860,59 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   arrows[0].addEventListener('click', () => step(-1));
   arrows[1].addEventListener('click', () => step(1));
+})();
+
+// ── Drag-to-scroll on every .disc-layout rail (Discover + Urgent) ──
+// Works alongside the native touch scroll. On desktop the layout is a
+// fixed grid (not scrollable), so the handlers become inert there.
+(function(){
+  document.querySelectorAll('.disc-layout').forEach(layout => {
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let moved = false;
+
+    layout.addEventListener('mousedown', e => {
+      // Don't start a drag if the user pressed on the heart button
+      if (e.target.closest('.dc-heart')) return;
+      // Only act if there's actually something to scroll horizontally
+      if (layout.scrollWidth <= layout.clientWidth) return;
+      isDown = true;
+      moved = false;
+      startX = e.pageX;
+      startScrollLeft = layout.scrollLeft;
+      layout.classList.add('dragging');
+      // Prevent text selection while dragging
+      e.preventDefault();
+    });
+
+    function endDrag(){
+      if (!isDown) return;
+      isDown = false;
+      layout.classList.remove('dragging');
+      // moved flag stays true briefly so the click handler below can
+      // swallow the trailing click; reset after the click event has fired
+      setTimeout(() => { moved = false; }, 60);
+    }
+    layout.addEventListener('mouseup',   endDrag);
+    layout.addEventListener('mouseleave', endDrag);
+
+    layout.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      const walk = e.pageX - startX;
+      if (Math.abs(walk) > 5) moved = true;
+      layout.scrollLeft = startScrollLeft - walk;
+    });
+
+    // If the user actually dragged, swallow the click so the card
+    // <a> doesn't navigate to campaign.html mid-drag-release
+    layout.addEventListener('click', e => {
+      if (moved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  });
 })();
 
 // ── Filter dropdown (click pill → toggle box, pick category → update label) ───
