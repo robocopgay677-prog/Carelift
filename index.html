@@ -254,6 +254,8 @@ nav{
   padding:22px 0 4px;
   margin-top:10px;
   border-top:1px solid var(--line);
+  background:transparent;
+  color:inherit;
   opacity:0;
 }
 .mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.46s}
@@ -536,7 +538,8 @@ body.menu-open{overflow:hidden}
 }
 .dcf-bar{
   height:100%;
-  background:linear-gradient(90deg,var(--coral),var(--coral-dark));
+  background:linear-gradient(90deg, var(--coral-soft) 0%, var(--coral) 45%, var(--coral-dark) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.30), 0 1px 6px rgba(255,116,82,.32);
   border-radius:6px;
   transition:width 1s cubic-bezier(.4,0,.2,1);
 }
@@ -603,7 +606,8 @@ body.menu-open{overflow:hidden}
 }
 .dcs-bar{
   height:100%;
-  background:linear-gradient(90deg,var(--coral),var(--coral-dark));
+  background:linear-gradient(90deg, var(--coral-soft) 0%, var(--coral) 45%, var(--coral-dark) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 1px 4px rgba(255,116,82,.28);
   border-radius:4px;
 }
 
@@ -656,31 +660,6 @@ body.menu-open{overflow:hidden}
   width:32px;height:32px;top:10px;right:10px;
 }
 .dc-small .dc-heart svg{width:16px;height:16px}
-
-/* ── SOCIAL ROW (avatar pile + supporters on featured cards) ── */
-.dcf-social{
-  display:flex;align-items:center;gap:6px;
-  margin-top:14px;padding-top:14px;
-  border-top:1px solid var(--line);
-}
-.dcf-avs{display:flex}
-.dcf-av{
-  width:26px;height:26px;border-radius:50%;
-  border:2px solid var(--white);
-  margin-right:-8px;
-  font-family:var(--font-head);font-size:.6rem;font-weight:800;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.dcf-av:nth-child(1){background:linear-gradient(135deg,#FF7452,#F06543)}
-.dcf-av:nth-child(2){background:linear-gradient(135deg,#FFC2B2,#FF7452)}
-.dcf-av:nth-child(3){background:linear-gradient(135deg,#6A7C89,#4A5660)}
-.dcf-av:nth-child(4){background:linear-gradient(135deg,#F06543,#C44A2D);font-size:.56rem}
-.dcf-supporters{
-  font-size:.82rem;color:var(--muted);font-weight:500;
-  margin-left:14px;
-}
-.dcf-supporters strong{color:var(--ink);font-weight:700}
 
 /* ── FILTER DROPDOWN (Roots pattern, coral skin) ────── */
 .disc-filter-wrap{position:relative}
@@ -1808,29 +1787,6 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.toggle('liked');
     });
     card.appendChild(btn);
-  });
-})();
-
-// ── Inject avatar pile + supporters count on featured cards ───
-(function(){
-  // Initials per card position so the two featured cards don't look identical
-  const variants = [
-    { initials: ['M', 'A', 'J', '+'], count: 312 },
-    { initials: ['L', 'C', 'B', '+'], count: 84  }
-  ];
-  document.querySelectorAll('.dc-featured').forEach((card, i) => {
-    const body = card.querySelector('.dcf-body');
-    if (!body) return;
-    const v = variants[i] || variants[0];
-    const row = document.createElement('div');
-    row.className = 'dcf-social';
-    row.innerHTML = `
-      <div class="dcf-avs">
-        ${v.initials.map(n => `<span class="dcf-av">${n}</span>`).join('')}
-      </div>
-      <span class="dcf-supporters"><strong>${v.count.toLocaleString()}</strong> people supporting</span>
-    `;
-    body.appendChild(row);
   });
 })();
 

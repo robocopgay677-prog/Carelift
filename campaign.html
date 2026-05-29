@@ -174,6 +174,8 @@ nav.site-nav{
   flex-shrink:0;
   padding:22px 0 4px;margin-top:10px;
   border-top:1px solid var(--line);
+  background:transparent;
+  color:inherit;
   opacity:0;
 }
 .mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.46s}
@@ -844,15 +846,65 @@ body.menu-open{overflow:hidden}
 .cs-card-prog{font-size:.82rem;color:var(--muted);margin-bottom:8px}
 .cs-card-prog strong{color:var(--ink);font-weight:800}
 .cs-card-barra{height:5px;background:var(--surface);border-radius:5px;overflow:hidden}
-.cs-card-barra-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--coral-dark));border-radius:5px}
+.cs-card-barra-fill{height:100%;background:linear-gradient(90deg, var(--coral-soft) 0%, var(--coral) 45%, var(--coral-dark) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 1px 4px rgba(255,116,82,.28);border-radius:5px}
 
 /* ── ANIMATIONS ────────────────────────────────────── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .pd-desktop-wrap,.pd-trust-bloco,.cs-section{animation:fadeUp .5s ease both}
 
 /* ── RESPONSIVE ────────────────────────────────────── */
+/* MOBILE-ONLY hero redesign: edge-to-edge image + overlapping content card.
+   Desktop (≥900px) is untouched — keeps the 2-col grid with sidebar. */
+@media(max-width:899px){
+  /* Wrapper loses horizontal padding so the image bleeds to the edges */
+  .pd-desktop-wrap{
+    padding:0 0 80px;
+    max-width:none;
+  }
+
+  /* Image carousel becomes a tall immersive hero, rounded only at the bottom */
+  .pd-imagem-container{
+    border-radius:0 0 32px 32px;
+    aspect-ratio:4/5;
+    margin-bottom:0;
+    border:none;
+    box-shadow:0 4px 18px rgba(45,49,53,.06);
+  }
+  .pd-img-slide{
+    background-position:center 28%;
+  }
+  /* Stronger bottom gradient so the title overlay stays readable */
+  .pd-imagem-grad{
+    background:linear-gradient(to bottom,
+      rgba(0,0,0,0) 28%,
+      rgba(0,0,0,.22) 58%,
+      rgba(0,0,0,.62) 100%);
+  }
+  /* Title overlay sits in the lower-left of the image, above the card lip */
+  .pd-titulo-overlay{
+    left:24px;right:24px;
+    bottom:72px;
+    font-size:clamp(1.5rem, 5vw, 2rem);
+    line-height:1.15;
+    text-shadow:0 2px 18px rgba(0,0,0,.55);
+  }
+
+  /* The body content becomes a soft Carelift card that rises over the image */
+  .pd-conteudo{
+    background:var(--paper);
+    border-radius:36px 36px 0 0;
+    padding:36px 24px 40px;
+    margin-top:-44px;
+    position:relative;
+    z-index:3;
+    box-shadow:0 -6px 28px rgba(45,49,53,.05);
+  }
+  /* Inline title is redundant on mobile — overlay on the image already shows it */
+  .pd-conteudo > .pd-titulo{display:none}
+}
+
 @media(max-width:600px){
-  .pd-imagem-container{aspect-ratio:4/3;border-radius:18px}
+  /* Smaller-phone tweaks: stack the progress block + buttons, tighten promo fan */
   .pd-progresso-bloco{flex-direction:column;align-items:flex-start;gap:16px;padding:20px}
   .pd-botoes{flex-direction:column}
   .pd-promo-fan{padding:0 6px}
