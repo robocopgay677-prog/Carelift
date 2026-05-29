@@ -696,68 +696,81 @@ body.menu-open{overflow:hidden}
 }
 .pd-promo-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(240,101,67,.40)}
 
-/* Mobile: the outer .pd-promo card was caging the fan into a too-small
-   inner width, making the side cards barely peek. Drop the box on
-   mobile and let the section bleed to the viewport edges (same trick
-   as .pd-words) so the fan has the full viewport width to breathe and
-   the side cards can sit at a natural offset behind the main one. */
+/* Mobile fan: drop the .pd-promo box entirely + anchor the side cards
+   to the LEFT and RIGHT edges of the viewport (per reference). The
+   main card flows centered inside the flex row at z-index 2; the side
+   cards sit absolutely positioned at left:-N / right:-N with rotate
+   so part of them clips off-screen and the rest peeks behind the
+   main card. .pd-promo's overflow:hidden does the clipping. */
 @media(max-width:768px){
   .pd-promo{
     background:transparent;
     border:none;
     border-radius:0;
-    /* Pull past the .pd-conteudo 24px horizontal padding so the section
-       reaches the viewport edges */
     margin:0 -24px;
     padding:36px 24px 32px;
     overflow:hidden;
     text-align:center;
   }
-  /* The fan itself bleeds even further so it spans the full viewport
-     while the title + sub above it stay inside the 24px padding */
   .pd-promo-fan{
+    position:relative;
     margin:0 -24px;
     gap:0;
-    min-height:340px;
+    min-height:360px;
+    /* Main card flows centered; side cards are absolutely placed */
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
+  /* Same width on every card — side cards are identical copies of the
+     main one, just anchored to the viewport edges and rotated behind.
+     Use display:block (matching the desktop default) so the image +
+     body stack vertically inside the card — display:flex here would
+     break the internal column layout. */
   .pd-promo-card-left,
-  .pd-promo-card-right{display:flex}
-  .pd-promo-card{flex:0 0 190px;width:190px}
-  /* Lighter overlap so each side card stays about half visible —
-     enough to read the photo + first chunk of the title, matching
-     the balanced fan in the reference */
-  .pd-promo-card-left{
-    margin-right:-95px;
+  .pd-promo-card-right{
+    display:block;
+    position:absolute;
+    top:22px;
+    width:220px;
+    flex:0 0 220px;
     z-index:1;
-    transform:rotate(-7deg) translateY(8px);
+  }
+  .pd-promo-card-left{
+    left:-30px;
+    transform:rotate(-7deg);
   }
   .pd-promo-card-right{
-    margin-left:-95px;
-    z-index:1;
-    transform:rotate(7deg) translateY(8px);
+    right:-30px;
+    transform:rotate(7deg);
   }
+  /* Main card stays in the normal flex flow at center, same width */
   .pd-promo-card-main{
+    position:relative;
     z-index:2;
     transform:translateY(-8px);
-    flex:0 0 210px;width:210px;
+    flex:0 0 220px;
+    width:220px;
   }
 }
 @media(max-width:600px){
-  /* Narrower phones: scale cards down proportionally but keep the
-     same ~50% side-card visibility */
+  /* Smaller phones: scale all 3 cards together to 200px */
   .pd-promo{padding:32px 20px 28px}
   .pd-promo-fan{margin:0 -20px}
-  .pd-promo-card{flex:0 0 170px;width:170px}
-  .pd-promo-card-main{flex:0 0 190px;width:190px}
-  .pd-promo-card-left{margin-right:-85px}
-  .pd-promo-card-right{margin-left:-85px}
+  .pd-promo-card-left,
+  .pd-promo-card-right,
+  .pd-promo-card-main{
+    width:200px;flex:0 0 200px;
+  }
 }
 @media(max-width:380px){
-  /* Compact phones: pull in a touch more to avoid edge clipping */
-  .pd-promo-card{flex:0 0 158px;width:158px}
-  .pd-promo-card-main{flex:0 0 178px;width:178px}
-  .pd-promo-card-left{margin-right:-80px}
-  .pd-promo-card-right{margin-left:-80px}
+  /* Compact phones: 188px keeps the side cards from crashing into the
+     main one */
+  .pd-promo-card-left,
+  .pd-promo-card-right,
+  .pd-promo-card-main{
+    width:188px;flex:0 0 188px;
+  }
 }
 
 /* ── DEFINE GRADIENT ID FOR RING STROKES ───────────── */
@@ -1417,6 +1430,10 @@ body.menu-open{overflow:hidden}
                   <div class="pd-promo-ring-pct"><span>74%</span></div>
                 </div>
               </div>
+              <span class="pd-promo-btn" aria-hidden="true">
+                Donate now!
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
             </div>
           </article>
 
@@ -1473,6 +1490,10 @@ body.menu-open{overflow:hidden}
                   <div class="pd-promo-ring-pct"><span>74%</span></div>
                 </div>
               </div>
+              <span class="pd-promo-btn" aria-hidden="true">
+                Donate now!
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
             </div>
           </article>
 
