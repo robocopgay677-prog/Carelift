@@ -225,24 +225,82 @@ body.menu-open{overflow:hidden}
    LEGAL PAGE
    ══════════════════════════════════════════════════════════ */
 .lg-hero{
-  max-width:760px;margin:0 auto;
-  padding:60px 5% 40px;
+  position:relative;
+  overflow:hidden;
+  padding:80px 5% 64px;
   text-align:center;
+  background:
+    radial-gradient(58% 80% at 50% 4%, rgba(242,198,109,.22) 0%, rgba(242,198,109,0) 56%),
+    radial-gradient(70% 70% at 100% 0%, rgba(255,180,143,.24) 0%, rgba(255,180,143,0) 56%),
+    radial-gradient(66% 70% at 0% 100%, rgba(255,116,82,.10) 0%, rgba(255,116,82,0) 60%),
+    linear-gradient(180deg, var(--white) 0%, var(--paper) 100%);
+  border-bottom:1px solid var(--line);
 }
+/* Decorative candlelight layer behind the hero copy */
+.lg-hero-decor{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.lg-halo{
+  position:absolute;left:50%;top:44%;
+  width:640px;height:420px;margin:-210px 0 0 -320px;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(255,224,154,.44) 0%, rgba(255,202,124,.16) 40%, rgba(255,202,124,0) 70%);
+  filter:blur(6px);
+  animation:lgHalo 5.2s ease-in-out infinite;
+}
+@keyframes lgHalo{0%,100%{opacity:.68;transform:scale(.95)}50%{opacity:1;transform:scale(1.07)}}
+.lg-spark{
+  position:absolute;width:7px;height:7px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,246,218,.95) 0%, rgba(255,198,112,.72) 55%, rgba(255,172,92,0) 100%);
+  opacity:0;
+  animation:lgSpark var(--d,6.5s) ease-in-out var(--delay,0s) infinite;
+}
+@keyframes lgSpark{
+  0%{opacity:0;transform:translateY(10px) scale(.55)}
+  28%{opacity:1}
+  55%{transform:translateY(-12px) scale(1)}
+  80%{opacity:.42}
+  100%{opacity:0;transform:translateY(-26px) scale(.7)}
+}
+.lg-hero-inner{position:relative;z-index:1;max-width:720px;margin:0 auto}
 .lg-eyebrow{
-  display:inline-block;
+  display:inline-flex;align-items:center;gap:9px;
   font-size:.7rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
   color:var(--coral-dark);
-  background:var(--coral-tint);
-  padding:7px 14px;border-radius:var(--r-pill);
-  margin-bottom:18px;
+  background:rgba(255,233,225,.86);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:8px 16px;border-radius:var(--r-pill);
+  margin-bottom:20px;
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 6px 18px rgba(240,101,67,.10);
+}
+.lg-eyebrow::before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--grad-btn);
+  box-shadow:0 2px 6px rgba(240,101,67,.34);
 }
 .lg-title{
   font-family:var(--font-head);
-  font-size:clamp(2.2rem, 5vw, 3.2rem);
+  font-size:clamp(2.4rem, 6vw, 3.6rem);
   font-weight:800;color:var(--ink);
-  line-height:1.08;letter-spacing:-.035em;
-  margin-bottom:16px;
+  line-height:1.05;letter-spacing:-.04em;
+  margin-bottom:18px;
+}
+.lg-title em{font-style:normal;color:var(--coral)}
+/* Decorative divider — gradient lines + glowing coral node */
+.lg-divider{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  width:100%;max-width:240px;margin:0 auto 22px;
+}
+.lg-divider span{flex:1;height:1px;background:linear-gradient(90deg, transparent, rgba(255,116,82,.45), transparent)}
+.lg-divider i{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--grad-btn);
+  box-shadow:0 0 12px rgba(255,140,90,.7), 0 2px 6px rgba(240,101,67,.4);
+}
+@media(prefers-reduced-motion:reduce){
+  .lg-halo,.lg-spark{animation:none}
+  .lg-spark{opacity:0}
+}
+@media(max-width:600px){
+  .lg-hero{padding:52px 5% 44px}
+  .lg-halo{width:420px;height:300px;margin:-150px 0 0 -210px}
 }
 .lg-meta{
   display:inline-flex;align-items:center;gap:8px;
@@ -527,10 +585,24 @@ footer{
 
 <!-- ═════════ HERO ═════════ -->
 <header class="lg-hero">
-  <span class="lg-eyebrow">Legal</span>
-  <h1 class="lg-title">Terms of Use</h1>
-  <div class="lg-meta">Last updated May 30, 2026</div>
-  <p class="lg-lede">These terms explain how Carelift works, what you can expect from us, and what we ask of you in return. We've written them in plain language, because trust starts with being understood.</p>
+  <div class="lg-hero-decor" aria-hidden="true">
+    <span class="lg-halo"></span>
+    <span class="lg-spark" style="left:18%;top:34%;--d:6.5s;--delay:0s"></span>
+    <span class="lg-spark" style="left:30%;top:58%;--d:7.4s;--delay:1.2s"></span>
+    <span class="lg-spark" style="left:42%;top:26%;--d:6.8s;--delay:2.1s"></span>
+    <span class="lg-spark" style="left:58%;top:30%;--d:7.8s;--delay:.7s"></span>
+    <span class="lg-spark" style="left:68%;top:56%;--d:6.2s;--delay:2.8s"></span>
+    <span class="lg-spark" style="left:80%;top:38%;--d:7.1s;--delay:1.7s"></span>
+    <span class="lg-spark" style="left:24%;top:46%;--d:8s;--delay:3.4s"></span>
+    <span class="lg-spark" style="left:74%;top:24%;--d:6.6s;--delay:4.1s"></span>
+  </div>
+  <div class="lg-hero-inner">
+    <span class="lg-eyebrow">Legal</span>
+    <h1 class="lg-title">Terms of <em>Use</em></h1>
+    <div class="lg-divider"><span></span><i></i><span></span></div>
+    <p class="lg-lede">These terms explain how Carelift works, what you can expect from us, and what we ask of you in return. We've written them in plain language, because trust starts with being understood.</p>
+    <div class="lg-meta">Last updated May 30, 2026</div>
+  </div>
 </header>
 
 <!-- ═════════ BODY ═════════ -->
