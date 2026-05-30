@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start a Campaign — Carelift</title>
+<meta name="description" content="Bring a cause to Carelift. We walk beside you, verify the story with care, and help you launch with warmth and clarity.">
+<link rel="icon" type="image/png" href="Logo-Icon.png">
+<link rel="apple-touch-icon" href="Logo-Icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   CARELIFT — Start a Campaign
+   Structural pattern adapted from Grace of Giving's multi-step
+   form; every visual token, palette, type and motion stays
+   100% Carelift coral.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── DESIGN TOKENS ─────────────────────────────────── */
+:root{
+  --coral:       #FF7452;
+  --coral-dark:  #F06543;
+  --coral-soft:  #FFC2B2;
+  --coral-tint:  #FFE9E1;
+  --paper:       #FFF8F4;
+  --white:       #FFFFFF;
+  --surface:     #F9EEE8;
+  --line:        #E7D6CC;
+  --ink:         #2D3135;
+  --slate:       #6A7C89;
+  --muted:       #7E736D;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-pill: 100px;
+
+  /* ── PREMIUM LAYER (additive — existing tokens unchanged) ── */
+  --coral-deep:  #D9492A;
+  --coral-amber: #FFB48F;
+  --peach-glow:  #FFD8C7;
+
+  --grad-btn:       linear-gradient(180deg, #FF8A6B 0%, #FF7452 42%, #EF5E3E 100%);
+  --grad-btn-hover: linear-gradient(180deg, #FF9B7E 0%, #FF7452 45%, #E25530 100%);
+  --grad-progress:  linear-gradient(90deg, #FFB48F 0%, #FF7452 50%, #E25530 100%);
+  --grad-warm:      radial-gradient(110% 70% at 50% 0%, #FFE9DD 0%, var(--paper) 60%);
+
+  --s-card:       0 1px 2px rgba(45,49,53,.04), 0 6px 14px rgba(180,80,52,.06), 0 20px 40px -14px rgba(180,80,52,.12);
+  --s-card-hover: 0 2px 4px rgba(45,49,53,.05), 0 12px 24px rgba(180,80,52,.10), 0 32px 60px -18px rgba(180,80,52,.20);
+  --s-btn:        0 1px 0 rgba(255,255,255,.30) inset, 0 6px 14px rgba(240,101,67,.28), 0 16px 32px -10px rgba(240,101,67,.38);
+  --s-btn-hover:  0 1px 0 rgba(255,255,255,.36) inset, 0 10px 22px rgba(240,101,67,.34), 0 24px 46px -12px rgba(240,101,67,.46);
+  --s-glow:       0 0 36px rgba(255,180,143,.32);
+
+  --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── RESET ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:
+    radial-gradient(55% 50% at 100% 0%, rgba(255,180,143,.16) 0%, rgba(255,116,82,0) 65%),
+    radial-gradient(48% 45% at 0% 40%, rgba(255,116,82,.07) 0%, rgba(255,116,82,0) 65%),
+    var(--paper);
+  background-attachment:fixed;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* ── NAV ───────────────────────────────────────────── */
+nav.site-nav{
+  background:rgba(255,248,244,.78);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:none;
+  height:104px;padding:0 5%;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  position:sticky;top:0;z-index:50;
+}
+.nav-search,
+.nav-hamburger{
+  width:52px;height:52px;border-radius:16px;
+  border:1px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:border-color .18s, background .18s, box-shadow .18s;
+}
+.nav-search:hover,
+.nav-hamburger:hover{border-color:var(--coral);background:var(--coral-tint);box-shadow:0 4px 14px rgba(255,116,82,.18)}
+.nav-search{justify-self:start;text-decoration:none;color:var(--ink)}
+.nav-search svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;transition:stroke .15s}
+.nav-search:hover svg{stroke:var(--coral-dark)}
+.nav-hamburger{justify-self:end;flex-direction:column;gap:5px}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:background .15s}
+.nav-hamburger:hover span{background:var(--coral-dark)}
+.nav-logo{justify-self:center;display:flex;align-items:center;text-decoration:none;transition:transform .25s}
+.nav-logo-img{height:82px;width:auto;display:block;object-fit:contain}
+.nav-logo:hover{transform:scale(1.04)}
+@media(max-width:700px){
+  nav.site-nav{height:78px;gap:12px}
+  .nav-logo-img{height:54px}
+  .nav-search,
+  .nav-hamburger{width:44px;height:44px;border-radius:14px}
+  .nav-search svg{width:18px;height:18px}
+  .nav-hamburger span{width:18px}
+}
+
+/* ── MOBILE MENU OVERLAY ───────────────────────────── */
+.mobile-menu{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(45,49,53,0);
+  pointer-events:none;
+  transition:background .35s ease;
+}
+.mobile-menu.open{background:rgba(45,49,53,.38);pointer-events:auto}
+.mobile-menu-inner{
+  position:absolute;top:0;right:0;bottom:0;
+  width:420px;max-width:calc(100vw - 48px);
+  background:var(--paper);
+  padding:24px 30px 24px;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transform:translateX(100%);
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+  box-shadow:-14px 0 44px rgba(45,49,53,.18);
+}
+.mobile-menu.open .mobile-menu-inner{transform:translateX(0)}
+.mobile-menu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;padding-top:6px}
+.mobile-menu-logo{display:inline-flex;align-items:center;text-decoration:none}
+.mobile-menu-logo-img{height:52px;width:auto;display:block;object-fit:contain}
+.mobile-menu-close{
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--white);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:border-color .15s, background .15s, color .15s, transform .35s cubic-bezier(.4,0,.2,1);
+}
+.mobile-menu-close:hover{border-color:var(--coral);background:var(--coral-tint);color:var(--coral-dark);transform:rotate(90deg)}
+.mobile-menu-close svg{stroke:currentColor;fill:none}
+.mobile-menu-nav{
+  display:flex;flex-direction:column;
+  flex:1;min-height:0;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+  padding:4px 4px 8px 0;
+}
+.mm-section{
+  padding:14px 4px 18px;
+  opacity:0;transform:translateX(12px);
+  flex:0 0 auto;
+}
+.mm-section:first-child{padding-top:6px}
+.mm-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-body);font-size:.7rem;font-weight:800;
+  color:var(--coral-dark);letter-spacing:2.4px;text-transform:uppercase;
+  margin-bottom:18px;
+}
+.mm-eyebrow::before{
+  content:"";flex-shrink:0;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--grad-btn);
+  box-shadow:0 2px 6px rgba(240,101,67,.34);
+}
+.mm-list{display:flex;flex-direction:column;gap:4px;padding:0;list-style:none}
+.mm-link{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--font-head);font-size:1.32rem;font-weight:600;
+  color:var(--ink);letter-spacing:-.018em;text-decoration:none;
+  padding:9px 8px;
+  border-radius:10px;
+  transition:color .22s, padding-left .28s cubic-bezier(.4,0,.2,1), background .22s;
+}
+.mm-link::before{
+  content:"";flex-shrink:0;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--coral-soft);
+  transition:background .22s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+.mm-link:hover{color:var(--coral-dark);padding-left:16px}
+.mm-link:hover::before{background:var(--coral);transform:scale(1.28)}
+.mm-divider{
+  border:none;border-top:1px dashed var(--line);
+  margin:6px 4px;
+  opacity:0;
+  flex:0 0 auto;
+}
+
+/* Staggered fade-in for each section + divider */
+.mobile-menu.open .mm-section,
+.mobile-menu.open .mm-divider{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
+.mobile-menu.open .mm-section:nth-child(1){animation-delay:.08s}
+.mobile-menu.open .mm-divider:nth-child(2){animation-delay:.14s}
+.mobile-menu.open .mm-section:nth-child(3){animation-delay:.18s}
+.mobile-menu.open .mm-divider:nth-child(4){animation-delay:.24s}
+.mobile-menu.open .mm-section:nth-child(5){animation-delay:.28s}
+@keyframes mmLinkIn{to{opacity:1;transform:translateX(0)}}
+.mobile-menu-footer{
+  flex-shrink:0;
+  padding:22px 0 4px;margin-top:10px;
+  border-top:1px solid var(--line);
+  background:transparent;color:inherit;
+  opacity:0;
+}
+.mobile-menu.open .mobile-menu-footer{animation:mmFooterIn .5s ease forwards;animation-delay:.46s}
+@keyframes mmFooterIn{to{opacity:1}}
+.mobile-menu-cta{
+  display:flex;width:100%;align-items:center;justify-content:center;gap:10px;
+  padding:18px 28px;border-radius:var(--r-pill);
+  background:var(--grad-btn);
+  color:var(--white);text-decoration:none;
+  font-family:var(--font-body);font-size:1rem;font-weight:700;letter-spacing:-.005em;
+  box-shadow:var(--s-btn);
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, background .25s;
+}
+.mobile-menu-cta:hover{transform:translateY(-2px);background:var(--grad-btn-hover);box-shadow:var(--s-btn-hover)}
+.mobile-menu-cta svg{stroke:currentColor;fill:none;stroke-width:2.6}
+body.menu-open{overflow:hidden}
+@media(max-width:600px){
+  .mobile-menu-inner{padding:18px 22px 18px;width:340px}
+  .mobile-menu-header{margin-bottom:24px}
+  .mobile-menu-logo-img{height:42px}
+  .mm-link{font-size:1.2rem;padding:8px 6px}
+  .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE LAYOUT
+   ══════════════════════════════════════════════════════════ */
+.sc-wrap{
+  max-width:780px;margin:0 auto;
+  padding:48px 5% 96px;
+  animation:fadeUp .5s ease both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── HERO ──────────────────────────────────────────── */
+.sc-hero{text-align:center;margin-bottom:56px}
+.sc-eyebrow{
+  display:inline-block;
+  font-size:.7rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--coral-dark);
+  background:rgba(255,233,225,.82);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:7px 14px;border-radius:var(--r-pill);
+  margin-bottom:18px;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 4px 14px rgba(240,101,67,.10);
+}
+.sc-titulo{
+  font-family:var(--font-head);
+  font-size:clamp(2rem, 4.6vw, 2.85rem);
+  font-weight:800;color:var(--ink);
+  line-height:1.1;letter-spacing:-.035em;
+  margin-bottom:18px;
+}
+.sc-titulo em{
+  font-style:italic;font-weight:800;
+  color:var(--coral);
+  background-image:linear-gradient(180deg, transparent 78%, rgba(255,116,82,.22) 78%);
+  background-repeat:no-repeat;background-size:100% 100%;
+  padding:0 4px;
+}
+.sc-lede{
+  font-size:1.05rem;color:var(--slate);
+  line-height:1.72;max-width:540px;margin:0 auto;
+}
+
+/* ── STEPS INDICATOR ───────────────────────────────── */
+.sc-steps{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin-bottom:40px;
+  padding:14px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.sc-step{
+  flex:1;min-width:140px;
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:var(--r-sm);
+  font-family:var(--font-body);font-size:.84rem;font-weight:600;
+  color:var(--muted);letter-spacing:.01em;
+  transition:color .25s, background .25s;
+}
+.sc-step.active{color:var(--coral-dark);background:var(--coral-tint)}
+.sc-step.done{color:var(--ink)}
+.sc-step-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--surface);color:var(--muted);
+  font-family:var(--font-head);font-size:.7rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .25s, color .25s;
+}
+.sc-step.active .sc-step-num{background:var(--grad-btn);color:#fff;box-shadow:0 4px 10px rgba(240,101,67,.34)}
+.sc-step.done .sc-step-num{background:var(--coral-soft);color:var(--coral-dark)}
+@media(max-width:700px){
+  .sc-steps{padding:10px 0;gap:2px}
+  .sc-step{min-width:0;font-size:.74rem;padding:8px 6px;gap:6px}
+  .sc-step-num{width:20px;height:20px;font-size:.62rem}
+}
+
+/* ── FORM ──────────────────────────────────────────── */
+.sc-form{display:flex;flex-direction:column}
+
+.sc-section{
+  display:none;
+  animation:fadeUp .35s ease both;
+}
+.sc-section.is-current{display:block}
+
+.sc-section-step{
+  font-size:.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  color:var(--coral-dark);margin-bottom:10px;
+}
+.sc-section h2{
+  font-family:var(--font-head);
+  font-size:clamp(1.4rem, 3vw, 1.9rem);font-weight:800;
+  color:var(--ink);letter-spacing:-.024em;line-height:1.18;
+  margin-bottom:8px;
+}
+.sc-hint{font-size:.96rem;color:var(--slate);line-height:1.7;margin-bottom:26px;max-width:560px}
+
+/* Field grid */
+.sc-grid-2{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  margin-bottom:18px;
+}
+@media(max-width:600px){.sc-grid-2{grid-template-columns:1fr}}
+
+.sc-field{margin-bottom:18px}
+.sc-field label{
+  display:block;
+  font-family:var(--font-body);font-size:.82rem;font-weight:700;
+  color:var(--ink);letter-spacing:.01em;
+  margin-bottom:8px;
+}
+.sc-field-hint{
+  font-size:.78rem;color:var(--muted);line-height:1.55;
+  margin-bottom:10px;
+}
+.sc-input,
+.sc-select,
+.sc-textarea{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-md);
+  background:var(--white);
+  font-family:var(--font-body);font-size:1rem;color:var(--ink);
+  line-height:1.5;
+  transition:border-color .18s, box-shadow .18s, background .18s;
+}
+.sc-input::placeholder,
+.sc-textarea::placeholder{color:var(--muted);font-weight:400}
+.sc-input:focus,
+.sc-select:focus,
+.sc-textarea:focus,
+.sc-rich:focus{
+  outline:none;
+  border-color:var(--coral);
+  box-shadow:0 0 0 4px rgba(255,116,82,.14);
+}
+.sc-select{
+  appearance:none;-webkit-appearance:none;
+  background:
+    var(--white)
+    url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237E736D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")
+    no-repeat right 14px center/16px 16px;
+  padding-right:42px;
+  cursor:pointer;
+}
+
+/* Rich editor (story) */
+.sc-rich{
+  width:100%;
+  min-height:200px;max-height:540px;overflow-y:auto;
+  padding:16px 18px;
+  border:1.5px solid var(--line);border-radius:var(--r-md);
+  background:var(--white);
+  font-family:var(--font-body);font-size:1rem;color:var(--ink);line-height:1.7;
+  transition:border-color .18s, box-shadow .18s;
+}
+.sc-rich:empty::before{
+  content:attr(data-placeholder);
+  color:var(--muted);white-space:pre-line;pointer-events:none;
+}
+.sc-rich img{
+  display:block;max-width:100%;height:auto;
+  margin:16px 0;border-radius:var(--r-sm);
+  box-shadow:var(--s-card);
+}
+.sc-rich a{color:var(--coral-dark);text-decoration:underline}
+.sc-rich-hint{font-size:.78rem;color:var(--muted);margin-top:8px;line-height:1.55}
+
+/* Upload tile */
+.sc-upload{
+  position:relative;
+  display:flex;align-items:center;gap:14px;
+  padding:18px 18px;
+  border:1.5px dashed var(--coral-soft);
+  border-radius:var(--r-md);
+  background:
+    radial-gradient(80% 100% at 0% 0%, rgba(255,233,221,.55) 0%, rgba(255,255,255,0) 60%),
+    var(--white);
+  cursor:pointer;
+  transition:border-color .25s, background .25s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+.sc-upload:hover{
+  border-color:var(--coral);
+  background:
+    radial-gradient(80% 100% at 0% 0%, rgba(255,233,221,.75) 0%, rgba(255,255,255,0) 60%),
+    var(--white);
+  transform:translateY(-1px);
+}
+.sc-upload.is-filled{
+  border-style:solid;border-color:var(--coral);
+  background:var(--coral-tint);
+}
+.sc-upload-input{
+  position:absolute;inset:0;opacity:0;cursor:pointer;
+}
+.sc-upload-icon{
+  width:42px;height:42px;border-radius:12px;
+  background:var(--coral-tint);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  color:var(--coral-dark);
+  transition:background .25s, color .25s;
+}
+.sc-upload.is-filled .sc-upload-icon{background:var(--white);color:var(--coral-dark)}
+.sc-upload-icon svg{stroke:currentColor;fill:none;stroke-width:1.8}
+.sc-upload-text{flex:1;min-width:0}
+.sc-upload-title{
+  display:block;
+  font-family:var(--font-body);font-size:.95rem;font-weight:700;color:var(--ink);
+  line-height:1.3;letter-spacing:-.005em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sc-upload-hint{
+  display:block;font-size:.78rem;color:var(--muted);margin-top:2px;
+}
+.sc-upload-check{
+  display:none;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--grad-btn);color:#fff;
+  align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(240,101,67,.30);
+}
+.sc-upload-check svg{stroke:currentColor;fill:none}
+.sc-upload.is-filled .sc-upload-check{display:flex}
+
+/* Review pane */
+.sc-review-card{
+  padding:22px 24px;
+  background:
+    radial-gradient(80% 60% at 0% 0%, rgba(255,233,221,.45) 0%, rgba(255,255,255,0) 60%),
+    var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  margin-bottom:22px;
+  font-size:.94rem;color:var(--ink);line-height:1.7;
+}
+.sc-review-card strong{display:block;font-weight:800;margin-bottom:6px;letter-spacing:-.005em}
+
+/* Agreement row */
+.sc-agree{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:.9rem;color:var(--slate);line-height:1.6;
+  cursor:pointer;
+  margin-bottom:6px;
+}
+.sc-agree input{
+  margin-top:3px;flex-shrink:0;
+  accent-color:var(--coral);
+  width:18px;height:18px;
+  cursor:pointer;
+}
+.sc-agree a{color:var(--coral-dark);text-decoration:underline}
+
+/* Buttons row */
+.sc-actions{
+  display:flex;align-items:center;gap:12px;
+  margin-top:28px;flex-wrap:wrap;
+}
+.sc-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;border-radius:var(--r-pill);
+  font-family:var(--font-body);font-size:.96rem;font-weight:700;
+  letter-spacing:-.005em;
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, background .25s, border-color .18s, color .18s;
+  white-space:nowrap;
+}
+.sc-btn svg{stroke:currentColor;fill:none;stroke-width:2.2;width:14px;height:14px}
+.sc-btn-primary{
+  position:relative;
+  background:var(--grad-btn);
+  color:var(--white);
+  box-shadow:var(--s-btn);
+  isolation:isolate;
+}
+.sc-btn-primary::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 50%);
+}
+.sc-btn-primary:hover{transform:translateY(-2px);background:var(--grad-btn-hover);box-shadow:var(--s-btn-hover)}
+.sc-btn-secondary{
+  background:var(--white);color:var(--ink);
+  border:1.5px solid var(--line);
+}
+.sc-btn-secondary:hover{border-color:var(--coral-soft);background:var(--coral-tint);color:var(--coral-dark)}
+.sc-btn[disabled]{opacity:.6;pointer-events:none}
+
+/* ── SUCCESS STATE ─────────────────────────────────── */
+.sc-success{
+  display:none;
+  text-align:center;
+  padding:48px 28px 36px;
+  animation:fadeUp .5s ease both;
+}
+.sc-success.is-shown{display:block}
+.sc-success-icon{
+  width:84px;height:84px;border-radius:50%;
+  background:var(--grad-btn);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px;
+  color:#fff;
+  box-shadow:var(--s-btn), 0 0 36px rgba(255,180,143,.42);
+  animation:successPop .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+.sc-success-icon svg{stroke:currentColor;fill:none;stroke-width:2.4;width:36px;height:36px}
+@keyframes successPop{
+  from{opacity:0;transform:scale(.6)}
+  to{opacity:1;transform:scale(1)}
+}
+.sc-success-title{
+  font-family:var(--font-head);
+  font-size:clamp(1.6rem, 3.2vw, 2.1rem);font-weight:800;color:var(--ink);
+  letter-spacing:-.028em;line-height:1.18;
+  margin-bottom:12px;
+}
+.sc-success-title em{font-style:italic;color:var(--coral)}
+.sc-success-text{
+  font-size:1rem;color:var(--slate);line-height:1.72;
+  max-width:480px;margin:0 auto 28px;
+}
+.sc-success-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER (same pattern as other pages)
+   ══════════════════════════════════════════════════════════ */
+footer{
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(60,28,16,.55) 0%, rgba(60,28,16,0) 60%),
+    #1A1D20;
+  color:rgba(255,255,255,.7);
+  padding:84px 5% 32px;
+  position:relative;
+}
+.footer-inner{max-width:1240px;margin:0 auto}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:48px;
+}
+.footer-logo{display:inline-block;margin-bottom:18px;line-height:0}
+.footer-logo-img{
+  height:48px;width:auto;display:block;object-fit:contain;
+  filter:brightness(0) invert(1);
+  transition:filter .2s, opacity .2s;
+}
+.footer-logo:hover .footer-logo-img{opacity:.85}
+.footer-brand p{
+  font-size:.88rem;line-height:1.75;
+  color:rgba(255,255,255,.6);max-width:300px;
+}
+.footer-social{display:flex;gap:10px;margin-top:18px}
+.soc-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.75);
+  transition:background .2s, border-color .2s, color .2s;
+}
+.soc-btn:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+.soc-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+.footer-col h4{
+  font-family:var(--font-head);font-size:.82rem;font-weight:800;
+  color:#fff;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:18px;
+}
+.footer-col ul{display:flex;flex-direction:column;gap:12px}
+.footer-col a{
+  font-size:.88rem;color:rgba(255,255,255,.65);
+  transition:color .15s;
+}
+.footer-col a:hover{color:var(--coral-soft)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:24px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  font-size:.78rem;color:rgba(255,255,255,.45);
+}
+.footer-bottom-links{display:flex;gap:22px;flex-wrap:wrap}
+.footer-bottom-links a{color:rgba(255,255,255,.45);transition:color .15s}
+.footer-bottom-links a:hover{color:var(--coral-soft)}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}footer{padding:60px 5% 28px}}
+</style>
+</head>
+<body>
+
+<!-- ═════════ NAV ═════════ -->
+<nav class="site-nav">
+  <a class="nav-search" href="campaigns.html" aria-label="Browse campaigns">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </a>
+  <a class="nav-logo" href="index.html" aria-label="Carelift home">
+    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="82" height="82" fetchpriority="high">
+  </a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═════════ MOBILE MENU OVERLAY ═════════ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Site menu">
+  <div class="mobile-menu-inner">
+    <header class="mobile-menu-header">
+      <a href="index.html" class="mobile-menu-logo" aria-label="Carelift home">
+        <img class="mobile-menu-logo-img" src="Logo-Icontext.png" alt="Carelift">
+      </a>
+      <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </header>
+
+    <nav class="mobile-menu-nav" aria-label="Primary">
+      <div class="mm-section">
+        <span class="mm-eyebrow">How to Help</span>
+        <ul class="mm-list">
+          <li><a href="index.html" class="mm-link">Home</a></li>
+          <li><a href="campaigns.html" class="mm-link">All Campaigns</a></li>
+          <li><a href="campaigns.html" class="mm-link">Urgent Campaigns</a></li>
+          <li><a href="start-campaign.html" class="mm-link">Start a Campaign</a></li>
+        </ul>
+      </div>
+
+      <hr class="mm-divider">
+
+      <div class="mm-section">
+        <span class="mm-eyebrow">Company</span>
+        <ul class="mm-list">
+          <li><a href="index.html#how" class="mm-link">How it Works</a></li>
+          <li><a href="index.html#impact" class="mm-link">Our Impact</a></li>
+          <li><a href="index.html#stories" class="mm-link">Stories</a></li>
+        </ul>
+      </div>
+
+      <hr class="mm-divider">
+
+      <div class="mm-section">
+        <span class="mm-eyebrow">Legal</span>
+        <ul class="mm-list">
+          <li><a href="#" class="mm-link">Privacy Policy</a></li>
+          <li><a href="#" class="mm-link">Terms of Use</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <footer class="mobile-menu-footer">
+      <a href="campaigns.html" class="mobile-menu-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Browse Campaigns
+      </a>
+    </footer>
+  </div>
+</div>
+
+<!-- ═════════ MAIN ═════════ -->
+<main class="sc-wrap">
+
+  <!-- Hero -->
+  <header class="sc-hero">
+    <span class="sc-eyebrow">Start a Campaign</span>
+    <h1 class="sc-titulo">Lift a story <em>into the world.</em></h1>
+    <p class="sc-lede">If someone you love is holding hope in their hands, we'll walk beside you. Tell us about the cause — we'll review with care and help you launch with warmth.</p>
+  </header>
+
+  <!-- Step indicator -->
+  <div class="sc-steps" id="scSteps" role="list">
+    <div class="sc-step active" data-step="1" role="listitem"><span class="sc-step-num">01</span>About You</div>
+    <div class="sc-step"        data-step="2" role="listitem"><span class="sc-step-num">02</span>The Campaign</div>
+    <div class="sc-step"        data-step="3" role="listitem"><span class="sc-step-num">03</span>The Story</div>
+    <div class="sc-step"        data-step="4" role="listitem"><span class="sc-step-num">04</span>Review</div>
+  </div>
+
+  <!-- Form -->
+  <form id="scForm" class="sc-form" novalidate>
+
+    <!-- ── Step 1 — About You ── -->
+    <section class="sc-section is-current" data-section="1">
+      <div class="sc-section-step">Step 01 · About You</div>
+      <h2>Tell us who's bringing this campaign forward.</h2>
+      <p class="sc-hint">We use this to reach out, verify together, and keep you updated on every step.</p>
+
+      <div class="sc-grid-2">
+        <div class="sc-field">
+          <label for="scFullName">Full name</label>
+          <input id="scFullName" class="sc-input" type="text" name="full_name" placeholder="Ana Silva" autocomplete="name">
+        </div>
+        <div class="sc-field">
+          <label for="scEmail">Email address</label>
+          <input id="scEmail" class="sc-input" type="email" name="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="sc-field">
+        <label for="scPhone">Phone <span style="font-weight:500;color:var(--muted)">(optional)</span></label>
+        <input id="scPhone" class="sc-input" type="tel" name="phone" placeholder="+1 555 000 0000" autocomplete="tel">
+      </div>
+
+      <div class="sc-actions">
+        <button type="button" class="sc-btn sc-btn-primary" data-step-next>
+          Continue
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ── Step 2 — The Campaign ── -->
+    <section class="sc-section" data-section="2">
+      <div class="sc-section-step">Step 02 · The Campaign</div>
+      <h2>What is the need?</h2>
+      <p class="sc-hint">A clear, warm headline helps people recognize the heart of the story in a single line.</p>
+
+      <div class="sc-field">
+        <label for="scTitulo">Campaign title</label>
+        <input id="scTitulo" class="sc-input" type="text" name="titulo" placeholder="e.g. Help the Martins family rebuild after the fire">
+      </div>
+
+      <div class="sc-grid-2">
+        <div class="sc-field">
+          <label for="scCategoria">Category</label>
+          <select id="scCategoria" class="sc-select" name="categoria">
+            <option value="">Choose one…</option>
+            <option value="Health">Health</option>
+            <option value="Medical">Medical</option>
+            <option value="Education">Education</option>
+            <option value="Children">Children</option>
+            <option value="Shelter">Shelter</option>
+            <option value="Food">Food</option>
+            <option value="Elders">Elders</option>
+            <option value="Disaster">Disaster relief</option>
+            <option value="Community">Community</option>
+            <option value="Environment">Environment</option>
+            <option value="Animals">Animals</option>
+            <option value="Memorial">Memorial</option>
+          </select>
+        </div>
+        <div class="sc-field">
+          <label for="scMeta">Goal amount (USD)</label>
+          <input id="scMeta" class="sc-input" type="number" name="meta" min="100" step="50" placeholder="25000" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="sc-field">
+        <label for="scLocal">City &amp; country</label>
+        <input id="scLocal" class="sc-input" type="text" name="local" placeholder="Lisbon, Portugal">
+      </div>
+
+      <div class="sc-actions">
+        <button type="button" class="sc-btn sc-btn-secondary" data-step-prev>Back</button>
+        <button type="button" class="sc-btn sc-btn-primary" data-step-next>
+          Continue
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ── Step 3 — The Story ── -->
+    <section class="sc-section" data-section="3">
+      <div class="sc-section-step">Step 03 · The Story</div>
+      <h2>Tell the story in your own words.</h2>
+      <p class="sc-hint">A few honest paragraphs is enough. Our team will edit gently with you before publishing.</p>
+
+      <div class="sc-field">
+        <label for="scHistoria">What happened, and what is needed?</label>
+        <div
+          id="scHistoria"
+          class="sc-rich"
+          contenteditable="true"
+          role="textbox"
+          aria-multiline="true"
+          data-placeholder="It started with a small fire in the kitchen…&#10;&#10;Paste an image from your clipboard or drop one in to embed it. URLs become clickable."
+        ></div>
+        <p class="sc-rich-hint">Tip: paste an image directly from your clipboard or drop it in — it embeds inline. Plain URLs become clickable links.</p>
+        <input type="hidden" name="historia" id="scHistoriaHidden">
+      </div>
+
+      <div class="sc-field">
+        <label>Main photo</label>
+        <p class="sc-field-hint">The hero image — shows on cards, listings and at the top of the campaign page.</p>
+        <label class="sc-upload" data-default-title="Choose main photo" data-default-hint="Click to upload · JPG or PNG">
+          <input type="file" name="imagem_principal" accept="image/*" class="sc-upload-input" aria-label="Main photo">
+          <span class="sc-upload-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17 L17 13 L12 18 L8 14 L3 19"/></svg>
+          </span>
+          <span class="sc-upload-text">
+            <span class="sc-upload-title">Choose main photo</span>
+            <span class="sc-upload-hint">Click to upload · JPG or PNG</span>
+          </span>
+          <span class="sc-upload-check" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </label>
+      </div>
+
+      <div class="sc-field">
+        <label>Additional photos <span style="font-weight:500;color:var(--muted)">(up to 10)</span></label>
+        <p class="sc-field-hint">Optional. These appear as a gallery below the main photo on the campaign's detail page.</p>
+        <label class="sc-upload" data-default-title="Add photos" data-default-hint="Pick up to 10 · JPG or PNG">
+          <input type="file" name="imagem_extras" accept="image/*" multiple class="sc-upload-input" data-max-files="10" aria-label="Additional photos">
+          <span class="sc-upload-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17 L17 13 L12 18 L8 14 L3 19"/></svg>
+          </span>
+          <span class="sc-upload-text">
+            <span class="sc-upload-title">Add photos</span>
+            <span class="sc-upload-hint">Pick up to 10 · JPG or PNG</span>
+          </span>
+          <span class="sc-upload-check" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </label>
+      </div>
+
+      <div class="sc-actions">
+        <button type="button" class="sc-btn sc-btn-secondary" data-step-prev>Back</button>
+        <button type="button" class="sc-btn sc-btn-primary" data-step-next>
+          Continue
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ── Step 4 — Review ── -->
+    <section class="sc-section" data-section="4">
+      <div class="sc-section-step">Step 04 · Review</div>
+      <h2>Almost there.</h2>
+      <p class="sc-hint">When you submit, our team will review with care. We typically reach out within 2 business days.</p>
+
+      <div class="sc-review-card">
+        <strong>Before you submit</strong>
+        We promise to handle every story with respect and dignity. We may ask gentle follow-up questions to verify details before publishing — it protects both the family and the community of givers.
+      </div>
+
+      <div class="sc-field">
+        <label class="sc-agree">
+          <input type="checkbox" name="agree" id="scAgree">
+          <span>I confirm the story is true to the best of my knowledge, and I agree to Carelift's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</span>
+        </label>
+      </div>
+
+      <div class="sc-actions">
+        <button type="button" class="sc-btn sc-btn-secondary" data-step-prev>Back</button>
+        <button type="submit" class="sc-btn sc-btn-primary" id="scSubmit">
+          Submit with care
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+  </form>
+
+  <!-- Success state -->
+  <section class="sc-success" id="scSuccess" aria-live="polite">
+    <div class="sc-success-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2 class="sc-success-title">Received with <em>care.</em></h2>
+    <p class="sc-success-text">Thank you for trusting Carelift with this story. Our team will review it within 2 business days and reach out by email. In the meantime, you can keep exploring the people already lifted here.</p>
+    <div class="sc-success-actions">
+      <a href="campaigns.html" class="sc-btn sc-btn-primary">
+        Browse campaigns
+        <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="index.html" class="sc-btn sc-btn-secondary">Back to home</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═════════ FOOTER ═════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html" aria-label="Carelift home">
+          <img class="footer-logo-img" src="Logo-Icontext.png" alt="Carelift">
+        </a>
+        <p>A home for every cause. A heart for every story. Lifting lives, one donation at a time.</p>
+        <div class="footer-social">
+          <a href="#" class="soc-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="soc-btn" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="campaigns.html">Browse campaigns</a></li>
+          <li><a href="start-campaign.html">Start a campaign</a></li>
+          <li><a href="index.html#impact">Our impact</a></li>
+          <li><a href="index.html#stories">Stories</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Carelift</a></li>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="#">Press &amp; media</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Trust &amp; safety</a></li>
+          <li><a href="#">Privacy &amp; terms</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Carelift. Made with care.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ────────────────────────────────────────────────────
+   DRAWER MENU (same pattern as the other pages)
+   ──────────────────────────────────────────────────── */
+(function initDrawer() {
+  const ham = document.getElementById('navHamburger');
+  const menu = document.getElementById('mobileMenu');
+  const close = document.getElementById('mobileMenuClose');
+  if (!ham || !menu || !close) return;
+
+  function open() {
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden', 'false');
+    ham.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
+  function shut() {
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    ham.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  ham.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  menu.addEventListener('click', e => { if (e.target === menu) shut(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') shut(); });
+})();
+
+/* ────────────────────────────────────────────────────
+   STEP NAVIGATION — show one .sc-section at a time,
+   track progress via .sc-step states (active/done),
+   validate the required fields per step on Continue.
+   ──────────────────────────────────────────────────── */
+(function initSteps() {
+  const form = document.getElementById('scForm');
+  if (!form) return;
+
+  const sections = Array.from(form.querySelectorAll('.sc-section'));
+  const stepEls  = Array.from(document.querySelectorAll('#scSteps .sc-step'));
+  let current = 1;
+
+  // Required fields per step
+  const required = {
+    1: [
+      { sel: '[name="full_name"]', label: 'Full name' },
+      { sel: '[name="email"]',     label: 'Email address' },
+    ],
+    2: [
+      { sel: '[name="titulo"]',    label: 'Campaign title' },
+      { sel: '[name="categoria"]', label: 'Category' },
+      { sel: '[name="meta"]',      label: 'Goal amount' },
+      { sel: '[name="local"]',     label: 'City & country' },
+    ],
+    3: [
+      { sel: '#scHistoria',                       label: 'Story', isRich: true },
+      { sel: '[name="imagem_principal"]',         label: 'Main photo',  isFile: true },
+    ],
+  };
+
+  function validateStep(n) {
+    const list = required[n] || [];
+    for (const f of list) {
+      const el = form.querySelector(f.sel);
+      if (!el) continue;
+      let value = '';
+      if (f.isFile) {
+        value = el.files && el.files.length ? 'has' : '';
+      } else if (f.isRich) {
+        value = (el.textContent || '').trim();
+      } else {
+        value = (el.value || '').trim();
+      }
+      if (!value) {
+        alert(f.label + ' is required.');
+        if (typeof el.focus === 'function') el.focus();
+        return false;
+      }
+    }
+    // Email shape
+    if (n === 1) {
+      const email = form.querySelector('[name="email"]').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function show(n) {
+    sections.forEach(s => s.classList.toggle('is-current', Number(s.dataset.section) === n));
+    stepEls.forEach(el => {
+      const idx = Number(el.dataset.step);
+      el.classList.toggle('active', idx === n);
+      el.classList.toggle('done', idx < n);
+    });
+    current = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  form.addEventListener('click', e => {
+    const next = e.target.closest('[data-step-next]');
+    const prev = e.target.closest('[data-step-prev]');
+    if (next) {
+      if (!validateStep(current)) return;
+      show(Math.min(current + 1, sections.length));
+    } else if (prev) {
+      show(Math.max(current - 1, 1));
+    }
+  });
+
+  // Let users click the indicator to jump back, but never forward
+  stepEls.forEach(el => {
+    el.addEventListener('click', () => {
+      const idx = Number(el.dataset.step);
+      if (idx < current) show(idx);
+    });
+  });
+})();
+
+/* ────────────────────────────────────────────────────
+   UPLOAD TILES — swap title/hint for filename + size,
+   flip into the "filled" visual state.
+   ──────────────────────────────────────────────────── */
+(function initUploadTiles() {
+  function fmtSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+  }
+  document.querySelectorAll('.sc-upload-input').forEach(input => {
+    input.addEventListener('change', () => {
+      const tile = input.closest('.sc-upload');
+      if (!tile) return;
+      const titleEl = tile.querySelector('.sc-upload-title');
+      const hintEl  = tile.querySelector('.sc-upload-hint');
+      const files = input.files;
+      const count = files ? files.length : 0;
+
+      // Cap [multiple] inputs at data-max-files; rebuild via DataTransfer
+      const maxFiles = parseInt(input.dataset.maxFiles, 10);
+      if (count > 0 && maxFiles > 0 && count > maxFiles) {
+        alert('You can upload up to ' + maxFiles + ' photos here — the first ' + maxFiles + ' will be used.');
+        try {
+          const dt = new DataTransfer();
+          for (let i = 0; i < maxFiles; i++) dt.items.add(files[i]);
+          input.files = dt.files;
+        } catch (e) { /* Older browsers may block this — safe to ignore */ }
+      }
+
+      const finalCount = input.files ? input.files.length : 0;
+      if (finalCount === 0) {
+        tile.classList.remove('is-filled');
+        titleEl.textContent = tile.dataset.defaultTitle || '';
+        hintEl.textContent  = tile.dataset.defaultHint || '';
+        return;
+      }
+      tile.classList.add('is-filled');
+      if (finalCount === 1) {
+        const f = input.files[0];
+        titleEl.textContent = f.name;
+        hintEl.textContent  = fmtSize(f.size) + ' · ready to upload';
+      } else {
+        let totalSize = 0;
+        for (let i = 0; i < finalCount; i++) totalSize += input.files[i].size;
+        titleEl.textContent = finalCount + ' photos selected';
+        hintEl.textContent  = fmtSize(totalSize) + ' · ready to upload';
+      }
+    });
+  });
+})();
+
+/* ────────────────────────────────────────────────────
+   RICH STORY EDITOR — paste images (clipboard or URL)
+   and links inline. Feeds a hidden input named
+   "historia" so the FormData flow stays untouched.
+   ──────────────────────────────────────────────────── */
+(function initStoryEditor() {
+  const editor = document.getElementById('scHistoria');
+  const hidden = document.getElementById('scHistoriaHidden');
+  if (!editor || !hidden) return;
+
+  function syncHidden() { hidden.value = editor.innerHTML; }
+  editor.addEventListener('input', syncHidden);
+  editor.addEventListener('blur', syncHidden);
+
+  function insertAtCaret(html) {
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount || !editor.contains(sel.anchorNode)) {
+      editor.insertAdjacentHTML('beforeend', html);
+    } else {
+      const range = sel.getRangeAt(0);
+      range.deleteContents();
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      const frag = document.createDocumentFragment();
+      let lastNode;
+      while (tmp.firstChild) lastNode = frag.appendChild(tmp.firstChild);
+      range.insertNode(frag);
+      if (lastNode) {
+        const r = document.createRange();
+        r.setStartAfter(lastNode);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+      }
+    }
+    syncHidden();
+  }
+
+  function readAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function inlineImage(file) {
+    try {
+      const dataUrl = await readAsDataURL(file);
+      insertAtCaret('<img src="' + dataUrl + '" alt="" loading="lazy">');
+    } catch (err) {
+      alert('Could not read that image — please try again.');
+    }
+  }
+
+  editor.addEventListener('paste', e => {
+    const cd = e.clipboardData;
+    if (!cd) return;
+
+    // 1) Image file straight from the clipboard → inline as data URL
+    if (cd.items) {
+      for (let i = 0; i < cd.items.length; i++) {
+        const it = cd.items[i];
+        if (it.kind === 'file' && it.type && it.type.indexOf('image/') === 0) {
+          const file = it.getAsFile();
+          if (file) {
+            e.preventDefault();
+            inlineImage(file);
+            return;
+          }
+        }
+      }
+    }
+
+    // 2) Plain-text URL — image URL embeds inline, other URLs become links
+    const text = (cd.getData('text/plain') || '').trim();
+    if (text) {
+      const isImageUrl = /^https?:\/\/\S+\.(jpe?g|png|gif|webp|svg|avif)(\?\S*)?$/i.test(text);
+      const isUrl      = /^https?:\/\/\S+$/i.test(text) && text.indexOf(' ') === -1;
+      if (isImageUrl) {
+        e.preventDefault();
+        insertAtCaret('<img src="' + text.replace(/"/g, '&quot;') + '" alt="" loading="lazy">');
+        return;
+      }
+      if (isUrl) {
+        e.preventDefault();
+        const safe = text.replace(/"/g, '&quot;');
+        insertAtCaret('<a href="' + safe + '" target="_blank" rel="noopener noreferrer">' + safe + '</a>');
+        return;
+      }
+    }
+
+    // 3) Strip every inline style/color/font carried over from the source
+    const raw = cd.getData('text/plain');
+    if (raw) {
+      e.preventDefault();
+      const escaped = raw
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      const html = escaped.replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
+      insertAtCaret(html);
+    }
+  });
+
+  // Drag-drop image — mirrors the clipboard image path
+  editor.addEventListener('dragover', e => { e.preventDefault(); });
+  editor.addEventListener('drop', e => {
+    const files = e.dataTransfer && e.dataTransfer.files;
+    if (!files || !files.length) return;
+    const file = files[0];
+    if (file.type && file.type.indexOf('image/') === 0) {
+      e.preventDefault();
+      inlineImage(file);
+    }
+  });
+})();
+
+/* ────────────────────────────────────────────────────
+   SUBMIT — Carelift is frontend-only (CLAUDE.md), so
+   we store the draft in localStorage under a unique
+   key and reveal the inline confirmation state.
+   ──────────────────────────────────────────────────── */
+(function initSubmit() {
+  const form = document.getElementById('scForm');
+  const submitBtn = document.getElementById('scSubmit');
+  const success = document.getElementById('scSuccess');
+  if (!form || !submitBtn || !success) return;
+
+  function slugify(str) {
+    return String(str || '')
+      .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80);
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!form.querySelector('#scAgree').checked) {
+      alert('Please confirm the agreement before submitting.');
+      return;
+    }
+
+    const fd = new FormData(form);
+    const titulo = (fd.get('titulo') || '').toString().trim();
+    const payload = {
+      slug:        slugify(titulo) + '-' + Date.now().toString(36),
+      titulo,
+      categoria:   (fd.get('categoria') || '').toString().trim(),
+      meta:        Number(fd.get('meta')) || 0,
+      local:       (fd.get('local') || '').toString().trim(),
+      historia:    (fd.get('historia') || '').toString(),
+      organizador: (fd.get('full_name') || '').toString().trim() || 'Anonymous',
+      email:       (fd.get('email') || '').toString().trim(),
+      phone:       (fd.get('phone') || '').toString().trim(),
+      submittedAt: new Date().toISOString(),
+      status:      'pending-review',
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending with care…';
+
+    // Persist the draft for the demo flow (no backend on Carelift)
+    try {
+      const key = 'carelift:campaign:' + payload.slug;
+      localStorage.setItem(key, JSON.stringify(payload));
+      localStorage.setItem('carelift:last-campaign', key);
+    } catch (err) { /* Storage may be full or blocked — non-fatal here */ }
+
+    // Brief delay so the button state reads, then swap to success
+    setTimeout(() => {
+      form.style.display = 'none';
+      document.getElementById('scSteps').style.display = 'none';
+      success.classList.add('is-shown');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 600);
+  });
+})();
+</script>
+
+</body>
+</html>

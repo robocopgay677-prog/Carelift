@@ -169,37 +169,56 @@ nav.site-nav{
 .mobile-menu-nav::-webkit-scrollbar{width:5px}
 .mobile-menu-nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
 
-.mobile-menu-link{
-  display:flex;width:100%;box-sizing:border-box;
-  align-items:center;gap:22px;
-  padding:24px 4px;
-  border-bottom:1px solid var(--line);
-  font-family:var(--font-head);
-  font-size:clamp(1.55rem, 5vw, 2rem);
-  font-weight:700;color:var(--ink);
-  letter-spacing:-.025em;text-decoration:none;
-  transition:padding-left .3s cubic-bezier(.4,0,.2,1), color .22s;
-  position:relative;
+.mm-section{
+  padding:14px 4px 18px;
   opacity:0;transform:translateX(12px);
   flex:0 0 auto;
 }
-.mobile-menu-link:last-child{border-bottom:none}
-.mobile-menu-link:hover{padding-left:16px;color:var(--coral-dark)}
-.mobile-menu-link-num{
-  font-family:var(--font-body);font-size:.68rem;font-weight:700;
-  color:var(--muted);letter-spacing:2.4px;
-  flex-shrink:0;width:28px;transition:color .22s;
+.mm-section:first-child{padding-top:6px}
+.mm-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-body);font-size:.7rem;font-weight:800;
+  color:var(--coral-dark);letter-spacing:2.4px;text-transform:uppercase;
+  margin-bottom:18px;
 }
-.mobile-menu-link:hover .mobile-menu-link-num{color:var(--coral)}
-.mobile-menu-link-text{flex:1;line-height:1.1}
+.mm-eyebrow::before{
+  content:"";flex-shrink:0;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--grad-btn);
+  box-shadow:0 2px 6px rgba(240,101,67,.34);
+}
+.mm-list{display:flex;flex-direction:column;gap:4px;padding:0;list-style:none}
+.mm-link{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--font-head);font-size:1.32rem;font-weight:600;
+  color:var(--ink);letter-spacing:-.018em;text-decoration:none;
+  padding:9px 8px;
+  border-radius:10px;
+  transition:color .22s, padding-left .28s cubic-bezier(.4,0,.2,1), background .22s;
+}
+.mm-link::before{
+  content:"";flex-shrink:0;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--coral-soft);
+  transition:background .22s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+.mm-link:hover{color:var(--coral-dark);padding-left:16px}
+.mm-link:hover::before{background:var(--coral);transform:scale(1.28)}
+.mm-divider{
+  border:none;border-top:1px dashed var(--line);
+  margin:6px 4px;
+  opacity:0;
+  flex:0 0 auto;
+}
 
-.mobile-menu.open .mobile-menu-link{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
-.mobile-menu.open .mobile-menu-link:nth-child(1){animation-delay:.08s}
-.mobile-menu.open .mobile-menu-link:nth-child(2){animation-delay:.14s}
-.mobile-menu.open .mobile-menu-link:nth-child(3){animation-delay:.20s}
-.mobile-menu.open .mobile-menu-link:nth-child(4){animation-delay:.26s}
-.mobile-menu.open .mobile-menu-link:nth-child(5){animation-delay:.32s}
-.mobile-menu.open .mobile-menu-link:nth-child(6){animation-delay:.38s}
+/* Staggered fade-in for each section + divider */
+.mobile-menu.open .mm-section,
+.mobile-menu.open .mm-divider{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
+.mobile-menu.open .mm-section:nth-child(1){animation-delay:.08s}
+.mobile-menu.open .mm-divider:nth-child(2){animation-delay:.14s}
+.mobile-menu.open .mm-section:nth-child(3){animation-delay:.18s}
+.mobile-menu.open .mm-divider:nth-child(4){animation-delay:.24s}
+.mobile-menu.open .mm-section:nth-child(5){animation-delay:.28s}
 @keyframes mmLinkIn{to{opacity:1;transform:translateX(0)}}
 
 .mobile-menu-footer{
@@ -233,8 +252,7 @@ body.menu-open{overflow:hidden}
   .mobile-menu-inner{padding:18px 22px 18px;width:340px}
   .mobile-menu-header{margin-bottom:24px}
   .mobile-menu-logo-img{height:42px}
-  .mobile-menu-link{padding:20px 4px;font-size:1.5rem}
-  .mobile-menu-link-num{width:24px;font-size:.64rem}
+  .mm-link{font-size:1.2rem;padding:8px 6px}
   .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
 }
 
@@ -591,30 +609,36 @@ footer{
     </header>
 
     <nav class="mobile-menu-nav" aria-label="Primary">
-      <a href="index.html" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">01</span>
-        <span class="mobile-menu-link-text">Home</span>
-      </a>
-      <a href="campaigns.html" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">02</span>
-        <span class="mobile-menu-link-text">Campaigns</span>
-      </a>
-      <a href="index.html#how" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">03</span>
-        <span class="mobile-menu-link-text">How it Works</span>
-      </a>
-      <a href="index.html#impact" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">04</span>
-        <span class="mobile-menu-link-text">Impact</span>
-      </a>
-      <a href="index.html#stories" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">05</span>
-        <span class="mobile-menu-link-text">Stories</span>
-      </a>
-      <a href="donate.html" class="mobile-menu-link">
-        <span class="mobile-menu-link-num">06</span>
-        <span class="mobile-menu-link-text">Donate</span>
-      </a>
+      <div class="mm-section">
+        <span class="mm-eyebrow">How to Help</span>
+        <ul class="mm-list">
+          <li><a href="index.html" class="mm-link">Home</a></li>
+          <li><a href="campaigns.html" class="mm-link">All Campaigns</a></li>
+          <li><a href="campaigns.html" class="mm-link">Urgent Campaigns</a></li>
+          <li><a href="start-campaign.html" class="mm-link">Start a Campaign</a></li>
+        </ul>
+      </div>
+
+      <hr class="mm-divider">
+
+      <div class="mm-section">
+        <span class="mm-eyebrow">Company</span>
+        <ul class="mm-list">
+          <li><a href="index.html#how" class="mm-link">How it Works</a></li>
+          <li><a href="index.html#impact" class="mm-link">Our Impact</a></li>
+          <li><a href="index.html#stories" class="mm-link">Stories</a></li>
+        </ul>
+      </div>
+
+      <hr class="mm-divider">
+
+      <div class="mm-section">
+        <span class="mm-eyebrow">Legal</span>
+        <ul class="mm-list">
+          <li><a href="#" class="mm-link">Privacy Policy</a></li>
+          <li><a href="#" class="mm-link">Terms of Use</a></li>
+        </ul>
+      </div>
     </nav>
 
     <footer class="mobile-menu-footer">
@@ -670,7 +694,7 @@ footer{
     <h3>Have a cause that needs lifting?</h3>
     <p>Tell the story, set the goal, and let people who care show up.</p>
   </div>
-  <a href="donate.html" class="footer-cta-btn">
+  <a href="start-campaign.html" class="footer-cta-btn">
     Start a campaign
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
   </a>
@@ -695,7 +719,7 @@ footer{
         <h4>Platform</h4>
         <ul>
           <li><a href="campaigns.html">Browse campaigns</a></li>
-          <li><a href="donate.html">Start a campaign</a></li>
+          <li><a href="start-campaign.html">Start a campaign</a></li>
           <li><a href="index.html#impact">Our impact</a></li>
           <li><a href="index.html#stories">Stories</a></li>
         </ul>
