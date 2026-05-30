@@ -72,6 +72,14 @@
   --s-btn-hover:  0 1px 0 rgba(255,255,255,.36) inset, 0 10px 22px rgba(240,101,67,.34), 0 24px 46px -12px rgba(240,101,67,.46);
   --s-glow:       0 0 36px rgba(255,180,143,.32);
 
+  /* ── CANDLELIGHT GLOW — amber/gold as LIGHT only; coral stays primary ── */
+  --amber:       #E5A94B;
+  --candle-gold: #F2C66D;
+  --honey:       #E9B95C;
+  --grad-flame:  linear-gradient(90deg, #F2C66D 0%, #FF8A5C 42%, #EF5E3E 100%);
+  --glow-candle: radial-gradient(circle, rgba(242,198,109,.32) 0%, rgba(242,198,109,0) 70%);
+  --s-candle:    0 0 30px rgba(233,169,75,.32);
+
   --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -219,6 +227,7 @@ nav{
   display:flex;flex-direction:column;
   flex:1;min-height:0;
   align-items:stretch;
+  overflow-x:hidden;
   overflow-y:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:thin;
   scrollbar-color:var(--line) transparent;
@@ -254,7 +263,7 @@ nav{
   color:var(--ink);letter-spacing:-.018em;text-decoration:none;
   padding:7px 8px;
   border-radius:10px;
-  transition:color .22s, padding-left .28s cubic-bezier(.4,0,.2,1), background .22s;
+  transition:color .22s, transform .28s cubic-bezier(.4,0,.2,1), background .22s;
 }
 .mm-link::before{
   content:"";flex-shrink:0;
@@ -262,7 +271,7 @@ nav{
   background:var(--coral-soft);
   transition:background .22s, transform .25s cubic-bezier(.4,0,.2,1);
 }
-.mm-link:hover{color:var(--coral-dark);padding-left:16px}
+.mm-link:hover{color:var(--coral-dark);transform:translateX(5px)}
 .mm-link:hover::before{background:var(--coral);transform:scale(1.28)}
 .mm-divider{
   width:100%;
@@ -348,6 +357,7 @@ body.menu-open{overflow:hidden}
 .hero-overlay{
   position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
+    radial-gradient(46% 42% at 86% 14%, rgba(242,198,109,.22) 0%, rgba(242,198,109,0) 66%),
     radial-gradient(70% 60% at 0% 40%, rgba(255,116,82,.18) 0%, rgba(255,116,82,0) 60%),
     radial-gradient(60% 50% at 100% 0%, rgba(255,216,199,.30) 0%, rgba(255,216,199,0) 60%),
     linear-gradient(180deg,
@@ -373,13 +383,8 @@ body.menu-open{overflow:hidden}
   margin-bottom:24px;
 }
 .hero-h1 em{
-  display:inline-block;
   font-style:italic;font-weight:800;
   color:var(--coral);
-  background-image:linear-gradient(180deg, transparent 78%, rgba(255,116,82,.22) 78%);
-  background-repeat:no-repeat;
-  background-size:100% 100%;
-  padding:0 2px;
 }
 .hero-sub{
   font-size:clamp(1rem, 1.6vw, 1.12rem);
@@ -421,12 +426,48 @@ body.menu-open{overflow:hidden}
   .hero{min-height:90vh}
   .hero-content{padding:32px 6% 80px}
 }
-@media(max-width:600px){
-  .hero{min-height:86vh}
-  .hero-content{padding:24px 6% 64px}
-  .hero-h1{font-size:clamp(2rem, 8.5vw, 3rem);margin-bottom:18px}
-  .hero-sub{font-size:.98rem;margin-bottom:26px}
-  .hero-cta{padding:14px 28px;font-size:.94rem}
+@media(max-width:700px){
+  /* Mobile homepage hero — candle illustration sits directly below the
+     nav with the flame in the upper area; the headline + CTA sit on the
+     cream base beneath it, so the text never covers the flame. */
+  .hero{
+    min-height:0;
+    margin-top:0;
+    padding-top:0;
+    display:block;
+    overflow:visible;
+    background:var(--paper);
+  }
+  .hero-bg{
+    position:relative;
+    inset:auto;
+    width:100%;
+    height:auto;
+    aspect-ratio:853 / 1218;
+    max-height:62vh;
+    background-image:url('hero-mobile.jpg');
+    background-size:cover;
+    background-position:center 12%;
+  }
+  /* Fade the candle base into the cream so the text reads cleanly */
+  .hero-bg::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:-1px;height:36%;
+    background:linear-gradient(180deg, rgba(255,248,244,0) 0%, var(--paper) 86%);
+    pointer-events:none;
+  }
+  .hero-overlay{display:none}
+  .hero-content{
+    position:relative;
+    z-index:2;
+    margin-top:-8%;
+    padding:0 7% 56px;
+    max-width:none;
+    text-align:center;
+  }
+  .hero-h1{font-size:clamp(1.9rem, 8vw, 2.7rem);margin-bottom:14px}
+  .hero-sub{font-size:.98rem;margin:0 auto 24px;max-width:42ch}
+  .hero-cta{padding:14px 28px;font-size:.95rem}
 }
 
 /* ── SECTION PRIMITIVES ────────────────────────────── */
@@ -593,7 +634,7 @@ body.menu-open{overflow:hidden}
 }
 .dcf-bar{
   height:100%;
-  background:var(--grad-progress);
+  background:var(--grad-flame);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.06), 0 1px 8px rgba(240,101,67,.34);
   border-radius:6px;
   transition:width 1s cubic-bezier(.4,0,.2,1);
@@ -661,7 +702,7 @@ body.menu-open{overflow:hidden}
 }
 .dcs-bar{
   height:100%;
-  background:var(--grad-progress);
+  background:var(--grad-flame);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.40), inset 0 -1px 0 rgba(0,0,0,.05), 0 1px 6px rgba(240,101,67,.30);
   border-radius:4px;
 }
@@ -1084,8 +1125,8 @@ body.menu-open{overflow:hidden}
    ══════════════════════════════════════════════════════════ */
 .impact-wrap{
   background:
-    radial-gradient(70% 100% at 100% 0%, rgba(255,216,199,.22) 0%, rgba(255,255,255,0) 55%),
-    radial-gradient(60% 80% at 0% 100%, rgba(0,0,0,.10) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(64% 90% at 100% 0%, rgba(242,198,109,.30) 0%, rgba(242,198,109,0) 58%),
+    radial-gradient(60% 80% at 0% 100%, rgba(0,0,0,.12) 0%, rgba(0,0,0,0) 60%),
     linear-gradient(135deg, var(--coral-deep) 0%, var(--coral-dark) 45%, var(--coral) 100%);
   padding:88px 5%;
   position:relative;
@@ -1445,13 +1486,11 @@ footer{
 
   <div class="hero-content">
     <h1 class="hero-h1">
-      Real stories.<br>
-      Real people.<br>
-      <em>One needs lifting today.</em>
+      One small light can change<br>
+      <em>how someone's story ends.</em>
     </h1>
     <p class="hero-sub">
-      Behind every campaign is a real person holding hope in their hands.
-      A little from you goes a long way.
+      Your gift is the warmth that carries them through.
     </p>
     <a href="campaigns.html" class="hero-cta">
       Browse Campaigns

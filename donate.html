@@ -53,6 +53,14 @@
   --s-btn-hover:  0 1px 0 rgba(255,255,255,.36) inset, 0 10px 22px rgba(240,101,67,.34), 0 24px 46px -12px rgba(240,101,67,.46);
   --s-glow:       0 0 36px rgba(255,180,143,.32);
 
+  /* ── CANDLELIGHT GLOW — amber/gold as LIGHT only; coral stays primary ── */
+  --amber:       #E5A94B;
+  --candle-gold: #F2C66D;
+  --honey:       #E9B95C;
+  --grad-flame:  linear-gradient(90deg, #F2C66D 0%, #FF8A5C 42%, #EF5E3E 100%);
+  --glow-candle: radial-gradient(circle, rgba(242,198,109,.32) 0%, rgba(242,198,109,0) 70%);
+  --s-candle:    0 0 30px rgba(233,169,75,.32);
+
   --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -151,6 +159,7 @@ nav.site-nav{
   display:flex;flex-direction:column;
   flex:1;min-height:0;
   align-items:stretch;
+  overflow-x:hidden;
   overflow-y:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;
   padding:4px 4px 8px 0;
@@ -183,7 +192,7 @@ nav.site-nav{
   color:var(--ink);letter-spacing:-.018em;text-decoration:none;
   padding:7px 8px;
   border-radius:10px;
-  transition:color .22s, padding-left .28s cubic-bezier(.4,0,.2,1), background .22s;
+  transition:color .22s, transform .28s cubic-bezier(.4,0,.2,1), background .22s;
 }
 .mm-link::before{
   content:"";flex-shrink:0;
@@ -191,7 +200,7 @@ nav.site-nav{
   background:var(--coral-soft);
   transition:background .22s, transform .25s cubic-bezier(.4,0,.2,1);
 }
-.mm-link:hover{color:var(--coral-dark);padding-left:16px}
+.mm-link:hover{color:var(--coral-dark);transform:translateX(5px)}
 .mm-link:hover::before{background:var(--coral);transform:scale(1.28)}
 .mm-divider{
   width:100%;
@@ -313,7 +322,7 @@ body.menu-open{overflow:hidden}
 }
 .dn-hero-prog-fill{
   height:100%;width:74%;
-  background:var(--grad-progress);
+  background:var(--grad-flame);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.06), 0 1px 8px rgba(240,101,67,.36);
   border-radius:8px;
   transition:width 1s cubic-bezier(.4,0,.2,1);
