@@ -78,6 +78,7 @@ body{
     var(--paper);
   background-attachment:fixed;
   line-height:1.5;
+  overflow-x:clip;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
@@ -248,8 +249,9 @@ body.menu-open{overflow:hidden}
    PAGE LAYOUT
    ══════════════════════════════════════════════════════════ */
 .sc-wrap{
-  max-width:780px;margin:0 auto;
-  padding:48px 5% 96px;
+  max-width:760px;margin:0 auto;
+  padding:56px 5% 100px;
+  position:relative;
   animation:fadeUp .5s ease both;
 }
 @keyframes fadeUp{
@@ -257,88 +259,180 @@ body.menu-open{overflow:hidden}
   to{opacity:1;transform:translateY(0)}
 }
 
-/* ── HERO ──────────────────────────────────────────── */
-.sc-hero{text-align:center;margin-bottom:56px}
+/* ── HERO — full-bleed strong-orange background band ── */
+.sc-hero{
+  position:relative;left:50%;width:100vw;margin-left:-50vw;
+  margin-top:-56px;margin-bottom:40px;
+  padding:74px 5% 82px;
+  text-align:center;overflow:hidden;
+  background:
+    radial-gradient(58% 62% at 50% -4%, rgba(255,206,130,.5) 0%, rgba(255,206,130,0) 55%),
+    radial-gradient(90% 80% at 88% 116%, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 58%),
+    linear-gradient(165deg, #FF8A5C 0%, #F0603C 50%, #D9492A 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+.sc-hero-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.sc-hero > *{position:relative;z-index:1}
+
+/* Custom Carelift candle illustration (CSS/SVG, no assets) */
+.sc-hero-art{
+  position:relative;width:150px;height:178px;margin:0 auto 6px;
+  display:flex;align-items:flex-end;justify-content:center;
+  animation:scArtIn .9s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes scArtIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.sc-art-halo{
+  position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);
+  width:230px;height:230px;border-radius:50%;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(242,198,109,.5) 0%, rgba(255,140,90,.2) 36%, rgba(255,140,90,0) 70%);
+  filter:blur(8px);
+  animation:scHalo 4.4s ease-in-out infinite;
+}
+@keyframes scHalo{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(.92)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+.sc-art-flame{
+  position:relative;width:122px;height:auto;z-index:1;
+  filter:drop-shadow(0 8px 18px rgba(240,101,67,.32));
+  transform-origin:50% 82%;
+  animation:scFlicker 3.8s ease-in-out infinite;
+}
+@keyframes scFlicker{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.025) rotate(-.6deg)}}
+.sc-art-spark{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,244,212,.95) 0%, rgba(255,188,112,.6) 60%, rgba(255,188,112,0) 100%);
+  opacity:0;animation:scSpark var(--d,5.5s) ease-in-out var(--delay,0s) infinite;
+}
+@keyframes scSpark{0%{opacity:0;transform:translateY(8px) scale(.5)}30%{opacity:1}62%{transform:translateY(-16px) scale(1)}100%{opacity:0;transform:translateY(-30px) scale(.7)}}
+/* Concentric energy rings behind the flame */
+.sc-art-ring{
+  position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;
+}
+.sc-art-ring.r1{width:132px;height:132px;border:1.5px solid rgba(255,255,255,.5);animation:scRing 7s ease-in-out infinite}
+.sc-art-ring.r2{width:178px;height:178px;border:1.5px solid rgba(255,255,255,.32);animation:scRing 9s ease-in-out .6s infinite}
+.sc-art-ring.r3{width:226px;height:226px;border:1.5px solid rgba(255,255,255,.18);animation:scRing 11s ease-in-out 1.2s infinite}
+@keyframes scRing{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.95)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}}
+
 .sc-eyebrow{
   display:inline-block;
-  font-size:.7rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
-  color:var(--coral-dark);
-  background:rgba(255,233,225,.82);
+  font-size:.72rem;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;
+  color:#fff;
+  background:rgba(255,255,255,.18);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  padding:7px 14px;border-radius:var(--r-pill);
+  padding:8px 16px;border-radius:var(--r-pill);
   margin-bottom:18px;
-  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 4px 14px rgba(240,101,67,.10);
+  box-shadow:0 1px 0 rgba(255,255,255,.28) inset;
 }
 .sc-titulo{
   font-family:var(--font-head);
-  font-size:clamp(2rem, 4.6vw, 2.85rem);
-  font-weight:800;color:var(--ink);
-  line-height:1.1;letter-spacing:-.035em;
-  margin-bottom:18px;
+  font-size:clamp(2.4rem, 5.6vw, 3.5rem);
+  font-weight:800;color:#fff;
+  line-height:1.03;letter-spacing:-.04em;
+  margin-bottom:20px;
+  text-shadow:0 2px 22px rgba(120,40,20,.28);
 }
+/* "into the world." — warm gradient text */
 .sc-titulo em{
   font-style:italic;font-weight:800;
-  color:var(--coral);
-  background-image:linear-gradient(180deg, transparent 78%, rgba(255,116,82,.22) 78%);
-  background-repeat:no-repeat;background-size:100% 100%;
-  padding:0 4px;
+  background:linear-gradient(92deg, #FFF3D6 0%, #FFD98A 50%, #FFE9E1 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
 }
 .sc-lede{
-  font-size:1.05rem;color:var(--slate);
-  line-height:1.72;max-width:540px;margin:0 auto;
+  font-size:clamp(1.02rem,1.4vw,1.14rem);color:rgba(255,255,255,.9);
+  line-height:1.75;max-width:520px;margin:0 auto;
 }
 
-/* ── STEPS INDICATOR ───────────────────────────────── */
+/* ── STEPS — premium journey tracker ──────────────── */
 .sc-steps{
-  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
-  margin-bottom:40px;
-  padding:14px 0;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
+  display:flex;align-items:stretch;gap:6px;
+  margin:0 0 40px;padding:6px;
+  background:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,233,221,.55) 0%, rgba(255,255,255,0) 58%),
+    var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  box-shadow:var(--s-card);
 }
 .sc-step{
-  flex:1;min-width:140px;
+  flex:1;min-width:0;
   display:flex;align-items:center;gap:10px;
-  padding:10px 12px;border-radius:var(--r-sm);
+  padding:12px 14px;border-radius:12px;
   font-family:var(--font-body);font-size:.84rem;font-weight:600;
-  color:var(--muted);letter-spacing:.01em;
-  transition:color .25s, background .25s;
+  color:var(--muted);letter-spacing:.01em;line-height:1.2;
+  transition:color .28s, background .28s, box-shadow .28s;
 }
-.sc-step.active{color:var(--coral-dark);background:var(--coral-tint)}
+.sc-step.active{
+  color:var(--coral-dark);
+  background:var(--white);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 8px 18px -8px rgba(180,80,52,.34);
+}
 .sc-step.done{color:var(--ink)}
 .sc-step-num{
-  width:24px;height:24px;border-radius:50%;
-  background:var(--surface);color:var(--muted);
+  width:27px;height:27px;border-radius:50%;
+  background:var(--white);color:var(--muted);
+  border:1.5px solid var(--line);
   font-family:var(--font-head);font-size:.7rem;font-weight:800;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:background .25s, color .25s;
+  flex-shrink:0;transition:all .28s cubic-bezier(.4,0,.2,1);
 }
-.sc-step.active .sc-step-num{background:var(--grad-btn);color:#fff;box-shadow:0 4px 10px rgba(240,101,67,.34)}
-.sc-step.done .sc-step-num{background:var(--coral-soft);color:var(--coral-dark)}
+.sc-step.active .sc-step-num{
+  background:var(--grad-btn);color:#fff;border-color:transparent;
+  box-shadow:0 4px 12px rgba(240,101,67,.42), 0 0 0 4px rgba(255,194,178,.4);
+}
+.sc-step.done .sc-step-num{background:var(--coral-tint);color:var(--coral-dark);border-color:var(--coral-soft)}
 @media(max-width:700px){
-  .sc-steps{padding:10px 0;gap:2px}
-  .sc-step{min-width:0;font-size:.74rem;padding:8px 6px;gap:6px}
-  .sc-step-num{width:20px;height:20px;font-size:.62rem}
+  .sc-hero-art{width:120px;height:150px;margin-bottom:2px}
+  .sc-art-flame{width:100px}
+  .sc-steps{gap:2px;padding:4px}
+  .sc-step{min-width:0;font-size:.7rem;padding:9px 7px;gap:7px}
+  .sc-step-num{width:22px;height:22px;font-size:.62rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .sc-art-halo,.sc-art-flame,.sc-art-spark,.sc-art-ring,.sc-hero-art{animation:none}
+  .sc-art-spark{opacity:0}
+}
+
+/* Desktop — let the candle illustration breathe a touch larger */
+@media(min-width:901px){
+  .sc-hero{padding:84px 5% 92px}
+  .sc-hero-art{width:170px;height:194px}
+  .sc-art-flame{width:138px}
 }
 
 /* ── FORM ──────────────────────────────────────────── */
-.sc-form{display:flex;flex-direction:column}
+/* Premium onboarding card holding the steps */
+.sc-form{
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(120% 72% at 0% 0%, rgba(255,233,221,.44) 0%, rgba(255,255,255,0) 52%),
+    var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:36px 38px 38px;
+  box-shadow:var(--s-card);
+}
+@media(max-width:600px){ .sc-form{padding:26px 22px 28px} }
 
 .sc-section{
   display:none;
-  animation:fadeUp .35s ease both;
+  animation:fadeUp .4s cubic-bezier(.22,1,.36,1) both;
 }
 .sc-section.is-current{display:block}
 
 .sc-section-step{
+  display:inline-flex;align-items:center;gap:8px;
   font-size:.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;
-  color:var(--coral-dark);margin-bottom:10px;
+  color:var(--coral-dark);margin-bottom:12px;
+}
+.sc-section-step::before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--grad-btn);box-shadow:0 2px 6px rgba(240,101,67,.34);
 }
 .sc-section h2{
   font-family:var(--font-head);
-  font-size:clamp(1.4rem, 3vw, 1.9rem);font-weight:800;
-  color:var(--ink);letter-spacing:-.024em;line-height:1.18;
-  margin-bottom:8px;
+  font-size:clamp(1.45rem, 3vw, 2rem);font-weight:800;
+  color:var(--ink);letter-spacing:-.026em;line-height:1.16;
+  margin-bottom:10px;
 }
 .sc-hint{font-size:.96rem;color:var(--slate);line-height:1.7;margin-bottom:26px;max-width:560px}
 
@@ -364,23 +458,30 @@ body.menu-open{overflow:hidden}
 .sc-select,
 .sc-textarea{
   width:100%;
-  padding:14px 16px;
+  padding:15px 17px;
   border:1.5px solid var(--line);
-  border-radius:var(--r-md);
-  background:var(--white);
+  border-radius:14px;
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(255,233,221,.28) 0%, rgba(255,255,255,0) 55%),
+    var(--white);
   font-family:var(--font-body);font-size:1rem;color:var(--ink);
   line-height:1.5;
-  transition:border-color .18s, box-shadow .18s, background .18s;
+  box-shadow:0 1px 2px rgba(45,49,53,.04);
+  transition:border-color .2s, box-shadow .2s, background .2s, transform .2s;
 }
 .sc-input::placeholder,
 .sc-textarea::placeholder{color:var(--muted);font-weight:400}
+.sc-input:hover,
+.sc-select:hover,
+.sc-textarea:hover{border-color:var(--coral-soft)}
 .sc-input:focus,
 .sc-select:focus,
 .sc-textarea:focus,
 .sc-rich:focus{
   outline:none;
   border-color:var(--coral);
-  box-shadow:0 0 0 4px rgba(255,116,82,.14);
+  background:var(--white);
+  box-shadow:0 0 0 4px rgba(255,116,82,.16), 0 6px 16px -8px rgba(240,101,67,.3);
 }
 .sc-select{
   appearance:none;-webkit-appearance:none;
@@ -522,9 +623,16 @@ body.menu-open{overflow:hidden}
 }
 .sc-btn-primary::before{
   content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(180deg, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 50%);
+  background:linear-gradient(180deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 50%);
+}
+.sc-btn-primary::after{
+  content:"";position:absolute;left:10%;right:10%;bottom:-15px;height:22px;border-radius:50%;
+  background:radial-gradient(ellipse, rgba(240,101,67,.5) 0%, rgba(240,101,67,0) 70%);
+  filter:blur(9px);opacity:.7;z-index:-1;
+  transition:opacity .25s, transform .25s;
 }
 .sc-btn-primary:hover{transform:translateY(-2px);background:var(--grad-btn-hover);box-shadow:var(--s-btn-hover)}
+.sc-btn-primary:hover::after{opacity:1;transform:translateY(3px) scale(1.08)}
 .sc-btn-secondary{
   background:var(--white);color:var(--ink);
   border:1.5px solid var(--line);
@@ -704,11 +812,52 @@ footer{
 <!-- ═════════ MAIN ═════════ -->
 <main class="sc-wrap">
 
-  <!-- Hero -->
+  <!-- Hero — full-bleed warm orange band -->
   <header class="sc-hero">
+    <div class="sc-hero-inner">
+    <div class="sc-hero-art" aria-hidden="true">
+      <span class="sc-art-ring r1"></span>
+      <span class="sc-art-ring r2"></span>
+      <span class="sc-art-ring r3"></span>
+      <span class="sc-art-halo"></span>
+      <svg class="sc-art-flame" viewBox="0 0 120 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="scFlameOuter" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFD98A"/>
+            <stop offset="40%" stop-color="#FF8A5C"/>
+            <stop offset="100%" stop-color="#F06543"/>
+          </linearGradient>
+          <linearGradient id="scFlameInner" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFF3D6"/>
+            <stop offset="60%" stop-color="#FFC36A"/>
+            <stop offset="100%" stop-color="#FF8A5C"/>
+          </linearGradient>
+          <linearGradient id="scWax" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#FCEDE2"/>
+          </linearGradient>
+        </defs>
+        <!-- candle body -->
+        <rect x="40" y="116" width="40" height="48" rx="11" fill="url(#scWax)"/>
+        <ellipse cx="60" cy="116" rx="20" ry="4.5" fill="#FFFFFF" opacity=".9"/>
+        <ellipse cx="51" cy="138" rx="3" ry="11" fill="#FFFFFF" opacity=".5"/>
+        <!-- wick -->
+        <rect x="58.5" y="106" width="3" height="14" rx="1.5" fill="#2D3135"/>
+        <!-- flame, three layered shapes -->
+        <path d="M60 16 C 82 52, 90 80, 74 106 C 66 119, 50 119, 42 106 C 26 80, 42 52, 60 16 Z" fill="url(#scFlameOuter)"/>
+        <path d="M60 50 C 72 70, 76 88, 66 102 C 60 110, 52 110, 47 102 C 38 88, 50 68, 60 50 Z" fill="url(#scFlameInner)"/>
+        <path d="M60 74 C 66 84, 67 92, 62 99 C 59 103, 55 103, 53 99 C 49 92, 55 82, 60 74 Z" fill="#FFF6E2"/>
+      </svg>
+      <span class="sc-art-spark" style="left:30%;top:30%;--d:5.2s;--delay:0s"></span>
+      <span class="sc-art-spark" style="left:66%;top:24%;--d:6s;--delay:1.3s"></span>
+      <span class="sc-art-spark" style="left:74%;top:46%;--d:5.6s;--delay:2.4s"></span>
+      <span class="sc-art-spark" style="left:24%;top:50%;--d:6.4s;--delay:3.1s"></span>
+      <span class="sc-art-spark" style="left:50%;top:18%;--d:5.8s;--delay:4s"></span>
+    </div>
     <span class="sc-eyebrow">Start a Campaign</span>
     <h1 class="sc-titulo">Lift a story <em>into the world.</em></h1>
     <p class="sc-lede">If someone you love is holding hope in their hands, we'll walk beside you. Tell us about the cause — we'll review with care and help you launch with warmth.</p>
+    </div>
   </header>
 
   <!-- Step indicator -->
