@@ -150,6 +150,7 @@ nav.site-nav{
 .mobile-menu-nav{
   display:flex;flex-direction:column;
   flex:1;min-height:0;
+  align-items:stretch;
   overflow-y:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;
   padding:4px 4px 8px 0;
@@ -158,10 +159,11 @@ nav.site-nav{
 .mobile-menu-nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
 
 .mm-section{
+  width:100%;
   padding:10px 4px 12px;
   flex:0 0 auto;
 }
-.mm-section:first-child{padding-top:2px}
+.mm-section:first-child{padding-top:8px}
 .mm-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--font-body);font-size:.7rem;font-weight:800;
@@ -192,7 +194,8 @@ nav.site-nav{
 .mm-link:hover{color:var(--coral-dark);padding-left:16px}
 .mm-link:hover::before{background:var(--coral);transform:scale(1.28)}
 .mm-divider{
-  border:none;border-top:1px dashed var(--line);
+  width:100%;
+  border:none;border-top:1px dashed rgba(125,115,109,.38);
   margin:5px 4px;
   flex:0 0 auto;
 }
@@ -238,7 +241,7 @@ body.menu-open{overflow:hidden}
   .mobile-menu-inner{padding:18px 22px 18px;width:340px}
   .mobile-menu-header{margin-bottom:24px}
   .mobile-menu-logo-img{height:42px}
-  .mm-link{font-size:1.18rem;padding:6px 6px}
+  .mm-link{font-size:1.2rem;padding:6px 6px}
   .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
 }
 
@@ -625,7 +628,6 @@ body.menu-open{overflow:hidden}
 
     <nav class="mobile-menu-nav" aria-label="Primary">
       <div class="mm-section">
-        <span class="mm-eyebrow">How to Help</span>
         <ul class="mm-list">
           <li><a href="index.html" class="mm-link">Home</a></li>
           <li><a href="campaigns.html" class="mm-link">All Campaigns</a></li>
