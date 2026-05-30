@@ -870,7 +870,7 @@ function renderCampaigns(list){
   grid.innerHTML = list.map(c => {
     const pct = c.goal > 0 ? Math.min(Math.round((c.raised / c.goal) * 100), 100) : 0;
     return `
-      <a href="campaign.html" class="dc-small">
+      <a href="campaign.html?c=${CAMPAIGNS.indexOf(c)}" class="dc-small">
         <div class="dcs-img">
           <span class="dcs-cat">${c.cat}</span>
           <img src="${c.img}" alt="${c.title}" loading="lazy">
