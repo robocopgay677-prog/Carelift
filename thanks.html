@@ -34,6 +34,19 @@
   --font-head:   'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-body:   'Inter', system-ui, -apple-system, sans-serif;
   --r-pill:      100px;
+
+  /* ── PREMIUM LAYER (additive — existing tokens unchanged) ── */
+  --coral-deep:  #D9492A;
+  --coral-amber: #FFB48F;
+  --peach-glow:  #FFD8C7;
+
+  --grad-btn:       linear-gradient(180deg, #FF8A6B 0%, #FF7452 42%, #EF5E3E 100%);
+  --grad-btn-hover: linear-gradient(180deg, #FF9B7E 0%, #FF7452 45%, #E25530 100%);
+
+  --s-card:       0 1px 2px rgba(45,49,53,.04), 0 6px 14px rgba(180,80,52,.06), 0 20px 40px -14px rgba(180,80,52,.12);
+  --s-btn:        0 1px 0 rgba(255,255,255,.30) inset, 0 6px 14px rgba(240,101,67,.28), 0 16px 32px -10px rgba(240,101,67,.38);
+  --s-btn-hover:  0 1px 0 rgba(255,255,255,.36) inset, 0 10px 22px rgba(240,101,67,.34), 0 24px 46px -12px rgba(240,101,67,.46);
+  --s-glow:       0 0 36px rgba(255,180,143,.32);
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -44,8 +57,9 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(255,116,82,.18) 0%, rgba(255,116,82,0) 55%),
-    radial-gradient(ellipse at 50% 100%, rgba(255,194,178,.18) 0%, rgba(255,194,178,0) 60%),
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,116,82,.22) 0%, rgba(255,116,82,0) 60%),
+    radial-gradient(ellipse 55% 50% at 0% 70%, rgba(255,180,143,.18) 0%, rgba(255,180,143,0) 60%),
+    radial-gradient(ellipse 55% 50% at 100% 80%, rgba(255,194,178,.16) 0%, rgba(255,194,178,0) 60%),
     linear-gradient(180deg, var(--white) 0%, var(--paper) 100%);
   min-height:100vh;
   display:flex;
@@ -184,26 +198,37 @@ body{
 
 /* ── BUTTON ────────────────────────────────────────── */
 .ty-btn{
+  position:relative;
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--font-body);
   font-size:1rem;font-weight:700;color:var(--white);
-  background:linear-gradient(135deg, #FF7452 0%, #F06543 100%);
+  background:var(--grad-btn);
   border:none;
   border-radius:var(--r-pill);
   padding:16px 34px;
   cursor:pointer;
   text-decoration:none;
-  box-shadow:
-    0 8px 24px rgba(255,116,82,.36),
-    inset 0 1px 0 rgba(255,255,255,.3);
-  transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  box-shadow:var(--s-btn);
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, background .25s;
+  isolation:isolate;
 }
+.ty-btn::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 50%);
+}
+.ty-btn::after{
+  content:"";position:absolute;left:8%;right:8%;bottom:-20px;height:26px;border-radius:50%;
+  background:radial-gradient(ellipse, rgba(240,101,67,.50) 0%, rgba(240,101,67,0) 70%);
+  filter:blur(10px);opacity:.75;z-index:-1;
+  transition:opacity .25s, transform .25s;
+}
+.ty-btn > *{position:relative;z-index:1}
 .ty-btn:hover{
   transform:translateY(-2px);
-  box-shadow:
-    0 12px 32px rgba(240,101,67,.46),
-    inset 0 1px 0 rgba(255,255,255,.3);
+  background:var(--grad-btn-hover);
+  box-shadow:var(--s-btn-hover);
 }
+.ty-btn:hover::after{opacity:1;transform:translateY(3px) scale(1.08)}
 .ty-btn:active{transform:translateY(0)}
 .ty-btn svg{width:16px;height:16px}
 

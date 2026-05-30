@@ -38,6 +38,25 @@
   --s-sm: 0 2px 8px rgba(45,49,53,.05), 0 1px 3px rgba(45,49,53,.03);
   --s-md: 0 8px 24px rgba(255,116,82,.10), 0 2px 8px rgba(45,49,53,.04);
   --s-lg: 0 14px 36px rgba(255,116,82,.13), 0 4px 12px rgba(45,49,53,.06);
+
+  /* ── PREMIUM LAYER (additive — existing tokens unchanged) ── */
+  --coral-deep:  #D9492A;
+  --coral-amber: #FFB48F;
+  --peach-glow:  #FFD8C7;
+
+  --grad-btn:       linear-gradient(180deg, #FF8A6B 0%, #FF7452 42%, #EF5E3E 100%);
+  --grad-btn-hover: linear-gradient(180deg, #FF9B7E 0%, #FF7452 45%, #E25530 100%);
+  --grad-progress:  linear-gradient(90deg, #FFB48F 0%, #FF7452 50%, #E25530 100%);
+  --grad-warm:      radial-gradient(110% 70% at 50% 0%, #FFE9DD 0%, var(--paper) 60%);
+  --grad-warm-side: radial-gradient(60% 80% at 100% 30%, rgba(255,180,143,.20) 0%, rgba(255,116,82,0) 70%),
+                    radial-gradient(55% 70% at 0% 80%, rgba(255,116,82,.08) 0%, rgba(255,116,82,0) 65%);
+
+  --s-card:       0 1px 2px rgba(45,49,53,.04), 0 6px 14px rgba(180,80,52,.06), 0 20px 40px -14px rgba(180,80,52,.12);
+  --s-card-hover: 0 2px 4px rgba(45,49,53,.05), 0 12px 24px rgba(180,80,52,.10), 0 32px 60px -18px rgba(180,80,52,.20);
+  --s-btn:        0 1px 0 rgba(255,255,255,.30) inset, 0 6px 14px rgba(240,101,67,.28), 0 16px 32px -10px rgba(240,101,67,.38);
+  --s-btn-hover:  0 1px 0 rgba(255,255,255,.36) inset, 0 10px 22px rgba(240,101,67,.34), 0 24px 46px -12px rgba(240,101,67,.46);
+  --s-glow:       0 0 36px rgba(255,180,143,.32);
+
   --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -48,7 +67,11 @@ html{scroll-behavior:smooth}
 body{
   font-family:var(--font-body);
   color:var(--ink);
-  background:var(--paper);
+  background:
+    radial-gradient(55% 50% at 100% 0%, rgba(255,180,143,.16) 0%, rgba(255,116,82,0) 65%),
+    radial-gradient(48% 45% at 0% 40%, rgba(255,116,82,.07) 0%, rgba(255,116,82,0) 65%),
+    var(--paper);
+  background-attachment:fixed;
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
@@ -192,15 +215,16 @@ nav.site-nav{
 .mobile-menu-cta{
   display:flex;width:100%;align-items:center;justify-content:center;gap:10px;
   padding:18px 28px;border-radius:var(--r-pill);
-  background:linear-gradient(135deg,var(--coral) 0%,var(--coral-dark) 100%);
+  background:var(--grad-btn);
   color:var(--white);text-decoration:none;
   font-family:var(--font-body);font-size:1rem;font-weight:700;letter-spacing:-.005em;
-  box-shadow:0 4px 14px rgba(255,116,82,.28);
-  transition:transform .15s, box-shadow .22s, background .2s;
+  box-shadow:var(--s-btn);
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, background .25s;
 }
 .mobile-menu-cta:hover{
   transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(240,101,67,.36);
+  background:var(--grad-btn-hover);
+  box-shadow:var(--s-btn-hover);
 }
 .mobile-menu-cta svg{stroke:currentColor;fill:none;stroke-width:2.6}
 
@@ -305,7 +329,7 @@ body.menu-open{overflow:hidden}
 /* ── CAMPAIGNS GRID ────────────────────────────────── */
 .campaigns-section{
   padding:0 5% 96px;
-  background:var(--paper);
+  background:transparent;
 }
 .campaigns-grid{
   display:grid;
@@ -319,8 +343,8 @@ body.menu-open{overflow:hidden}
   position:relative;
   border:1px solid var(--line);
   background:var(--white);
-  box-shadow:var(--s-xs);
-  transition:transform .25s, box-shadow .25s, border-color .25s;
+  box-shadow:var(--s-card);
+  transition:transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s, border-color .35s;
   cursor:pointer;
   display:flex;flex-direction:column;
   text-decoration:none;
@@ -329,7 +353,7 @@ body.menu-open{overflow:hidden}
 }
 .dc-small:hover{
   transform:translateY(-4px);
-  box-shadow:var(--s-md);
+  box-shadow:var(--s-card-hover);
   border-color:var(--coral-soft);
 }
 .dcs-img{
@@ -378,8 +402,8 @@ body.menu-open{overflow:hidden}
 }
 .dcs-bar{
   height:100%;
-  background:linear-gradient(90deg, var(--coral-soft) 0%, var(--coral) 45%, var(--coral-dark) 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 1px 4px rgba(255,116,82,.28);
+  background:var(--grad-progress);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.40), inset 0 -1px 0 rgba(0,0,0,.05), 0 1px 6px rgba(240,101,67,.30);
   border-radius:4px;
   transition:width 1s cubic-bezier(.4,0,.2,1);
 }
