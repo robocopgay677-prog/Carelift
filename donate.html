@@ -265,29 +265,25 @@ body.menu-open{overflow:hidden}
 /* ── HERO (campaign you're supporting) ─────────────── */
 .dn-hero{
   position:relative;border-radius:24px;overflow:hidden;
-  box-shadow:0 2px 4px rgba(45,49,53,.05), 0 14px 30px rgba(180,80,52,.10), 0 32px 60px -18px rgba(180,80,52,.22);
+  box-shadow:0 2px 4px rgba(45,49,53,.05), 0 14px 30px rgba(180,80,52,.10), 0 26px 52px -20px rgba(180,80,52,.20);
   border:1px solid var(--line);
   background:var(--surface);
-  margin-bottom:40px;
-  min-height:380px;
 }
 .dn-hero-img{
-  width:100%;height:auto;display:block;object-fit:cover;
-  max-height:560px;
+  width:100%;height:46vh;min-height:360px;max-height:540px;
+  display:block;object-fit:cover;
 }
 .dn-hero-grad{
-  position:absolute;inset:0;
-  background:linear-gradient(to bottom, rgba(45,49,53,0) 0%, rgba(45,49,53,.04) 28%, rgba(45,49,53,.52) 66%, rgba(45,49,53,.88) 100%);
-  pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom, rgba(45,49,53,0) 26%, rgba(45,49,53,.28) 52%, rgba(45,49,53,.74) 100%);
 }
-/* Badge + title + card grouped as one intentional hero unit at the
-   bottom, with tight spacing — the title leads straight into the card. */
-.dn-hero-bottom{
+/* Badge + title sit directly on the lower third of the image, clearing
+   the donation card that overlaps from below. */
+.dn-hero-texto{
   position:absolute;left:0;right:0;bottom:0;z-index:2;
-  padding:26px;
-  display:flex;flex-direction:column;gap:18px;
+  padding:0 30px 80px;
+  color:var(--white);
 }
-.dn-hero-texto{color:var(--white);padding:0 6px}
 .dn-hero-eyebrow{
   display:inline-block;
   font-size:.76rem;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;
@@ -305,9 +301,10 @@ body.menu-open{overflow:hidden}
   text-shadow:0 2px 22px rgba(0,0,0,.55);
 }
 
-/* ── Donation card — warm coral "luxury card" surface ─ */
+/* ── Donation card — warm coral "luxury card", overlapping the image ─ */
 .dn-hero-progresso{
-  position:relative;
+  position:relative;z-index:3;
+  margin:-56px 0 40px;
   color:#fff;
   background:
     radial-gradient(120% 130% at 14% 0%, rgba(255,255,255,.24) 0%, rgba(255,255,255,0) 42%),
@@ -371,16 +368,15 @@ body.menu-open{overflow:hidden}
 @media(max-width:700px){
   .dn-hero{
     position:relative;left:50%;width:100vw;margin-left:-50vw;
-    margin-top:-36px;margin-bottom:32px;
-    border-radius:0;border-left:none;border-right:none;border-top:none;
-    min-height:560px;
+    margin-top:-36px;
+    border-radius:0;border:none;
   }
-  .dn-hero-img{max-height:640px}
+  .dn-hero-img{height:56vh;min-height:420px;max-height:600px}
   .dn-hero-grad{
-    background:linear-gradient(to bottom, rgba(45,49,53,0) 0%, rgba(45,49,53,.06) 32%, rgba(45,49,53,.55) 64%, rgba(45,49,53,.9) 100%);
+    background:linear-gradient(to bottom, rgba(45,49,53,0) 24%, rgba(45,49,53,.3) 52%, rgba(45,49,53,.82) 100%);
   }
-  .dn-hero-bottom{padding:20px}
-  .dn-hero-progresso{padding:20px 20px}
+  .dn-hero-texto{padding:0 22px 78px}
+  .dn-hero-progresso{margin:-58px 0 36px;padding:20px 20px}
 }
 
 /* ── FALTA / MOTIVATIONAL LINE ─────────────────────── */
@@ -730,27 +726,25 @@ body.menu-open{overflow:hidden}
          alt="Maria's family">
     <div class="dn-hero-grad" aria-hidden="true"></div>
 
-    <div class="dn-hero-bottom">
-      <div class="dn-hero-texto">
-        <span class="dn-hero-eyebrow">You're supporting</span>
-        <h2 class="dn-hero-titulo" id="dnHeroTitulo">Help Maria finish her cancer treatment this winter</h2>
-      </div>
-
-      <div class="dn-hero-progresso">
-        <div class="dn-hero-prog-num">
-          <span id="dnHeroArrecadado">$18,420</span>
-          <span class="dn-hero-prog-of">raised of <span id="dnHeroMeta">$25,000</span></span>
-        </div>
-        <div class="dn-hero-prog-barra" aria-hidden="true">
-          <div class="dn-hero-prog-fill" id="dnHeroProgFill" style="width:74%"></div>
-        </div>
-        <div class="dn-hero-prog-rodape">
-          <span><strong id="dnHeroDoacoes">312</strong> donations</span>
-          <span class="dn-hero-prog-pct" id="dnHeroPct">74%</span>
-        </div>
-      </div>
+    <div class="dn-hero-texto">
+      <span class="dn-hero-eyebrow">You're supporting</span>
+      <h2 class="dn-hero-titulo" id="dnHeroTitulo">Help Maria finish her cancer treatment this winter</h2>
     </div>
   </section>
+
+  <div class="dn-hero-progresso">
+    <div class="dn-hero-prog-num">
+      <span id="dnHeroArrecadado">$18,420</span>
+      <span class="dn-hero-prog-of">raised of <span id="dnHeroMeta">$25,000</span></span>
+    </div>
+    <div class="dn-hero-prog-barra" aria-hidden="true">
+      <div class="dn-hero-prog-fill" id="dnHeroProgFill" style="width:74%"></div>
+    </div>
+    <div class="dn-hero-prog-rodape">
+      <span><strong id="dnHeroDoacoes">312</strong> donations</span>
+      <span class="dn-hero-prog-pct" id="dnHeroPct">74%</span>
+    </div>
+  </div>
 
   <p class="dn-falta">
     Just <strong>$6,580</strong> away from a full life-saving fund. Be the next to lift Maria up.
