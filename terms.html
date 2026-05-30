@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use — Carelift</title>
+<meta name="description" content="The terms that govern your use of Carelift — how campaigns, donations, payments, and your responsibilities work on the platform.">
+<link rel="icon" type="image/png" href="Logo-Icon.png">
+<link rel="apple-touch-icon" href="Logo-Icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   CARELIFT — Terms of Use
+   Editorial legal layout on the shared Carelift design system:
+   sticky table of contents, prose-first sections, warm callouts.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── DESIGN TOKENS ─────────────────────────────────── */
+:root{
+  --coral:       #FF7452;
+  --coral-dark:  #F06543;
+  --coral-soft:  #FFC2B2;
+  --coral-tint:  #FFE9E1;
+  --paper:       #FFF8F4;
+  --white:       #FFFFFF;
+  --surface:     #F9EEE8;
+  --line:        #E7D6CC;
+  --ink:         #2D3135;
+  --slate:       #6A7C89;
+  --muted:       #7E736D;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-pill: 100px;
+
+  /* ── PREMIUM LAYER (additive — existing tokens unchanged) ── */
+  --coral-deep:  #D9492A;
+  --coral-amber: #FFB48F;
+  --peach-glow:  #FFD8C7;
+
+  --grad-btn:       linear-gradient(180deg, #FF8A6B 0%, #FF7452 42%, #EF5E3E 100%);
+  --grad-btn-hover: linear-gradient(180deg, #FF9B7E 0%, #FF7452 45%, #E25530 100%);
+
+  --s-card:       0 1px 2px rgba(45,49,53,.04), 0 6px 14px rgba(180,80,52,.06), 0 20px 40px -14px rgba(180,80,52,.12);
+  --s-btn:        0 1px 0 rgba(255,255,255,.30) inset, 0 6px 14px rgba(240,101,67,.28), 0 16px 32px -10px rgba(240,101,67,.38);
+  --s-btn-hover:  0 1px 0 rgba(255,255,255,.36) inset, 0 10px 22px rgba(240,101,67,.34), 0 24px 46px -12px rgba(240,101,67,.46);
+  --s-glow:       0 0 36px rgba(255,180,143,.32);
+
+  --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── RESET ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:
+    radial-gradient(55% 50% at 100% 0%, rgba(255,180,143,.14) 0%, rgba(255,116,82,0) 60%),
+    var(--paper);
+  background-attachment:fixed;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* ── NAV ───────────────────────────────────────────── */
+nav.site-nav{
+  background:rgba(255,248,244,.78);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:none;
+  height:104px;padding:0 5%;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  position:sticky;top:0;z-index:50;
+}
+.nav-search,
+.nav-hamburger{
+  width:52px;height:52px;border-radius:16px;
+  border:1px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:border-color .18s, background .18s, box-shadow .18s;
+}
+.nav-search:hover,
+.nav-hamburger:hover{border-color:var(--coral);background:var(--coral-tint);box-shadow:0 4px 14px rgba(255,116,82,.18)}
+.nav-search{justify-self:start;text-decoration:none;color:var(--ink)}
+.nav-search svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;transition:stroke .15s}
+.nav-search:hover svg{stroke:var(--coral-dark)}
+.nav-hamburger{justify-self:end;flex-direction:column;gap:5px}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:background .15s}
+.nav-hamburger:hover span{background:var(--coral-dark)}
+.nav-logo{justify-self:center;display:flex;align-items:center;text-decoration:none;transition:transform .25s}
+.nav-logo-img{height:82px;width:auto;display:block;object-fit:contain}
+.nav-logo:hover{transform:scale(1.04)}
+@media(max-width:700px){
+  nav.site-nav{height:78px;gap:12px}
+  .nav-logo-img{height:54px}
+  .nav-search,
+  .nav-hamburger{width:44px;height:44px;border-radius:14px}
+  .nav-search svg{width:18px;height:18px}
+  .nav-hamburger span{width:18px}
+}
+
+/* ── MOBILE MENU OVERLAY ───────────────────────────── */
+.mobile-menu{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(45,49,53,0);
+  pointer-events:none;
+  transition:background .35s ease;
+}
+.mobile-menu.open{background:rgba(45,49,53,.38);pointer-events:auto}
+.mobile-menu-inner{
+  position:absolute;top:0;right:0;bottom:0;
+  width:420px;max-width:calc(100vw - 48px);
+  background:var(--paper);
+  padding:24px 30px 24px;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transform:translateX(100%);
+  transition:transform .42s cubic-bezier(.4,0,.2,1);
+  box-shadow:-14px 0 44px rgba(45,49,53,.18);
+}
+.mobile-menu.open .mobile-menu-inner{transform:translateX(0)}
+.mobile-menu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;padding-top:6px}
+.mobile-menu-logo{display:inline-flex;align-items:center;text-decoration:none}
+.mobile-menu-logo-img{height:52px;width:auto;display:block;object-fit:contain}
+.mobile-menu-close{
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--white);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:border-color .15s, background .15s, color .15s, transform .35s cubic-bezier(.4,0,.2,1);
+}
+.mobile-menu-close:hover{border-color:var(--coral);background:var(--coral-tint);color:var(--coral-dark);transform:rotate(90deg)}
+.mobile-menu-close svg{stroke:currentColor;fill:none}
+.mobile-menu-nav{
+  display:flex;flex-direction:column;
+  flex:1;min-height:0;
+  align-items:stretch;
+  overflow-x:hidden;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+  padding:4px 4px 8px 0;
+}
+.mm-section{
+  width:100%;
+  padding:10px 4px 12px;
+  flex:0 0 auto;
+}
+.mm-section:first-child{padding-top:8px}
+.mm-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-body);font-size:.7rem;font-weight:800;
+  color:var(--coral-dark);letter-spacing:2.4px;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.mm-eyebrow::before{
+  content:"";flex-shrink:0;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--grad-btn);
+  box-shadow:0 2px 6px rgba(240,101,67,.34);
+}
+.mm-list{display:flex;flex-direction:column;gap:2px;padding:0;list-style:none}
+.mm-link{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--font-head);font-size:1.32rem;font-weight:600;
+  color:var(--ink);letter-spacing:-.018em;text-decoration:none;
+  padding:7px 8px;
+  border-radius:10px;
+  transition:color .22s, transform .28s cubic-bezier(.4,0,.2,1), background .22s;
+}
+.mm-link::before{
+  content:"";flex-shrink:0;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--coral-soft);
+  transition:background .22s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+.mm-link:hover{color:var(--coral-dark);transform:translateX(5px)}
+.mm-link:hover::before{background:var(--coral);transform:scale(1.28)}
+.mm-link.is-current{color:var(--coral-dark)}
+.mm-link.is-current::before{background:var(--coral)}
+.mm-divider{
+  width:100%;
+  border:none;border-top:1px dashed rgba(125,115,109,.38);
+  margin:5px 4px;
+  flex:0 0 auto;
+}
+.mobile-menu-footer{
+  flex-shrink:0;
+  padding:22px 0 4px;margin-top:10px;
+  border-top:1px solid var(--line);
+  background:transparent;color:inherit;
+}
+.mobile-menu-cta{
+  display:flex;width:100%;align-items:center;justify-content:center;gap:10px;
+  padding:18px 28px;border-radius:var(--r-pill);
+  background:var(--grad-btn);
+  color:var(--white);text-decoration:none;
+  font-family:var(--font-body);font-size:1rem;font-weight:700;letter-spacing:-.005em;
+  box-shadow:var(--s-btn);
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, background .25s;
+}
+.mobile-menu-cta:hover{transform:translateY(-2px);background:var(--grad-btn-hover);box-shadow:var(--s-btn-hover)}
+.mobile-menu-cta svg{stroke:currentColor;fill:none;stroke-width:2.6}
+body.menu-open{overflow:hidden}
+@media(max-width:600px){
+  .mobile-menu-inner{padding:18px 22px 18px;width:340px}
+  .mobile-menu-header{margin-bottom:24px}
+  .mobile-menu-logo-img{height:42px}
+  .mm-link{font-size:1.2rem;padding:6px 6px}
+  .mobile-menu-cta{padding:16px 24px;font-size:.95rem}
+}
+@media(min-width:701px){.hero-flames{display:none}}
+
+/* ══════════════════════════════════════════════════════════
+   LEGAL PAGE
+   ══════════════════════════════════════════════════════════ */
+.lg-hero{
+  max-width:760px;margin:0 auto;
+  padding:60px 5% 40px;
+  text-align:center;
+}
+.lg-eyebrow{
+  display:inline-block;
+  font-size:.7rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--coral-dark);
+  background:var(--coral-tint);
+  padding:7px 14px;border-radius:var(--r-pill);
+  margin-bottom:18px;
+}
+.lg-title{
+  font-family:var(--font-head);
+  font-size:clamp(2.2rem, 5vw, 3.2rem);
+  font-weight:800;color:var(--ink);
+  line-height:1.08;letter-spacing:-.035em;
+  margin-bottom:16px;
+}
+.lg-meta{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.82rem;color:var(--muted);font-weight:500;
+  margin-bottom:22px;
+}
+.lg-meta::before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--coral-soft);
+}
+.lg-lede{
+  font-size:1.08rem;color:var(--slate);
+  line-height:1.75;max-width:600px;margin:0 auto;
+}
+
+.lg-wrap{
+  max-width:1080px;margin:0 auto;
+  padding:24px 5% 100px;
+  display:grid;grid-template-columns:248px 1fr;gap:64px;
+  align-items:start;
+}
+
+/* Sticky table of contents */
+.lg-toc{
+  position:sticky;top:132px;
+  align-self:start;
+}
+.lg-toc-label{
+  font-size:.68rem;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:16px;padding-left:14px;
+}
+.lg-toc ul{display:flex;flex-direction:column;gap:1px}
+.lg-toc a{
+  display:block;
+  padding:8px 14px;
+  border-left:2px solid var(--line);
+  font-size:.86rem;line-height:1.4;color:var(--slate);
+  transition:color .18s, border-color .18s, background .18s;
+}
+.lg-toc a:hover{color:var(--coral-dark);border-color:var(--coral-soft)}
+.lg-toc a.is-active{
+  color:var(--coral-dark);font-weight:600;
+  border-color:var(--coral);
+  background:linear-gradient(90deg, var(--coral-tint), transparent);
+}
+
+/* Article body */
+.lg-body{max-width:700px}
+
+.lg-intro-card{
+  background:
+    radial-gradient(80% 70% at 0% 0%, rgba(255,233,221,.7) 0%, rgba(255,255,255,0) 60%),
+    var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:28px 30px;
+  margin-bottom:48px;
+  box-shadow:var(--s-card);
+}
+.lg-intro-card h2{
+  font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--ink);
+  letter-spacing:-.01em;margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.lg-intro-card h2 svg{width:20px;height:20px;stroke:var(--coral-dark);fill:none;stroke-width:2}
+.lg-intro-card p{font-size:.96rem;color:var(--slate);line-height:1.7}
+.lg-intro-card p + p{margin-top:10px}
+.lg-intro-card strong{color:var(--ink);font-weight:700}
+
+.lg-section{
+  padding:40px 0;
+  border-top:1px solid var(--line);
+  scroll-margin-top:128px;
+}
+.lg-section:first-of-type{border-top:none;padding-top:4px}
+.lg-section h2{
+  font-family:var(--font-head);
+  font-size:clamp(1.4rem, 2.4vw, 1.75rem);
+  font-weight:800;color:var(--ink);
+  letter-spacing:-.022em;line-height:1.2;
+  margin-bottom:18px;
+  position:relative;padding-left:18px;
+}
+.lg-section h2::before{
+  content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:4px;
+  border-radius:4px;
+  background:var(--grad-btn);
+}
+.lg-section h3{
+  font-family:var(--font-head);
+  font-size:1.05rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;
+  margin:26px 0 8px;
+}
+.lg-section p{
+  font-size:1rem;color:var(--ink3,#4A5660);
+  line-height:1.78;
+}
+.lg-section p + p{margin-top:14px}
+.lg-section a{
+  color:var(--coral-dark);font-weight:600;
+  text-decoration:underline;text-underline-offset:2px;
+  text-decoration-color:var(--coral-soft);
+}
+.lg-section a:hover{text-decoration-color:var(--coral-dark)}
+.lg-section strong{color:var(--ink);font-weight:700}
+
+/* Clean list — soft coral marker, no heavy numbering */
+.lg-list{margin:16px 0 4px;display:flex;flex-direction:column;gap:12px}
+.lg-list li{
+  position:relative;padding-left:28px;
+  font-size:1rem;color:var(--ink3,#4A5660);line-height:1.7;
+}
+.lg-list li::before{
+  content:"";position:absolute;left:4px;top:.62em;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--coral-soft);
+  box-shadow:0 0 0 4px rgba(255,194,178,.18);
+}
+.lg-list li strong{color:var(--ink);font-weight:700}
+
+/* Warm callout for key points */
+.lg-callout{
+  margin:24px 0;
+  background:var(--coral-tint);
+  border:1px solid rgba(255,116,82,.18);
+  border-left:4px solid var(--coral);
+  border-radius:var(--r-md);
+  padding:18px 22px;
+  font-size:.96rem;color:var(--ink);line-height:1.7;
+}
+.lg-callout strong{font-weight:800}
+
+/* Closing contact card */
+.lg-contact{
+  margin-top:40px;
+  background:
+    radial-gradient(70% 90% at 100% 0%, rgba(242,198,109,.16) 0%, rgba(242,198,109,0) 60%),
+    linear-gradient(180deg, var(--surface) 0%, var(--paper) 100%);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:34px 32px;
+  text-align:center;
+  box-shadow:var(--s-card);
+}
+.lg-contact h2{
+  font-family:var(--font-head);font-size:1.4rem;font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;margin-bottom:10px;
+}
+.lg-contact p{font-size:.98rem;color:var(--slate);line-height:1.7;max-width:440px;margin:0 auto 22px}
+.lg-contact-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:var(--r-pill);
+  background:var(--grad-btn);color:var(--white);
+  font-family:var(--font-body);font-size:.96rem;font-weight:700;
+  box-shadow:var(--s-btn);
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, background .25s;
+}
+.lg-contact-btn:hover{transform:translateY(-2px);background:var(--grad-btn-hover);box-shadow:var(--s-btn-hover)}
+.lg-contact-btn svg{stroke:currentColor;fill:none;stroke-width:2.4;width:15px;height:15px}
+
+@media(max-width:900px){
+  .lg-wrap{grid-template-columns:1fr;gap:0;padding-top:8px}
+  .lg-toc{display:none}
+  .lg-body{max-width:none}
+}
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════ */
+footer{
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(60,28,16,.55) 0%, rgba(60,28,16,0) 60%),
+    #1A1D20;
+  color:rgba(255,255,255,.7);
+  padding:84px 5% 32px;
+  position:relative;
+}
+.footer-inner{max-width:1240px;margin:0 auto}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;
+}
+.footer-logo{display:inline-block;margin-bottom:18px;line-height:0}
+.footer-logo-img{height:48px;width:auto;display:block;object-fit:contain;filter:brightness(0) invert(1);transition:filter .2s, opacity .2s}
+.footer-logo:hover .footer-logo-img{opacity:.85}
+.footer-brand p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.6);max-width:300px}
+.footer-social{display:flex;gap:10px;margin-top:18px}
+.soc-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.75);
+  transition:background .2s, border-color .2s, color .2s;
+}
+.soc-btn:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+.soc-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+.footer-col h4{font-family:var(--font-head);font-size:.82rem;font-weight:800;color:#fff;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{display:flex;flex-direction:column;gap:12px}
+.footer-col a{font-size:.88rem;color:rgba(255,255,255,.65);transition:color .15s}
+.footer-col a:hover{color:var(--coral-soft)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);padding-top:24px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  font-size:.78rem;color:rgba(255,255,255,.45);
+}
+.footer-bottom-links{display:flex;gap:22px;flex-wrap:wrap}
+.footer-bottom-links a{color:rgba(255,255,255,.45);transition:color .15s}
+.footer-bottom-links a:hover{color:var(--coral-soft)}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}footer{padding:60px 5% 28px}}
+</style>
+</head>
+<body>
+
+<!-- ═════════ NAV ═════════ -->
+<nav class="site-nav">
+  <a class="nav-search" href="campaigns.html" aria-label="Browse campaigns">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </a>
+  <a class="nav-logo" href="index.html" aria-label="Carelift home">
+    <img class="nav-logo-img" src="Logo-Icon.png" alt="Carelift" width="82" height="82" fetchpriority="high">
+  </a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═════════ MOBILE MENU OVERLAY ═════════ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Site menu">
+  <div class="mobile-menu-inner">
+    <header class="mobile-menu-header">
+      <a href="index.html" class="mobile-menu-logo" aria-label="Carelift home">
+        <img class="mobile-menu-logo-img" src="Logo-Icontext.png" alt="Carelift">
+      </a>
+      <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </header>
+
+    <nav class="mobile-menu-nav" aria-label="Primary">
+      <div class="mm-section">
+        <ul class="mm-list">
+          <li><a href="index.html" class="mm-link">Home</a></li>
+          <li><a href="campaigns.html" class="mm-link">All Campaigns</a></li>
+          <li><a href="campaigns.html" class="mm-link">Urgent Campaigns</a></li>
+          <li><a href="start-campaign.html" class="mm-link">Start a Campaign</a></li>
+        </ul>
+      </div>
+
+      <hr class="mm-divider">
+
+      <div class="mm-section">
+        <span class="mm-eyebrow">Company</span>
+        <ul class="mm-list">
+          <li><a href="index.html#how" class="mm-link">How it Works</a></li>
+          <li><a href="index.html#impact" class="mm-link">Our Impact</a></li>
+          <li><a href="index.html#stories" class="mm-link">Stories</a></li>
+        </ul>
+      </div>
+
+      <hr class="mm-divider">
+
+      <div class="mm-section">
+        <span class="mm-eyebrow">Legal</span>
+        <ul class="mm-list">
+          <li><a href="#" class="mm-link">Privacy Policy</a></li>
+          <li><a href="terms.html" class="mm-link is-current">Terms of Use</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <footer class="mobile-menu-footer">
+      <a href="campaigns.html" class="mobile-menu-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Browse Campaigns
+      </a>
+    </footer>
+  </div>
+</div>
+
+<!-- ═════════ HERO ═════════ -->
+<header class="lg-hero">
+  <span class="lg-eyebrow">Legal</span>
+  <h1 class="lg-title">Terms of Use</h1>
+  <div class="lg-meta">Last updated May 30, 2026</div>
+  <p class="lg-lede">These terms explain how Carelift works, what you can expect from us, and what we ask of you in return. We've written them in plain language, because trust starts with being understood.</p>
+</header>
+
+<!-- ═════════ BODY ═════════ -->
+<div class="lg-wrap">
+
+  <!-- Table of contents -->
+  <aside class="lg-toc" aria-label="On this page">
+    <div class="lg-toc-label">On this page</div>
+    <ul>
+      <li><a href="#about">About these terms</a></li>
+      <li><a href="#how">How Carelift works</a></li>
+      <li><a href="#eligibility">Who can use Carelift</a></li>
+      <li><a href="#account">Your account</a></li>
+      <li><a href="#organizers">Starting a campaign</a></li>
+      <li><a href="#donors">Giving a donation</a></li>
+      <li><a href="#payments">Payments, fees &amp; disbursement</a></li>
+      <li><a href="#refunds">Refunds, holds &amp; chargebacks</a></li>
+      <li><a href="#prohibited-campaigns">What you can't fundraise for</a></li>
+      <li><a href="#conduct">How we expect you to behave</a></li>
+      <li><a href="#content">Content &amp; intellectual property</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#third-party">Third-party services</a></li>
+      <li><a href="#disclaimers">Disclaimers</a></li>
+      <li><a href="#liability">Limitation of liability</a></li>
+      <li><a href="#indemnity">Indemnification</a></li>
+      <li><a href="#termination">Suspension &amp; termination</a></li>
+      <li><a href="#disputes">Disputes &amp; governing law</a></li>
+      <li><a href="#changes">Changes to these terms</a></li>
+      <li><a href="#contact">Contact us</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article -->
+  <article class="lg-body">
+
+    <div class="lg-intro-card">
+      <h2>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 16v-4M12 8h.01"/></svg>
+        The short version
+      </h2>
+      <p>Carelift is a place where people share real stories and others choose to help. <strong>We provide the platform — we don't run the campaigns, and we're not the recipient of your gift.</strong></p>
+      <p>If you start a campaign, tell the truth and use the money for what you described. If you donate, give because you believe in the cause. Be kind, be honest, and don't use Carelift for anything illegal or harmful. The full terms below add the detail — but that's the heart of it.</p>
+    </div>
+
+    <section class="lg-section" id="about">
+      <h2>About these terms</h2>
+      <p>These Terms of Use ("Terms") are an agreement between you and Carelift ("Carelift," "we," "us," or "our") that governs your access to and use of our websites, mobile experiences, and related services (together, the "Services"). By creating an account, starting a campaign, making a donation, or simply browsing, you agree to these Terms and to our Privacy Policy, which is incorporated here by reference.</p>
+      <p>If you are using Carelift on behalf of an organization, you are agreeing to these Terms for that organization and confirming that you have the authority to do so. In that case, "you" refers to both you and the organization.</p>
+      <p>We may update these Terms from time to time. When we make material changes, we'll update the date at the top of this page and, where appropriate, let you know in another way. Continuing to use Carelift after a change means you accept the updated Terms.</p>
+    </section>
+
+    <section class="lg-section" id="how">
+      <h2>How Carelift works</h2>
+      <p>Carelift is a technology platform that connects <strong>organizers</strong> — the people who create campaigns — with <strong>donors</strong> — the people who choose to support them. Our role is to host campaigns, process donations through trusted payment partners, and give both sides the tools to tell and discover real stories.</p>
+      <p>It's important to understand what Carelift is <em>not</em>. We are not a charity, a broker, a financial institution, or a creditor. We don't endorse any campaign, and we don't guarantee that a campaign will reach its goal, that funds will be used as described, or that any particular outcome will follow from your donation. Decisions about whether to give, and how much, are entirely yours.</p>
+      <div class="lg-callout">
+        <strong>Donations are made to the organizer, not to Carelift.</strong> When you give, you are choosing to support a specific person or cause based on the information they've shared. Carelift simply makes that connection possible.</div>
+      <p>We work hard to keep Carelift safe — reviewing campaigns, responding to reports, and partnering with payment processors that screen for fraud — but no platform can verify every detail of every story. Please use your own judgment, and tell us if something doesn't seem right.</p>
+    </section>
+
+    <section class="lg-section" id="eligibility">
+      <h2>Who can use Carelift</h2>
+      <p>To use Carelift, you must be at least 18 years old (or the age of majority where you live) and able to form a legally binding contract. By using the Services, you confirm that you meet these requirements and that the information you provide about yourself is true and current.</p>
+      <p>You may not use Carelift if you are barred from doing so under applicable law, if your account has previously been suspended for a serious violation, or if you appear on any government sanctions or watch list. We may decline service, or limit access, where we're required to or where we reasonably believe it's necessary to protect our community.</p>
+    </section>
+
+    <section class="lg-section" id="account">
+      <h2>Your account</h2>
+      <p>Some features require an account. You're responsible for keeping your login details private and for everything that happens under your account. Choose a strong, unique password, and let us know promptly if you believe your account has been accessed without your permission.</p>
+      <p>Please keep your contact and payout information accurate. If we can't reach you — or if details we need to disburse funds are missing or incorrect — campaigns and payouts may be delayed. You may close your account at any time, though some information may be retained as described in our Privacy Policy or as required by law.</p>
+    </section>
+
+    <section class="lg-section" id="organizers">
+      <h2>Starting a campaign</h2>
+      <p>When you create a campaign, you take on real responsibility to the people who choose to trust you. You agree that every statement you make — about who you are, the situation, the amount you're raising, and how the funds will be used — is honest, accurate, and not misleading.</p>
+      <h3>Your promises as an organizer</h3>
+      <p>By launching a campaign, you commit to the following:</p>
+      <ul class="lg-list">
+        <li><strong>Tell the truth.</strong> Describe the need honestly and keep your campaign up to date as circumstances change.</li>
+        <li><strong>Use funds as described.</strong> Spend what you raise on the purpose you shared. If plans change meaningfully, update your donors before redirecting funds.</li>
+        <li><strong>Deliver on what you promise.</strong> If you offer to pass funds to a named beneficiary, you must actually deliver them, promptly and in full.</li>
+        <li><strong>Keep donors informed.</strong> Share progress and outcomes. The people who gave deserve to know the difference they made.</li>
+        <li><strong>Handle taxes and reporting.</strong> You are responsible for any taxes, legal obligations, or reporting that apply to the funds you receive.</li>
+      </ul>
+      <p>If you raise money for someone other than yourself, you must have their knowledge and consent, and you must make sure the funds reach them. Misusing donations — including using them for a purpose other than the one you described — is a serious breach of these Terms and may be unlawful.</p>
+    </section>
+
+    <section class="lg-section" id="donors">
+      <h2>Giving a donation</h2>
+      <p>When you donate through Carelift, you are choosing to support a campaign based on the information its organizer has provided. Because Carelift does not control campaigns and cannot guarantee how funds are used, <strong>donations are made at your own discretion and risk.</strong></p>
+      <p>Most donations are not tax-deductible, since they're typically personal gifts to an individual rather than contributions to a registered charity. If tax treatment matters to you, please confirm a campaign's status and consult your own advisor — we can't give tax advice.</p>
+      <p>We're proud of how generous our community is, and we want that generosity to be protected. If you ever believe a campaign is dishonest or that funds are being misused, please report it so our team can review.</p>
+    </section>
+
+    <section class="lg-section" id="payments">
+      <h2>Payments, fees &amp; disbursement</h2>
+      <p>Donations are processed by third-party payment partners. By giving or receiving funds, you also agree to the terms of the relevant payment processor. We don't store full card numbers ourselves; that information is handled securely by our partners.</p>
+      <p>Carelift may charge a transaction fee to help keep the platform running, and the payment processor may charge its own processing fee. Any fees that apply will be shown clearly before a donation is completed. Fees may change over time, and any change will be reflected at the point of payment.</p>
+      <p>Funds raised are disbursed to the organizer's verified payout account. Before money is released, we may need to confirm identity and account details — a step that protects everyone. Disbursement timing depends on verification, the payment processor, and your financial institution, and may take several business days.</p>
+    </section>
+
+    <section class="lg-section" id="refunds">
+      <h2>Refunds, holds &amp; chargebacks</h2>
+      <p>Because gifts are made directly to organizers, refunds are not guaranteed. That said, if you donated by mistake, or if you believe a campaign is fraudulent, contact us — we review refund requests in good faith and will help where we reasonably can, in line with our policies and the payment processor's rules.</p>
+      <p>To protect our community, we may place a temporary hold on funds, request additional information, or pause disbursement while we review a campaign — for example, if we receive reports, detect unusual activity, or need to verify identity. We may also reverse or withhold funds in connection with chargebacks, disputes, suspected fraud, or violations of these Terms.</p>
+      <div class="lg-callout">If a campaign is found to be deceptive or in serious violation of these Terms, we may refund donors from undisbursed funds and take further action, including recovering funds already paid out.</div>
+    </section>
+
+    <section class="lg-section" id="prohibited-campaigns">
+      <h2>What you can't fundraise for</h2>
+      <p>Carelift exists to lift people up — never to cause harm. The following campaigns are not allowed, and this list is not exhaustive. We may remove any campaign we believe runs against the spirit of our community.</p>
+      <ul class="lg-list">
+        <li><strong>Anything illegal</strong> — including fraud, money laundering, or raising money for unlawful activity, regulated goods, or sanctioned parties.</li>
+        <li><strong>Hate, violence, or harassment</strong> — campaigns that promote, fund, or celebrate violence, terrorism, or discrimination against people or groups.</li>
+        <li><strong>Deception</strong> — fabricated stories, fake beneficiaries, misleading claims, or impersonating another person or organization.</li>
+        <li><strong>Exploitation or harm</strong> — anything that endangers, exploits, or sexualizes minors, or that exploits vulnerable people.</li>
+        <li><strong>Prohibited financial activity</strong> — gambling, lotteries, investment schemes, debts tied to unlawful conduct, or campaigns offering financial returns.</li>
+        <li><strong>Rights violations</strong> — content that infringes someone's intellectual property, privacy, or other rights.</li>
+      </ul>
+    </section>
+
+    <section class="lg-section" id="conduct">
+      <h2>How we expect you to behave</h2>
+      <p>A platform built on trust depends on everyone acting in good faith. When you use Carelift, you agree not to:</p>
+      <ul class="lg-list">
+        <li>Post false, misleading, or deceptive information, or impersonate anyone.</li>
+        <li>Harass, threaten, defame, or abuse other people on the platform.</li>
+        <li>Attempt to bypass our security, scrape data, or interfere with how the Services work.</li>
+        <li>Use the Services to send spam, malware, or unsolicited promotions.</li>
+        <li>Collect or misuse other people's personal information.</li>
+        <li>Do anything that violates applicable law or the rights of others.</li>
+      </ul>
+      <p>We may remove content, limit features, or suspend accounts that breach these expectations — and we'll always try to be fair and proportionate when we do.</p>
+    </section>
+
+    <section class="lg-section" id="content">
+      <h2>Content &amp; intellectual property</h2>
+      <p>You keep ownership of the photos, text, and other content you share on Carelift. By posting it, you give us a non-exclusive, worldwide, royalty-free license to host, display, and promote that content so we can operate and showcase the Services — including featuring campaigns across the site. You confirm you have the rights to everything you upload and the consent of anyone identifiable in it.</p>
+      <p>The Carelift name, logo, design, and software are owned by us or our licensors and are protected by intellectual property laws. You may use the Services as intended, but you may not copy, modify, or redistribute our platform or branding without permission.</p>
+    </section>
+
+    <section class="lg-section" id="privacy">
+      <h2>Privacy</h2>
+      <p>We care about your data as much as your trust. Our Privacy Policy explains what information we collect, how we use it, and the choices you have. By using Carelift, you agree to the practices described there. Please take a moment to read it alongside these Terms.</p>
+    </section>
+
+    <section class="lg-section" id="third-party">
+      <h2>Third-party services</h2>
+      <p>Carelift relies on trusted partners — such as payment processors and infrastructure providers — and may link to websites or tools we don't control. We're not responsible for the content, policies, or practices of third parties, and your use of their services is governed by their own terms. We encourage you to review them.</p>
+    </section>
+
+    <section class="lg-section" id="disclaimers">
+      <h2>Disclaimers</h2>
+      <p>The Services are provided "as is" and "as available." To the fullest extent permitted by law, Carelift makes no warranties of any kind — express or implied — about the Services, including their reliability, accuracy, or fitness for a particular purpose. We do not warrant that any campaign is truthful, that funds will be used as described, or that the Services will be uninterrupted or error-free.</p>
+      <p>You understand that the relationships and transactions on Carelift are between organizers and donors, and that any reliance you place on a campaign is at your own risk.</p>
+    </section>
+
+    <section class="lg-section" id="liability">
+      <h2>Limitation of liability</h2>
+      <p>To the fullest extent permitted by law, Carelift and its team will not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of funds, data, goodwill, or profits, arising from your use of the Services or from any campaign or donation. Where liability cannot be excluded, it is limited to the greatest extent the law allows.</p>
+      <p>Some jurisdictions don't allow certain limitations, so parts of this section may not apply to you. In that case, our liability is limited as much as the law permits.</p>
+    </section>
+
+    <section class="lg-section" id="indemnity">
+      <h2>Indemnification</h2>
+      <p>You agree to defend and hold harmless Carelift and its team from claims, losses, and expenses (including reasonable legal fees) arising out of your use of the Services, your content, your campaigns or donations, or your breach of these Terms or of any law or third-party right. We may take over the defense of any such claim, and you agree to cooperate with us if we do.</p>
+    </section>
+
+    <section class="lg-section" id="termination">
+      <h2>Suspension &amp; termination</h2>
+      <p>You may stop using Carelift and close your account at any time. We may suspend or end your access — and remove campaigns or content — if you breach these Terms, if we're required to by law, or if we reasonably believe it's necessary to protect our community or the platform.</p>
+      <p>If your access ends, the sections of these Terms that should reasonably survive — such as content licenses already granted, disclaimers, liability limits, and indemnification — will continue to apply.</p>
+    </section>
+
+    <section class="lg-section" id="disputes">
+      <h2>Disputes &amp; governing law</h2>
+      <p>We'd always rather resolve a concern directly, so please reach out to us first — most issues can be sorted out quickly and kindly. If a dispute can't be resolved informally, you agree that these Terms are governed by the laws of the jurisdiction in which Carelift is established, without regard to conflict-of-law rules, and that disputes will be handled in the courts or through the dispute process designated there, except where local law gives you other rights.</p>
+      <p>Nothing in these Terms removes any consumer protections you're entitled to under the law where you live.</p>
+    </section>
+
+    <section class="lg-section" id="changes">
+      <h2>Changes to these terms</h2>
+      <p>As Carelift grows, these Terms may evolve. When we make changes, we'll revise the "Last updated" date above, and for significant updates we'll give reasonable notice where we can. If you keep using the Services after changes take effect, you're agreeing to the updated Terms. If you don't agree, you're free to stop using Carelift at any time.</p>
+    </section>
+
+    <div class="lg-contact" id="contact">
+      <h2>Questions about these terms?</h2>
+      <p>We'd genuinely like to hear from you. If anything here is unclear, or if you want to report a concern about a campaign, our team is ready to help.</p>
+      <a href="mailto:hello@carelift.org" class="lg-contact-btn">
+        Contact Carelift
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </article>
+</div>
+
+<!-- ═════════ FOOTER ═════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html" aria-label="Carelift home">
+          <img class="footer-logo-img" src="Logo-Icontext.png" alt="Carelift">
+        </a>
+        <p>A home for every cause. A heart for every story. Lifting lives, one donation at a time.</p>
+        <div class="footer-social">
+          <a href="#" class="soc-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="soc-btn" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="campaigns.html">Browse campaigns</a></li>
+          <li><a href="start-campaign.html">Start a campaign</a></li>
+          <li><a href="index.html#impact">Our impact</a></li>
+          <li><a href="index.html#stories">Stories</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Carelift</a></li>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="#">Press &amp; media</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Trust &amp; safety</a></li>
+          <li><a href="terms.html">Privacy &amp; terms</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Carelift. Made with care.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="#">Cookies</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Drawer menu */
+(function initDrawer(){
+  var ham=document.getElementById('navHamburger');
+  var menu=document.getElementById('mobileMenu');
+  var close=document.getElementById('mobileMenuClose');
+  if(!ham||!menu||!close) return;
+  function open(){menu.classList.add('open');menu.setAttribute('aria-hidden','false');ham.setAttribute('aria-expanded','true');document.body.classList.add('menu-open');}
+  function shut(){menu.classList.remove('open');menu.setAttribute('aria-hidden','true');ham.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open');}
+  ham.addEventListener('click',open);
+  close.addEventListener('click',shut);
+  menu.addEventListener('click',function(e){if(e.target===menu)shut();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')shut();});
+})();
+
+/* Table-of-contents scrollspy — highlight the section in view */
+(function initToc(){
+  var links=Array.prototype.slice.call(document.querySelectorAll('.lg-toc a'));
+  if(!links.length||!('IntersectionObserver' in window)) return;
+  var map={};
+  links.forEach(function(a){
+    var id=a.getAttribute('href').slice(1);
+    var el=document.getElementById(id);
+    if(el) map[id]=a;
+  });
+  var current=null;
+  function setActive(id){
+    if(current===id) return;
+    links.forEach(function(a){a.classList.remove('is-active');});
+    if(map[id]){map[id].classList.add('is-active');current=id;}
+  }
+  var obs=new IntersectionObserver(function(entries){
+    // Pick the entry nearest the top that is intersecting
+    var visible=entries.filter(function(e){return e.isIntersecting;});
+    if(visible.length){
+      visible.sort(function(a,b){return a.boundingClientRect.top-b.boundingClientRect.top;});
+      setActive(visible[0].target.id);
+    }
+  },{rootMargin:'-130px 0px -65% 0px',threshold:0});
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) obs.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
