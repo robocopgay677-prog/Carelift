@@ -1412,13 +1412,12 @@ body.menu-open{overflow:hidden}
           </div>
 
         </div>
-        <button class="pd-doacoes-ver-todas">See all 312 donations</button>
       </div>
 
       <!-- Words of support -->
       <div class="pd-words">
         <div class="pd-words-header">
-          <h3>Words of support <span class="pd-doacoes-count">48</span></h3>
+          <h3>Words of support <span class="pd-doacoes-count">3</span></h3>
         </div>
         <div class="pd-words-lista">
 
@@ -1427,7 +1426,6 @@ body.menu-open{overflow:hidden}
             <div class="pd-word-content">
               <div class="pd-word-top">
                 <div class="pd-doacao-nome">Marie S.</div>
-                <span class="pd-word-amount">$25</span>
               </div>
               <div class="pd-word-text">"Thinking of your family ✦ Maria, you've got this. From a stranger across the ocean rooting for you."</div>
               <div class="pd-doacao-meta">2 minutes ago</div>
@@ -1439,7 +1437,6 @@ body.menu-open{overflow:hidden}
             <div class="pd-word-content">
               <div class="pd-word-top">
                 <div class="pd-doacao-nome">Priya R.</div>
-                <span class="pd-word-amount">$50</span>
               </div>
               <div class="pd-word-text">"Sending love from Mumbai. May the road ahead be lighter than you fear. Stay strong, Maria."</div>
               <div class="pd-doacao-meta">13 minutes ago</div>
@@ -1451,7 +1448,6 @@ body.menu-open{overflow:hidden}
             <div class="pd-word-content">
               <div class="pd-word-top">
                 <div class="pd-doacao-nome">Kenji A.</div>
-                <span class="pd-word-amount">$75</span>
               </div>
               <div class="pd-word-text">"Força, Maria. Treatment is just a chapter — not the whole story. We're with you."</div>
               <div class="pd-doacao-meta">31 minutes ago</div>
@@ -1737,7 +1733,7 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="cs-rail" id="csRail" role="region" aria-label="More campaigns">
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=2" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Education</span></div>
       <div class="cs-card-body">
         <h4 class="cs-card-titulo">Send 120 girls back to school with full supply kits</h4>
@@ -1745,7 +1741,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:58%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=3" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Shelter</span></div>
       <div class="cs-card-body">
         <h4 class="cs-card-titulo">A safe home for 9 families displaced by the floods</h4>
@@ -1753,7 +1749,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:79%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=4" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Food</span></div>
       <div class="cs-card-body">
         <h4 class="cs-card-titulo">Hot meals every evening for 200 neighbors this season</h4>
@@ -1761,7 +1757,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:47%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=5" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Elders</span></div>
       <div class="cs-card-body">
         <h4 class="cs-card-titulo">In-home care for 28 elderly without family support</h4>
@@ -1769,7 +1765,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:61%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=10" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=600&q=80')"><span class="cs-card-cat">Community</span></div>
       <div class="cs-card-body">
         <h4 class="cs-card-titulo">Build a community center for 600 families in need</h4>
@@ -1906,6 +1902,7 @@ body.menu-open{overflow:hidden}
     setAll('.pd-promo-org-by', el => el.textContent = 'by ' + c.org);
     setAll('.pd-promo-org-avatar', el => el.textContent = initials);
     setAll('.pd-promo-prog-valor', el => el.textContent = fmt(c.raised));
+    document.querySelectorAll('a[href="donate.html"]').forEach(a => a.setAttribute('href','donate.html?c=' + i));
   }catch(e){ /* leave default content if anything fails */ }
 })();
 

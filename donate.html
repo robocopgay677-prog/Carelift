@@ -790,7 +790,7 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="cs-rail" id="csRail" role="region" aria-label="Featured campaigns">
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=2" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80')">
         <span class="cs-card-cat">Education</span>
       </div>
@@ -800,7 +800,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:58%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=3" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80')">
         <span class="cs-card-cat">Shelter</span>
       </div>
@@ -810,7 +810,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:79%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=4" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80')">
         <span class="cs-card-cat">Food</span>
       </div>
@@ -820,7 +820,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:47%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=5" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80')">
         <span class="cs-card-cat">Elders</span>
       </div>
@@ -830,7 +830,7 @@ body.menu-open{overflow:hidden}
         <div class="cs-card-barra"><div class="cs-card-barra-fill" style="width:61%"></div></div>
       </div>
     </a>
-    <a href="campaign.html" class="cs-card">
+    <a href="campaign.html?c=10" class="cs-card">
       <div class="cs-card-img" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=600&q=80')">
         <span class="cs-card-cat">Community</span>
       </div>
@@ -844,6 +844,94 @@ body.menu-open{overflow:hidden}
 </section>
 
 <script>
+/* ── Load the campaign referenced by ?c= and fill the donate hero ── */
+(function(){
+  try{
+    const CAMPAIGNS_DATA = [
+  { title:"Help Maria finish her cancer treatment this winter",
+    org:"Maria's family", loc:"Lisbon", cat:"Health",
+    img:"https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80",
+    raised:18420, goal:25000 },
+
+  { title:"Emergency heart surgery for Lucas — every hour counts",
+    org:"Lucas, 6", loc:"Buenos Aires", cat:"Medical",
+    img:"https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=600&q=80",
+    raised:22180, goal:35000 },
+
+  { title:"Send 120 girls back to school with full supply kits",
+    org:"Bright Futures", loc:"Kenya", cat:"Education",
+    img:"https://images.unsplash.com/photo-1497486751825-1233686d5d80?auto=format&fit=crop&w=600&q=80",
+    raised:8240, goal:14000 },
+
+  { title:"A safe home for 9 families displaced by the floods",
+    org:"Casa Aberta", loc:"São Paulo", cat:"Shelter",
+    img:"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80",
+    raised:31800, goal:40000 },
+
+  { title:"Hot meals every evening for 200 neighbors this season",
+    org:"Mesa Cheia", loc:"Porto", cat:"Food",
+    img:"https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80",
+    raised:5640, goal:12000 },
+
+  { title:"In-home care for 28 elderly without family support",
+    org:"Vida Plena", loc:"Madrid", cat:"Elders",
+    img:"https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80",
+    raised:12140, goal:20000 },
+
+  { title:"Emergency shelter for 40 families this week",
+    org:"Flood survivors", loc:"Valencia", cat:"Disaster",
+    img:"https://images.unsplash.com/photo-1542884748-2b87b36c6b90?auto=format&fit=crop&w=600&q=80",
+    raised:14920, goal:30000 },
+
+  { title:"Critical medication supply for 6 month treatment",
+    org:"Ana", loc:"Lima", cat:"Health",
+    img:"https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80",
+    raised:3820, goal:8000 },
+
+  { title:"Safe night shelter for 60 children sleeping on streets",
+    org:"Refugio Niños", loc:"Bogotá", cat:"Children",
+    img:"https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=600&q=80",
+    raised:9650, goal:18000 },
+
+  { title:"Weekly food kits for 280 families with no income",
+    org:"Banco Solidário", loc:"Quito", cat:"Food",
+    img:"https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?auto=format&fit=crop&w=600&q=80",
+    raised:6310, goal:15000 },
+
+  { title:"Build a community center for 600 families in need",
+    org:"Community Lift", loc:"Montevideo", cat:"Community",
+    img:"https://images.unsplash.com/photo-1518398046578-8cca57782e17?auto=format&fit=crop&w=600&q=80",
+    raised:48300, goal:80000 },
+
+  { title:"Mobile mental health clinic for rural towns",
+    org:"Conexão Salud", loc:"La Paz", cat:"Health",
+    img:"https://images.unsplash.com/photo-1559757175-5c350d0d3c56?auto=format&fit=crop&w=600&q=80",
+    raised:11400, goal:22000 }
+];
+    const params = new URLSearchParams(location.search);
+    let i = parseInt(params.get('c'), 10);
+    if (isNaN(i) || i < 0 || i >= CAMPAIGNS_DATA.length) i = 0;
+    const c = CAMPAIGNS_DATA[i];
+    const pct = c.goal > 0 ? Math.min(Math.round((c.raised / c.goal) * 100), 100) : 0;
+    const donors = Math.max(9, Math.round(c.raised / 68));
+    const remaining = Math.max(0, c.goal - c.raised);
+    const fmt = n => '$' + n.toLocaleString('en-US');
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    const img = document.getElementById('dnHeroImg');
+    if (img){ img.src = c.img.replace('w=600','w=1200'); img.alt = c.org; }
+    set('dnHeroTitulo', c.title);
+    set('dnHeroArrecadado', fmt(c.raised));
+    set('dnHeroMeta', fmt(c.goal));
+    set('dnHeroDoacoes', donors);
+    set('dnHeroPct', pct + '%');
+    const fill = document.getElementById('dnHeroProgFill'); if (fill) fill.style.width = pct + '%';
+    const falta = document.querySelector('.dn-falta');
+    if (falta) falta.innerHTML = 'Just <strong>' + fmt(remaining) + '</strong> away from the goal. Be the next to lift ' + c.org + ' up.';
+    document.title = 'Donate \u00b7 ' + c.title + ' \u2014 Carelift';
+  }catch(e){ /* keep default content on failure */ }
+})();
+
 // ── Mobile menu open/close ────────────────────────
 (function(){
   const menu  = document.getElementById('mobileMenu');
