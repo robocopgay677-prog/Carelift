@@ -171,7 +171,6 @@ nav.site-nav{
 
 .mm-section{
   padding:14px 4px 18px;
-  opacity:0;transform:translateX(12px);
   flex:0 0 auto;
 }
 .mm-section:first-child{padding-top:6px}
@@ -207,19 +206,18 @@ nav.site-nav{
 .mm-divider{
   border:none;border-top:1px dashed var(--line);
   margin:6px 4px;
-  opacity:0;
   flex:0 0 auto;
 }
 
 /* Staggered fade-in for each section + divider */
 .mobile-menu.open .mm-section,
-.mobile-menu.open .mm-divider{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) forwards}
+.mobile-menu.open .mm-divider{animation:mmLinkIn .5s cubic-bezier(.4,0,.2,1) both}
 .mobile-menu.open .mm-section:nth-child(1){animation-delay:.08s}
 .mobile-menu.open .mm-divider:nth-child(2){animation-delay:.14s}
 .mobile-menu.open .mm-section:nth-child(3){animation-delay:.18s}
 .mobile-menu.open .mm-divider:nth-child(4){animation-delay:.24s}
 .mobile-menu.open .mm-section:nth-child(5){animation-delay:.28s}
-@keyframes mmLinkIn{to{opacity:1;transform:translateX(0)}}
+@keyframes mmLinkIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
 
 .mobile-menu-footer{
   flex-shrink:0;
