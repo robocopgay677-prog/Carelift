@@ -468,6 +468,69 @@ body.menu-open{overflow:hidden}
   .hero-h1{font-size:clamp(1.9rem, 8vw, 2.7rem);margin-bottom:14px}
   .hero-sub{font-size:.98rem;margin:0 auto 24px;max-width:42ch}
   .hero-cta{padding:14px 28px;font-size:.95rem}
+
+  /* Candle motion layer — sits over the image, under the text */
+  .hero-flames{
+    display:block;
+    position:absolute;left:0;right:0;top:0;
+    height:62vh;max-height:62vh;
+    z-index:1;pointer-events:none;overflow:visible;
+  }
+  /* Pulsing flame glow over the wick */
+  .hero-glow{
+    position:absolute;left:50%;top:45%;
+    width:216px;height:256px;margin:-128px 0 0 -108px;
+    background:radial-gradient(50% 50% at 50% 50%, rgba(255,243,210,.78) 0%, rgba(255,201,120,.42) 34%, rgba(255,180,120,0) 72%);
+    filter:blur(5px);
+    animation:candleGlow 3.8s ease-in-out infinite;
+  }
+  /* Orange heat ribbons rising from the flame and dissolving upward */
+  .heat{
+    position:absolute;width:52px;height:340px;margin:-190px 0 0 -26px;
+    border-radius:50% / 42%;
+    background:linear-gradient(to top,
+      rgba(255,196,130,0) 0%,
+      rgba(255,210,150,.72) 24%,
+      rgba(255,236,200,.80) 52%,
+      rgba(255,248,228,.55) 74%,
+      rgba(255,250,240,0) 100%);
+    filter:blur(5px);opacity:0;
+    mix-blend-mode:screen;
+    transform-origin:bottom center;
+    animation:heatRise var(--dur,9s) ease-in-out var(--delay,0s) infinite;
+  }
+  /* Embers rising toward the nav, then vanishing behind it */
+  .ember{
+    position:absolute;width:7px;height:7px;border-radius:50%;margin:-3px 0 0 -3px;
+    background:radial-gradient(circle, rgba(255,244,212,.95) 0%, rgba(255,188,112,.7) 50%, rgba(255,160,90,0) 100%);
+    opacity:0;
+    animation:emberRise var(--dur,8s) ease-in var(--delay,0s) infinite;
+  }
+}
+
+/* Candle hero motion — hidden on desktop, disabled for reduced motion */
+@media(min-width:701px){.hero-flames{display:none}}
+@keyframes candleGlow{
+  0%,100%{opacity:.5;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.1)}
+}
+@keyframes heatRise{
+  0%{opacity:0;transform:translateY(40px) translateX(0) scaleY(.82)}
+  16%{opacity:.7}
+  50%{transform:translateY(-150px) translateX(var(--sway,14px)) scaleY(1.08)}
+  72%{opacity:.4}
+  100%{opacity:0;transform:translateY(-320px) translateX(calc(var(--sway,14px) * -1)) scaleY(1.32)}
+}
+@keyframes emberRise{
+  0%{opacity:0;transform:translate(0,0) scale(.7)}
+  12%{opacity:1}
+  70%{opacity:.85}
+  100%{opacity:0;transform:translate(var(--dx,8px),-300px) scale(1.15)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-glow,.ember,.heat{animation:none!important}
+  .ember,.heat{opacity:0}
+  .hero-glow{opacity:.7}
 }
 
 /* ── SECTION PRIMITIVES ────────────────────────────── */
@@ -1483,6 +1546,22 @@ footer{
 <section class="hero">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Candle motion layer (mobile only) — pulsing flame glow + rising
+       embers + heat ribbons drifting up behind the nav. Decorative. -->
+  <div class="hero-flames" aria-hidden="true">
+    <span class="hero-glow"></span>
+    <span class="heat" style="left:47%;top:52%;--dur:8s;--delay:0s;--sway:-18px"></span>
+    <span class="heat" style="left:53%;top:50%;--dur:9.5s;--delay:2.4s;--sway:16px"></span>
+    <span class="heat" style="left:50%;top:54%;--dur:11s;--delay:4.8s;--sway:-10px"></span>
+    <span class="ember" style="left:50%;top:44%;--dur:6.5s;--delay:0s;--dx:-10px"></span>
+    <span class="ember" style="left:46%;top:46%;--dur:7.6s;--delay:1.1s;--dx:14px"></span>
+    <span class="ember" style="left:54%;top:43%;--dur:8.2s;--delay:2.3s;--dx:-16px"></span>
+    <span class="ember" style="left:49%;top:48%;--dur:7s;--delay:3.2s;--dx:8px"></span>
+    <span class="ember" style="left:52%;top:45%;--dur:9s;--delay:4.4s;--dx:18px"></span>
+    <span class="ember" style="left:45%;top:42%;--dur:8.6s;--delay:5.5s;--dx:-12px"></span>
+    <span class="ember" style="left:55%;top:47%;--dur:7.8s;--delay:6.6s;--dx:6px"></span>
+  </div>
 
   <div class="hero-content">
     <h1 class="hero-h1">
